@@ -1,0 +1,10 @@
+<div (click)="_onBackdropClicked()" *ngIf="hasBackdrop" [class.tri-drawer-shown]="_isShowingBackdrop()"
+     class="tri-drawer-backdrop"></div>
+
+<ng-content select="tri-sidenav"></ng-content>
+
+<ng-content select="tri-sidenav-content">
+</ng-content>
+<tri-sidenav-content *ngIf="!_content" cdkScrollable>
+  <ng-content></ng-content>
+</tri-sidenav-content>

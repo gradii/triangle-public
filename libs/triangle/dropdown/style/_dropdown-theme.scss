@@ -1,0 +1,110 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$dropdown-prefix-cls : "#{ v.$tri-prefix}-dropdown";
+
+@mixin tri-dropdown-theme($theme) {
+  $foreground : map.get($theme, foreground);
+  $background : map.get($theme, background);
+
+  $primary    : map.get($theme, primary);
+
+  .#{$dropdown-prefix-cls} {
+    @at-root &-menu {
+      background-color : theming.tri-color($background, component-background);
+      border-radius    : v.$border-radius-base;
+      box-shadow       : v.$box-shadow-base;
+
+      @at-root &-item,
+      &-submenu-title {
+        color : theming.tri-color($foreground, text-color);
+        > a {
+          color : theming.tri-color($foreground, text-color);
+        }
+
+        @at-root &-selected,
+        &-selected > a {
+          color            : theming.tri-color($primary);
+          background-color : theming.tri-color($background, item-active-bg);
+        }
+
+        @at-root &:hover {
+          background-color : theming.tri-color($background, item-hover-bg);
+        }
+
+        @at-root &-disabled {
+          color  : theming.tri-color(disabled);
+          cursor : not-allowed;
+          @at-root &:hover {
+            color            : theming.tri-color($foreground, disabled-color);
+            background-color : theming.tri-color($background, component-background);
+            cursor           : not-allowed;
+          }
+        }
+
+        @at-root &:first-child,
+        &:first-child > a {
+          border-radius : v.$border-radius-base v.$border-radius-base 0 0;
+        }
+
+        @at-root &:last-child,
+        &:last-child > a {
+          border-radius : 0 0 v.$border-radius-base v.$border-radius-base;
+        }
+
+        @at-root &:only-child,
+        &:only-child > a {
+          border-radius : v.$border-radius-base;
+        }
+      }
+
+      @at-root &-submenu-title:after {
+        color : theming.tri-color($foreground, text-color-secondary);
+      }
+
+      @at-root &-submenu#{&}-submenu-disabled .#{$dropdown-prefix-cls}-menu-submenu-title {
+        @at-root &,
+        &:after {
+          color : theming.tri-color($foreground, disabled-color);
+        }
+      }
+
+      @at-root &-submenu:first-child #{&}-submenu-title {
+        border-radius : v.$border-radius-base v.$border-radius-base 0 0;
+      }
+
+      @at-root &-submenu:last-child #{&}-submenu-title {
+        border-radius : 0 0 v.$border-radius-base v.$border-radius-base;
+      }
+    }
+  }
+  .#{$dropdown-prefix-cls}-menu-dark {
+    @at-root &,
+    & .#{$dropdown-prefix-cls}-menu {
+      background : theming.tri-color($background, menu-dark-bg);
+    }
+    .#{$dropdown-prefix-cls}-menu-item,
+    .#{$dropdown-prefix-cls}-menu-submenu-title,
+    .#{$dropdown-prefix-cls}-menu-item > a {
+      color : theming.tri-color($background, text-color-secondary-dark);
+      @at-root &:after {
+        color : theming.tri-color($background, text-color-secondary-dark);
+      }
+      @at-root &:hover {
+        color      : #fff;
+        background : transparent;
+      }
+    }
+
+    .#{$dropdown-prefix-cls}-menu-item-selected {
+      @at-root &,
+      &:hover,
+      & > a {
+        background : theming.tri-color($primary);
+        color      : #fff;
+      }
+    }
+  }
+}

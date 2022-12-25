@@ -1,0 +1,231 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+@import "../../input/style/input-mixin";
+
+$pagination-prefix-cls : "#{$tri-prefix}-pagination";
+
+.#{$pagination-prefix-cls} {
+  font-size : $font-size-base;
+  @include clearfix();
+  @include user-select(none);
+
+  margin    : 0;
+  padding   : 0;
+
+  @at-root &-total-text {
+    display        : inline-block;
+    vertical-align : middle;
+    height         : 28px;
+    line-height    : 28px;
+    margin-right   : 8px;
+  }
+
+  @at-root &-item {
+    cursor         : pointer;
+    border-radius  : $border-radius-base;
+    user-select    : none;
+    min-width      : 28px;
+    height         : 28px;
+    line-height    : 28px;
+    text-align     : center;
+    list-style     : none;
+    display        : inline-block;
+    vertical-align : middle;
+    margin-right   : 8px;
+    font-family    : Arial;
+    outline        : 0;
+
+    a {
+      text-decoration : none;
+      transition      : none;
+      margin          : 0 6px;
+    }
+
+    @at-root &:focus,
+    &:hover {
+      transition : all .3s;
+      a {
+      }
+    }
+
+    @at-root &-active {
+
+      @at-root &:focus,
+      &:hover {
+      }
+
+      @at-root & a,
+      &:focus a,
+      &:hover a {
+        color : #fff;
+      }
+    }
+  }
+
+  @at-root &-jump-prev,
+  &-jump-next {
+    outline : 0;
+
+    @at-root &:after {
+      content        : "•••";
+      display        : block;
+      letter-spacing : 2px;
+      text-align     : center;
+    }
+  }
+
+  @at-root &-prev,
+  &-jump-prev,
+  &-jump-next {
+    margin-right : 8px;
+  }
+  @at-root &-prev,
+  &-next,
+  &-jump-prev,
+  &-jump-next {
+    font-family    : Arial;
+    cursor         : pointer;
+    border-radius  : $border-radius-base;
+    list-style     : none;
+    min-width      : 28px;
+    height         : 28px;
+    line-height    : 28px;
+    text-align     : center;
+    transition     : all .3s;
+    display        : inline-block;
+    vertical-align : middle;
+  }
+
+  @at-root &-prev,
+  &-next {
+    outline : 0;
+
+    a {
+      outline     : none;
+      user-select : none;
+
+      @at-root &:after {
+        @include iconfont-size-under-12px(8px);
+        display     : block;
+        height      : 26px;
+        line-height : 26px;
+        font-family : "anticon";
+        text-align  : center;
+      }
+    }
+
+    @at-root &:focus,
+    &:hover {
+      a {
+      }
+    }
+  }
+
+  @at-root &-slash {
+    margin : 0 10px 0 5px;
+  }
+
+  @at-root &-options {
+    display        : inline-block;
+    vertical-align : middle;
+    margin-left    : 16px;
+
+    @at-root &-size-changer {
+      display      : inline-block;
+      margin-right : 8px;
+    }
+
+    @at-root &-quick-jumper {
+      display     : inline-block;
+      height      : $form-control-height-base;
+      line-height : $form-control-height-base;
+
+      input {
+        @include input;
+        margin : 0 8px;
+        width  : 50px;
+      }
+    }
+  }
+
+  @at-root &-simple #{&}-prev,
+  &-simple #{&}-next {
+    border      : 0;
+    height      : 24px;
+    line-height : 24px;
+    margin      : 0;
+    font-size   : 18px;
+  }
+
+  @at-root &-simple #{&}-simple-pager {
+    display        : inline-block;
+    vertical-align : middle;
+    margin-right   : 8px;
+
+    input {
+      margin        : 0 8px;
+      box-sizing    : border-box;
+      border-radius : $border-radius-base;
+      outline       : none;
+      padding       : 5px 8px;
+      height        : 24px;
+      text-align    : center;
+      transition    : border-color .3s;
+
+      @at-root &:hover {
+      }
+    }
+  }
+}
+
+.#{$pagination-prefix-cls} {
+  @at-root &.mini #{&}-total-text {
+    height      : 20px;
+    line-height : 20px;
+  }
+
+  @at-root &.mini #{&}-item {
+    border      : 0;
+    margin      : 0;
+    min-width   : 20px;
+    height      : 20px;
+    line-height : 20px;
+  }
+
+  @at-root &.mini #{&}-prev,
+  &.mini #{&}-next {
+    margin      : 0;
+    min-width   : 20px;
+    height      : 20px;
+    line-height : 20px;
+    border      : 0;
+  }
+
+  @at-root &.mini #{&}-jump-prev,
+  &.mini #{&}-jump-next {
+    height      : 20px;
+    line-height : 20px;
+  }
+
+  @at-root &.mini #{&}-options {
+    margin-left : 8px;
+    @at-root &-quick-jumper {
+      height      : 20px;
+      line-height : 20px;
+
+      input {
+        @include input-sm;
+        width : 44px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width : 1024px) {
+  .#{$pagination-prefix-cls}-item {
+    @at-root &-after-jump-prev,
+    &-before-jump-next {
+      display : none;
+    }
+  }
+}

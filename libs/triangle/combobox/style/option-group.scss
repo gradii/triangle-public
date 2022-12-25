@@ -1,0 +1,20 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables";
+
+$option-group-prefix-cls : "#{mixins.$tri-prefix}-option-group";
+
+.#{$option-group-prefix-cls} {
+  &-label {
+    @include menu-item-base();
+    user-select : none;
+    cursor      : default;
+
+    //theme
+    color       : $text-color-secondary
+
+  }
+
+  &-disabled &-label {
+    color : $disabled-color;
+  }
+}

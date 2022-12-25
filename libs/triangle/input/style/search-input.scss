@@ -1,0 +1,53 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables";
+
+@use "../../core/style/legend/button-common";
+@use "../../core/style/variables" as v;
+@use "./input-mixin";
+
+.#{v.$tri-prefix}-input-search-icon {
+  cursor     : pointer;
+  transition : all .3s;
+  font-size  : 14px;
+}
+
+.#{v.$tri-prefix}-search-input-wrapper {
+  display        : inline-block;
+  vertical-align : middle;
+}
+
+.#{v.$tri-prefix}-search-input {
+  @at-root &.#{v.$tri-prefix}-input-group .#{v.$tri-prefix}-input:first-child,
+  &.#{v.$tri-prefix}-input-group .#{v.$tri-prefix}-select:first-child {
+    border-radius : v.$border-radius-base;
+    position      : absolute;
+    top           : -1px;
+    width         : 100%;
+  }
+
+  @at-root &.#{v.$tri-prefix}-input-group .#{v.$tri-prefix}-input:first-child {
+    padding-right : 36px;
+  }
+
+  .#{v.$tri-prefix}-search-btn {
+    //@include btn-default($theme);
+    border-radius : 0 (v.$border-radius-base - 1px) (v.$border-radius-base - 1px) 0;
+    left          : -1px;
+    position      : relative;
+    border-width  : 0 0 0 1px;
+    z-index       : 2;
+    padding-left  : 8px;
+    padding-right : 8px;
+  }
+
+  //@at-root &#{&}-focus .#{$tri-prefix}-search-btn-noempty,
+  //&:hover .#{$tri-prefix}-search-btn-noempty {
+  //  @include button-variant-primary($btn-primary-color, $btn-primary-bg);
+  //}
+
+  .#{v.$tri-prefix}-select-combobox {
+    .#{v.$tri-prefix}-select-selection__rendered {
+      margin-right : 29px;
+    }
+  }
+}

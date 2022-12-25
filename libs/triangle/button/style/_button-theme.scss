@@ -1,0 +1,211 @@
+@use "sass:color";
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/legend/button-common";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$btn-prefix-cls        : "#{ v.$tri-prefix}-btn";
+
+// Buttons
+
+$_foreground           : theme.$foreground;
+$_background           : theme.$background;
+
+$_primary              : theme.$primary;
+$_secondary            : theme.$secondary;
+$_success              : theme.$success;
+$_info                 : theme.$info;
+$_warning              : theme.$warning;
+$_danger               : theme.$error;
+
+$btn-primary-color     : #fff !default;
+$btn-primary-bg        : theming.tri-color($_primary) !default;
+
+$btn-secondary-color   : #fff !default;
+$btn-secondary-bg      : theming.tri-color($_secondary) !default;
+$btn-secondary-border  : theming.tri-color($_secondary) !default;
+
+$btn-default-color     : theming.tri-color($_foreground, text-color) !default;
+$btn-default-bg        : #fff !default;
+$btn-default-border    : theming.tri-color($_foreground, border-color-base) !default;
+$btn-default-hover-bg  : rgba(theming.tri-color-palette($btn-default-color, 1), .2) !default;
+$btn-default-active-bg : rgba(theming.tri-color-palette(theming.tri-color($_primary), 1), .5) !default;
+
+$btn-success-color     : #fff !default;
+$btn-success-bg        : theming.tri-color($_success) !default;
+$btn-success-border    : theming.tri-color($_success) !default;
+
+$btn-info-color        : #fff !default;
+$btn-info-bg           : theming.tri-color($_info) !default;
+$btn-info-border       : theming.tri-color($_info) !default;
+
+$btn-warning-color     : #fff !default;
+$btn-warning-bg        : theming.tri-color($_warning) !default;
+$btn-warning-border    : theming.tri-color($_warning) !default;
+
+$btn-danger-color      : #fff !default;
+$btn-danger-bg         : theming.tri-color($_danger) !default;
+$btn-danger-border     : theming.tri-color($_danger) !default;
+
+$btn-disable-color     : theming.tri-color($_foreground, disabled-color) !default;
+$btn-disable-bg        : theming.tri-color($_foreground, disabled-bg) !default;
+$btn-disable-border    : theming.tri-color($_foreground, border-color-base) !default;
+
+$btn-group-border      : theming.tri-color($_primary, 600) !default;
+
+$btn-ghost-color       : theming.tri-color($_foreground, text-color) !default;
+$btn-ghost-bg          : transparent !default;
+$btn-ghost-border      : theming.tri-color($_foreground, border-color-base) !default;
+
+@mixin tri-button-theme() {
+  $text-map-list : (
+    primary: $btn-primary-bg,
+    secondary: $btn-secondary-bg,
+    success: $btn-success-bg,
+    info: $btn-info-bg,
+    warning: $btn-warning-bg,
+    danger: $btn-danger-bg,
+  );
+
+
+  // Button styles
+  // -----------------------------
+  .#{$btn-prefix-cls} {
+    @include button-common.btn-default();
+
+    @at-root &-primary {
+      @include button-common.button-variant-basic($btn-primary-color, $btn-primary-bg);
+
+      @include button-common.btn-group-border(".#{$btn-prefix-cls}-group", $btn-group-border, $btn-default-border);
+    }
+
+    @at-root &-secondary {
+      @include button-common.button-variant-basic($btn-secondary-color, $btn-secondary-bg);
+
+      @include button-common.btn-group-border(".#{$btn-prefix-cls}-group", theming.tri-color-palette($btn-secondary-border, 7), $btn-default-border);
+    }
+
+    @at-root &-success {
+      @include button-common.button-variant-basic($btn-success-color, $btn-success-bg);
+
+      @include button-common.btn-group-border(".#{$btn-prefix-cls}-group", theming.tri-color-palette($btn-success-border, 7), $btn-default-border);
+    }
+
+    @at-root &-info {
+      @include button-common.button-variant-basic($btn-info-color, $btn-info-bg);
+
+      @include button-common.btn-group-border(".#{$btn-prefix-cls}-group", theming.tri-color-palette($btn-info-border, 7), $btn-default-border);
+    }
+
+    @at-root &-warning {
+      @include button-common.button-variant-basic($btn-warning-color, $btn-warning-bg);
+
+      @include button-common.btn-group-border(".#{$btn-prefix-cls}-group", theming.tri-color-palette($btn-warning-border, 7), $btn-default-border);
+    }
+
+    @at-root &-danger {
+      @include button-common.button-variant-basic($btn-danger-color, $btn-danger-bg, $btn-danger-border);
+
+      @include button-common.btn-group-border(".#{$btn-prefix-cls}-group", theming.tri-color-palette($btn-danger-border, 7), $btn-default-border);
+    }
+
+    @at-root &-text {
+      background : transparent;
+      &:hover {
+        background : $btn-default-hover-bg;
+      }
+
+      &:active {
+        background : $btn-default-active-bg;
+      }
+    }
+
+    @each $name, $color in $text-map-list {
+      @at-root &-text#{&}-#{$name} {
+        @include button-common.button-variant-text($color);
+      }
+    }
+
+    // default outlined
+    @at-root &-outlined {
+      @include button-common.button-variant-fill(
+          transparent, //$background
+          $btn-default-border, //$border-color
+          $btn-default-color, //$color
+          transparent, //$hover-background
+          color.adjust(theming.tri-color($_primary), $lightness: 5%), //$hover-border,
+          color.adjust(theming.tri-color($_primary), $lightness: 5%), //$hover-color,
+          $btn-default-active-bg, //$active-background,
+          theming.tri-color($_primary), //$active-border,
+          theming.tri-color($_primary), //$active-color
+        $box-shadow-color: rgba(theming.tri-color($_primary), .5),
+        $enable-shadows : false,
+        $enable-border  : true
+      );
+    }
+
+    @each $name, $color in $text-map-list {
+      @at-root &-outlined#{&}-#{$name} {
+        @include button-common.button-variant-outlined($color);
+      }
+    }
+
+    @at-root &-raised {
+      box-shadow : 0 3px 1px -2px rgb(0 0 0 / 20%),
+      0 2px 2px 0 rgb(0 0 0 / 14%),
+      0 1px 5px 0 rgb(0 0 0 / 12%);
+
+      &:focus,
+      &.focus {
+        box-shadow : none;
+      }
+    }
+
+    @at-root &#{&}-rounded {
+      border-radius : 2rem;
+    }
+
+    @at-root &#{&}-rounded#{&-icon-only} {
+      border-radius : 50%
+    }
+  }
+
+  .#{$btn-prefix-cls} {
+    @at-root &-ghost {
+      @include button-common.button-variant-fill(
+          $btn-ghost-bg,
+          $btn-ghost-border,
+          $btn-ghost-color,
+          $btn-ghost-bg,
+          theming.tri-color($_primary), //$hover-border,
+          theming.tri-color($_primary), //$hover-color,
+          rgba($btn-ghost-bg, .2), //$active-background,
+          theming.tri-color($_primary), //$active-border,
+          theming.tri-color($_primary), //$active-color
+        $enable-shadows : false,
+        $enable-border  : true,
+      );
+    }
+
+    @each $name, $color in $text-map-list {
+      @at-root &-ghost#{&}-#{$name} {
+        @include button-common.button-variant-ghost($color);
+      }
+    }
+
+    @at-root &-background-ghost:not(:hover):not(:focus):not(:active) {
+      filter : opacity(.9);
+    }
+
+    @at-root &-background-ghost#{&}-text {
+      border : 0 !important;
+    }
+  }
+
+  .#{$btn-prefix-cls} {
+    @at-root &-dashed {
+      border-style : dashed !important;
+    }
+  }
+}

@@ -1,0 +1,51 @@
+<table cellSpacing="0" class="{{ prefixCls }}-table" role="grid">
+  <thead>
+  <tr role="row">
+    <th *ngIf="showWeek" class="{{ prefixCls }}-column-header {{ prefixCls }}-week-number-header" role="columnheader">
+      <span class="{{ prefixCls }}-column-header-inner">x</span>
+    </th>
+    <th *ngFor="let cell of headWeekDays"
+        class="{{ prefixCls }}-column-header"
+        role="columnheader"
+        title="{{ cell.short }}"
+    >
+      <span class="{{ prefixCls }}-column-header-inner">{{ cell.veryShort }}</span>
+    </th>
+  </tr>
+  </thead>
+  <tbody class="{{ prefixCls }}-tbody">
+  <tr *ngFor="let row of weekRows" [ngClass]="row.classMap" role="row">
+    <td *ngIf="row.weekNum" class="{{ prefixCls }}-week-number-cell" role="gridcell">
+      {{ row.weekNum }}
+    </td>
+    <td
+      (click)="cell.isDisabled ? null : cell.onClick()"
+      (mouseenter)="cell.isDisabled ? null : cell.onMouseEnter()"
+      *ngFor="let cell of row.dateCells"
+      [ngClass]="cell.classMap"
+      role="gridcell"
+      title="{{ cell.title }}"
+    >
+
+      <ng-container [ngSwitch]="true">
+        <ng-container *ngSwitchCase="isTemplateRef(cell.customContent)">
+          <ng-container *ngTemplateOutlet="cell.customContent; context: { $implicit: cell.value }"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="isNonEmptyString(cell.customContent)">
+          <span [innerHTML]="cell.customContent"></span>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <div
+            [attr.aria-disabled]="cell.isDisabled"
+            [attr.aria-selected]="cell.isSelected"
+            class="{{ prefixCls }}-date"
+          >
+            {{ cell.content }}
+          </div>
+        </ng-container>
+      </ng-container>
+
+    </td>
+  </tr>
+  </tbody>
+</table>

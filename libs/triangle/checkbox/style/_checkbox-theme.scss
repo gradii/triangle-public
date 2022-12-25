@@ -1,0 +1,76 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/style/theming";
+@use "../../input/style/input-mixin";
+@use "../../input/style/input-theme";
+@use "../../core/themes/theme";
+
+$checkbox-prefix-cls       : "#{v.$tri-prefix}-checkbox" !default;
+
+$primary                   : theme.$primary !default;
+$foreground                : theme.$foreground !default;
+$background                : theme.$background !default;
+
+$checkbox-size             : v.$checkbox-size - 0.125rem !default;
+$checkbox-inner-prefix-cls : "#{$checkbox-prefix-cls}-inner" !default;
+
+@mixin tri-checkbox-theme() {
+  .#{$checkbox-prefix-cls} {
+    @at-root .#{$checkbox-prefix-cls}-wrapper:hover #{&}-inner,
+    &:hover #{&}-inner,
+    &-input:focus + #{&}-inner {
+      outline-color : theming.tri-color($primary);
+    }
+
+    @at-root &-checked:after {
+      outline : 1px solid theming.tri-color($primary);
+    }
+
+    @at-root &-inner {
+      outline          : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+      background-color : #fff;
+    }
+  }
+
+  // 半选状态
+  .#{$checkbox-prefix-cls}-indeterminate .#{$checkbox-inner-prefix-cls} > tri-icon {
+    color : white;
+  }
+
+  .#{$checkbox-prefix-cls}-indeterminate.#{$checkbox-prefix-cls}-disabled .#{$checkbox-inner-prefix-cls} > tri-icon {
+    color : theming.tri-color($foreground, disabled-color);
+  }
+
+  // 选中状态
+  .#{$checkbox-prefix-cls}-checked .#{$checkbox-inner-prefix-cls} > tri-icon {
+    color : white;
+  }
+
+  .#{$checkbox-prefix-cls}-checked,
+  .#{$checkbox-prefix-cls}-indeterminate {
+    .#{$checkbox-inner-prefix-cls} {
+      background-color : theming.tri-color($primary);
+      outline-color    : theming.tri-color($primary);
+    }
+  }
+
+  .#{$checkbox-prefix-cls}-disabled {
+    @at-root &.#{$checkbox-prefix-cls}-checked {
+      .#{$checkbox-inner-prefix-cls} > tri-icon {
+        color : theming.tri-color($foreground, disabled-color);
+      }
+    }
+
+    .#{$checkbox-inner-prefix-cls} {
+      outline-color    : theming.tri-color($foreground, border-color-base) !important;
+      background-color : input-theme.$input-disabled-bg;
+      @at-root & > tri-icon {
+        color : input-theme.$input-disabled-bg;
+      }
+    }
+
+    @at-root & + span {
+      color : theming.tri-color($foreground, disabled-color);
+    }
+  }
+}

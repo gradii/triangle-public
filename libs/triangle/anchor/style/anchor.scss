@@ -1,0 +1,73 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+.#{$tri-prefix} {
+  @at-root &-anchor {
+    position : relative;
+
+    @at-root &-ink {
+      position : absolute;
+      height   : 100%;
+      left     : 0;
+      top      : 0;
+
+      @at-root &:before {
+        content  : " ";
+        position : relative;
+        width    : 2px;
+        height   : 100%;
+        display  : block;
+        margin   : 0 auto;
+      }
+
+      @at-root &-ball {
+        display       : none;
+        position      : absolute;
+        width         : 9px;
+        height        : 9px;
+        border-radius : 9px;
+        left          : 50%;
+        transition    : top .3s ease-in-out;
+        transform     : translateX(-50%);
+        @at-root &.visible {
+          display : inline-block;
+        }
+      }
+    }
+
+    @at-root &.fixed #{&}-ink #{&}-ink-ball {
+      display : none;
+    }
+  }
+
+  @at-root &-anchor-link {
+    padding     : 8px 0 8px 18px;
+    line-height : 1;
+
+    @at-root &#{&} {
+      padding-top    : 6px;
+      padding-bottom : 6px;
+    }
+
+    @at-root &-title {
+      display       : block;
+      position      : relative;
+      transition    : all .3s;
+      white-space   : nowrap;
+      overflow      : hidden;
+      text-overflow : ellipsis;
+      margin-bottom : 8px;
+    }
+
+    @at-root &-title:only-child {
+      margin-bottom : 0;
+    }
+
+    @at-root &-active > #{&}-title {
+    }
+
+    @at-root & > #{&} {
+      font-size : $font-size-base;
+    }
+  }
+}

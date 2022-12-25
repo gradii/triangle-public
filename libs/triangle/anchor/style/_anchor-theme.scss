@@ -1,0 +1,40 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+
+@mixin tri-anchor-theme($theme) {
+  $primary    : map.get($theme, primary);
+  $foreground : map.get($theme, foreground);
+  $background : map.get($theme, background);
+
+  .#{ v.$tri-prefix} {
+    @at-root &-anchor {
+      @at-root &-wrapper {
+        background-color : theming.tri-color($background, component-background);
+      }
+
+      @at-root &-ink {
+        @at-root &:before {
+          background-color : theming.tri-color($foreground, border-color-split);
+        }
+        @at-root &-ball {
+          border           : 3px solid theming.tri-color($primary);
+          background-color : theming.tri-color($background, component-background);
+        }
+      }
+    }
+
+    @at-root &-anchor-link {
+
+      @at-root &-title {
+        color : theming.tri-color($foreground, text-color);
+      }
+
+      @at-root &-active > #{&}-title {
+        color : theming.tri-color($primary);
+      }
+    }
+  }
+}

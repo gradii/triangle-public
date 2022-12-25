@@ -1,0 +1,144 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$timeline-prefix-cls : "#{$tri-prefix}-timeline";
+
+.#{$timeline-prefix-cls} {
+  list-style : none;
+  margin     : 0;
+  padding    : 0;
+
+  @at-root &-item {
+    display    : flex;
+    font-size  : $font-size-base;
+    position   : relative;
+    padding    : 0 0 12px;
+    list-style : none;
+    margin     : 0;
+
+    @at-root &-tail {
+      position : absolute;
+      left     : 4px;
+      top      : 0.75em;
+      height   : 100%;
+    }
+
+    @at-root &-pending #{&}-head {
+      font-size : $font-size-sm;
+    }
+
+    @at-root &-pending #{&}-tail {
+      display : none;
+    }
+
+    @at-root &-head {
+      position      : absolute;
+      width         : 10px;
+      height        : 10px;
+      border-radius : 100px;
+      border        : 2px solid transparent;
+    }
+
+    @at-root &-head-custom {
+      position      : absolute;
+      text-align    : center;
+      width         : auto;
+      height        : auto;
+      top           : 5.5px;
+      left          : 5px;
+      line-height   : 1;
+      margin-top    : 0;
+      border        : 0;
+      border-radius : 0;
+      padding       : 3px 1px;
+      transform     : translateY(-50%);
+    }
+
+    @at-root &-content {
+      position : relative;
+      top      : - rem-convert("px", $font-size-base * $line-height-base - $font-size-base) + 1px;
+      margin   : 0 0 0 18px;
+    }
+
+    @at-root &-last {
+      .#{$timeline-prefix-cls}-item-tail {
+        display : none;
+      }
+
+      .#{$timeline-prefix-cls}-item-content {
+        min-height : 48px;
+      }
+    }
+  }
+
+
+  &.#{$timeline-prefix-cls}-alternate,
+  &.#{$timeline-prefix-cls}-right {
+    .#{$timeline-prefix-cls}-item {
+      &-tail,
+      &-head,
+      &-head-custom {
+        left : 50%;
+      }
+
+      &-head {
+        margin-left : -4px;
+
+        &-custom {
+          margin-left : 1px;
+        }
+      }
+
+      .#{$timeline-prefix-cls}-item-content {
+        &-right {
+          left       : 50%;
+          width      : 50%;
+          text-align : left;
+        }
+      }
+
+      .#{$timeline-prefix-cls}-item-content {
+        &-left {
+          right      : 50%;
+          width      : 50%;
+          margin     : 0 18px 0 0;
+          text-align : right;
+        }
+      }
+    }
+  }
+
+  &.#{$timeline-prefix-cls}-right {
+    .#{$timeline-prefix-cls}-item-left {
+      .#{$timeline-prefix-cls}-item-tail,
+      .#{$timeline-prefix-cls}-item-head,
+      .#{$timeline-prefix-cls}-item-head-custom {
+        left : 100%;
+      }
+
+      .#{$timeline-prefix-cls}-item-content {
+        right : 0;
+        left  : -30px;
+        width : 100%;
+      }
+    }
+  }
+
+  @at-root &#{&}-pending #{&}-item-last #{&}-item-tail {
+    display : block;
+  }
+
+  @at-root &#{&}-reverse #{&}-item-last #{&}-item-tail {
+    display : none;
+  }
+
+  @at-root &#{&}-reverse #{&}-item-pending {
+    .#{$timeline-prefix-cls}-item-tail {
+      display : block;
+    }
+
+    .#{$timeline-prefix-cls}-item-content {
+      min-height : 48px;
+    }
+  }
+}

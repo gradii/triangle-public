@@ -1,0 +1,205 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+
+$_background               : theme.$background;
+$_foreground               : theme.$foreground;
+$_primary                  : theme.$primary;
+$_secondary                : theme.$secondary;
+$_warning                  : theme.$warning;
+
+$tabs-header-border        : 1px solid theming.tri-color($_foreground, divider) !default;
+
+// Tabs
+// ---
+$tabs-card-head-background : #f9f9f9 !default;
+$tabs-title-font-size      : v.$font-size-lg !default;
+
+@mixin tri-tabs-theme() {
+
+  .tri-tab-nav-bar,
+  .tri-tab-header {
+    border-bottom : $tabs-header-border;
+  }
+
+  .tri-tab-group-inverted-header {
+    .tri-tab-nav-bar,
+    .tri-tab-header {
+      border-top    : $tabs-header-border;
+      border-bottom : none;
+    }
+  }
+
+  .tri-tab-label, .tri-tab-link {
+    color : theming.tri-color($_foreground, text);
+
+    &.tri-tab-disabled {
+      color : theming.tri-color($_foreground, disabled-text);
+    }
+  }
+
+  .tri-tab-header-pagination-chevron {
+    border-color : theming.tri-color($_foreground, text);
+  }
+
+  .tri-tab-header-pagination-disabled .tri-tab-header-pagination-chevron {
+    border-color : theming.tri-color($_foreground, disabled-text);
+  }
+
+  // Remove header border when there is a background color
+  .tri-tab-group[class*="tri-background-"] .tri-tab-header,
+  .tri-tab-nav-bar[class*="tri-background-"] {
+    border-bottom : none;
+    border-top    : none;
+  }
+
+  .tri-tab-group, .tri-tab-nav-bar {
+    $theme-colors : (
+      primary: $_primary,
+      accent: $_secondary,
+      warn: $_warning
+    );
+
+    @each $name, $color in $theme-colors {
+      // Set the foreground color of the tabs
+      &.tri-#{$name} {
+        @include _tri-tab-label-focus($color);
+        @include _tri-ink-bar($color);
+
+        // Override ink bar when background color is the same
+        &.tri-background-#{$name} {
+          @include _tri-ink-bar($color, default-contrast);
+        }
+      }
+    }
+
+    @each $name, $color in $theme-colors {
+      // Set background color of the tabs and override focus color
+      &.tri-background-#{$name} {
+        @include _tri-tab-label-focus($color);
+        @include _tri-tabs-background($color);
+      }
+    }
+  }
+
+  .tri-tab-group.tri-tab-group-type-segment {
+
+    .tri-tab-nav-bar, .tri-tab-header {
+      border : none;
+    }
+
+    .tri-tab-labels {
+      margin-right     : auto;
+      border-radius    : 0.5rem;
+      background-color : rgba(0, 0, 0, .065);
+      overflow         : hidden;
+    }
+
+    .tri-tab-label {
+      height : 2rem;
+
+      &:not(:first-child)::before {
+        margin      : 5px 0;
+        transition  : opacity 160ms ease-in-out 100ms;
+        border-left : 1px solid rgba(0, 0, 0, 0.12);
+        content     : "x";
+        display     : inline-block;
+        position    : absolute;
+        left        : 0;
+        opacity     : 1;
+        overflow    : hidden;
+        width       : 0;
+        will-change : opacity;
+      }
+
+      &.tri-tab-label-active, &.tri-tab-label-active + .tri-tab-label {
+        &::before {
+          display : none;
+        }
+      }
+    }
+
+    .tri-ink-bar {
+      background-color : unset;
+
+      padding          : 4px;
+
+      &::after {
+        content          : "";
+        border-radius    : 0.5rem;
+        background-color : #fff;
+        color            : #000;
+        display          : inline-block;
+        height           : 100%;
+        width            : 100%;
+        box-shadow       : 0 0 5px rgba(0, 0, 0, 0.16);
+      }
+    }
+  }
+
+}
+
+@mixin _tri-ink-bar($color, $hue: default) {
+  .tri-ink-bar {
+    background-color : theming.tri-color($color, $hue);
+  }
+}
+
+@mixin _tri-tab-label-focus($tab-focus-color) {
+  .tri-tab-label,
+  .tri-tab-link {
+    &.cdk-keyboard-focused,
+    &.cdk-program-focused {
+      &:not(.tri-tab-disabled) {
+        background-color : theming.tri-color($tab-focus-color, lighter, 0.3);
+      }
+    }
+  }
+}
+
+@mixin _tri-tabs-background($background-color) {
+  // Set background color for the tab group
+  .tri-tab-header, .tri-tab-links, .tri-tab-header-pagination {
+    background-color : theming.tri-color($background-color);
+  }
+
+  // Set labels to contrast against background
+  .tri-tab-label, .tri-tab-link {
+    color : theming.tri-color($background-color, default-contrast);
+
+    &.tri-tab-disabled {
+      color : theming.tri-color($background-color, default-contrast, 0.4);
+    }
+  }
+
+  // Set pagination chevrons to contrast background
+  .tri-tab-header-pagination-chevron {
+    border-color : theming.tri-color($background-color, default-contrast);
+  }
+
+  .tri-tab-header-pagination-disabled .tri-tab-header-pagination-chevron {
+    border-color : theming.tri-color($background-color, default-contrast, 0.4);
+  }
+
+  // Set ripples color to be the contrast color of the new background. Otherwise the ripple
+  // color will be based on the app background color.
+  .tri-ripple-element {
+    background-color : theming.tri-color($background-color, default-contrast, 0.12);
+  }
+}
+
+//@mixin tri-tabs-typography($config) {
+//  .tri-tab-group {
+//    font-family: tri-font-family($config);
+//  }
+//
+//  .tri-tab-label, .tri-tab-link {
+//    font: {
+//      family: tri-font-family($config, button);
+//      size: tri-font-size($config, button);
+//      weight: tri-font-weight($config, button);
+//    }
+//  }
+//}

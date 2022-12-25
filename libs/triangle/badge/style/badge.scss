@@ -1,0 +1,142 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$badge-prefix-cls  : "#{v.$tri-prefix}-badge";
+$number-prefix-cls : "#{v.$tri-prefix}-scroll-number";
+
+$badge-height      : 1.25rem !default;
+$badge-dot-size    : .5rem !default;
+$badge-font-size   : v.$font-size-base !default;
+
+.#{$badge-prefix-cls} {
+  position       : relative;
+  display        : inline-block;
+  line-height    : 1;
+  vertical-align : middle;
+
+  @at-root &-count {
+    position         : absolute;
+    transform        : translateX(-50%);
+    top              : -$badge-height * 0.5;
+    height           : $badge-height;
+    border-radius    : $badge-height * 0.5;
+    min-width        : $badge-height;
+    line-height      : $badge-height;
+    text-align       : center;
+    padding          : 0 6px;
+    font-size        : $badge-font-size;
+    white-space      : nowrap;
+    transform-origin : -10% center;
+    font-family      : tahoma;
+  }
+
+  @at-root &-dot {
+    position         : absolute;
+    transform        : translateX(-50%);
+    transform-origin : 0 center;
+    top              : -$badge-dot-size * 0.5;
+    height           : $badge-dot-size;
+    width            : $badge-dot-size;
+    border-radius    : 100%;
+    z-index          : 10;
+  }
+
+  @at-root &-status {
+    line-height    : inherit;
+    vertical-align : baseline;
+
+    @at-root &-dot {
+      width         : 8px;
+      height        : 8px;
+      display       : inline-block;
+      border-radius : 50%;
+    }
+    @at-root &-success {
+    }
+    @at-root &-processing {
+      position : relative;
+      @at-root &:after {
+        position      : absolute;
+        top           : 0;
+        left          : 0;
+        bottom        : 0;
+        right         : 0;
+        border-radius : 50%;
+        content       : "";
+        animation     : antStatusProcessing 1.2s infinite ease-in-out;
+      }
+    }
+    @at-root &-default {
+    }
+    @at-root &-error {
+    }
+    @at-root &-warning {
+    }
+    @at-root &-text {
+      font-size   : $badge-font-size;
+      margin-left : 8px;
+    }
+  }
+
+  @at-root &-zoom-appear, #{&}-zoom-enter {
+    animation           : antZoomBadgeIn .3s v.$ease-out-back;
+    animation-fill-mode : both;
+  }
+
+  @at-root &-zoom-leave {
+    animation           : antZoomBadgeOut .3s v.$ease-in-back;
+    animation-fill-mode : both;
+  }
+
+  //@at-root &-not-a-wrapper #{&}-count {
+  //  top       : auto;
+  //  display   : block;
+  //  position  : relative;
+  //  transform : none !important;
+  //}
+}
+
+@keyframes antStatusProcessing {
+  0% {
+    transform : scale(0.8);
+    opacity   : 0.5;
+  }
+  100% {
+    transform : scale(2.4);
+    opacity   : 0;
+  }
+}
+
+.#{$number-prefix-cls} {
+  overflow : hidden;
+  @at-root &-only {
+    display    : inline-block;
+    transition : all .3s v.$ease-in-out;
+    height     : $badge-height;
+    > p {
+      height : $badge-height;
+      margin : 0;
+      padding: 0;
+    }
+  }
+}
+
+@keyframes antZoomBadgeIn {
+  0% {
+    opacity   : 0;
+    transform : scale(0) translateX(-50%);
+  }
+  100% {
+    transform : scale(1) translateX(-50%);
+  }
+}
+
+@keyframes antZoomBadgeOut {
+  0% {
+    transform : scale(1) translateX(-50%);
+  }
+  100% {
+    opacity   : 0;
+    transform : scale(0) translateX(-50%);
+  }
+}

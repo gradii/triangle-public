@@ -1,0 +1,16 @@
+@use "sass:list";
+@use "../variables" as v;
+
+@mixin transition($transition...) {
+  @if v.$enable-transitions {
+    @if list.length($transition) == 0 {
+      transition : $transition-base;
+    } @else {
+      transition : $transition;
+    }
+  }
+
+  @media screen and (prefers-reduced-motion : reduce) {
+    transition : none;
+  }
+}

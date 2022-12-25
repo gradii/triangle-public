@@ -1,0 +1,78 @@
+@use "sass:color";
+@use "sass:map";
+@use "sass:meta";
+@use "../../core/themes/theme";
+@use "../../core/style/legend/elevation";
+@use "../../core/style/theming";
+@use "../../core/style/mixins";
+
+@mixin tri-drawer-theme() {
+  $primary                           : theme.$primary;
+  $accent                            : theme.$secondary;
+  $warn                              : theme.$warning;
+  $background                        : theme.$background;
+  $foreground                        : theme.$foreground;
+
+  $drawer-background-color           : theming.tri-color($background, dialog);
+  $drawer-container-background-color : theming.tri-color($background, background);
+  $drawer-push-background-color      : theming.tri-color($background, dialog);
+  $drawer-side-border                : solid 1px theming.tri-color($foreground, divider);
+
+  .tri-drawer-container {
+    background-color : $drawer-container-background-color;
+    color            : theming.tri-color($foreground, text);
+  }
+
+  .tri-drawer {
+    background-color : $drawer-background-color;
+    color            : theming.tri-color($foreground, text);
+
+    &.tri-drawer-push {
+      background-color : $drawer-push-background-color;
+    }
+
+    &:not(.tri-drawer-side) {
+      // The elevation of z-16 is noted in the design specifications.
+      // See https://material.io/design/components/navigation-drawer.html
+      @include mixins.tri-theme-elevation(16);
+    }
+  }
+
+  .tri-drawer-side {
+    border-right : $drawer-side-border;
+
+    &.tri-drawer-end {
+      border-left  : $drawer-side-border;
+      border-right : none;
+    }
+  }
+
+  [dir="rtl"] .tri-drawer-side {
+    border-left  : $drawer-side-border;
+    border-right : none;
+
+    &.tri-drawer-end {
+      border-left  : none;
+      border-right : $drawer-side-border;
+    }
+  }
+
+  .tri-drawer-backdrop.tri-drawer-shown {
+    $opacity        : 0.6;
+    $backdrop-color : theming.tri-color($background, card, $opacity);
+
+    @if (meta.type-of($backdrop-color) == color) {
+      // We use invert() here to have the darken the background color expected to be used. If the
+      // background is light, we use a dark backdrop. If the background is dark,
+      // we use a light backdrop.
+      background-color : color.invert($backdrop-color);
+    } @else {
+      // If we couldn't resolve the backdrop color to a color value, fall back to using
+      // `opacity` to make it opaque since its end value could be a solid color.
+      background-color : $backdrop-color;
+      opacity          : $opacity;
+    }
+  }
+}
+
+@mixin tri-drawer-typography($config) { }

@@ -1,0 +1,48 @@
+@use 'sass:math';
+@use '../../core/style/variables';
+@use '../../core/style/cdk/a11y';
+@use './form-field-variable';
+
+// Styles that only apply to the fill appearance of the form-field.
+
+// The border radius for the form field fill box.
+$fill-border-radius           : 4px !default;
+// The height of the underline at the bottom of the form field fill box.
+$fill-underline-height        : 1px !default;
+// The height of the underline ripple at the bottom of the form field fill box.
+$fill-underline-ripple-height : 2px !default;
+// The horizontal padding between the edge of the form field fill box and the start of the text.
+$fill-side-padding            : .5rem !default;
+// The vertical padding between the edge of the form field fill box and the start of the text as
+// well as between the floating label and the value.
+$fill-line-spacing            : 1rem;
+// The scale of the subscript and floating label text w.r.t the value text.
+$fill-subscript-font-scale    : 0.75 !default;
+// The horizontal padding between the edge of the subscript box and the start of the subscript text.
+$fill-subscript-padding       : math.div($fill-side-padding, $fill-subscript-font-scale);
+
+
+.tri-form-field-appearance-fill.tri-form-field-can-float {
+  .tri-form-field-flex {
+    border-radius : $fill-border-radius $fill-border-radius;
+    padding       : $fill-line-spacing $fill-side-padding 0 $fill-side-padding;
+    margin-top    : 0; // reset appearance margin-top
+    height        : 3.5rem;
+
+    @include a11y.cdk-high-contrast(active, off) {
+      outline : solid 1px;
+    }
+  }
+
+  &.tri-focused .tri-form-field-flex {
+    @include a11y.cdk-high-contrast(active, off) {
+      outline : dashed 3px;
+    }
+  }
+
+
+  .tri-form-field-label-wrapper .tri-form-field-label {
+    top : 1.6rem;
+  }
+}
+

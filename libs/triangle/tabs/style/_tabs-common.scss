@@ -1,0 +1,173 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables";
+@use "../../core/style/cdk/a11y";
+
+$tri-tab-bar-height         : 3rem !default;
+$tri-tab-animation-duration : 200ms !default;
+
+// Mixin styles for labels that are contained within the tab header.
+@mixin tab-label {
+  height          : $tri-tab-bar-height;
+  padding         : 0 32px;
+  cursor          : pointer;
+  box-sizing      : border-box;
+  opacity         : 0.6;
+  //min-width       : 160px;
+  text-align      : center;
+  display         : inline-flex;
+  justify-content : center;
+  align-items     : center;
+  white-space     : nowrap;
+
+  //flex-grow       : 1;
+
+  z-index         : 2;
+
+  &:focus {
+    outline : none;
+
+    &:not(.tri-tab-disabled) {
+      opacity : 1;
+    }
+
+    @include a11y.cdk-high-contrast(active, off) {
+      $outline-width : 2px;
+      outline        : dotted $outline-width;
+      outline-offset : -$outline-width; // Not supported on IE, but looks better everywhere else.
+    }
+  }
+
+  &.tri-tab-disabled {
+    cursor : default;
+
+    @include a11y.cdk-high-contrast(active, off) {
+      opacity : 0.5;
+    }
+  }
+
+  .tri-tab-label-content {
+    display         : inline-flex;
+    justify-content : center;
+    align-items     : center;
+    white-space     : nowrap;
+  }
+
+  @include a11y.cdk-high-contrast(active, off) {
+    opacity : 1;
+  }
+}
+
+// The ink bar that displays under the active tab label
+@mixin ink-bar {
+  $height    : 2px;
+
+  @include mixins.noop-animation();
+  position   : absolute;
+  bottom     : 0;
+  height     : $height;
+  transition : left $tri-tab-animation-duration mixins.$ease-in-out-curve-function;
+
+  z-index    : 1;
+
+  .tri-tab-group-type-segment & {
+    height : 100%
+  }
+
+  .tri-tab-group-inverted-header & {
+    bottom : auto;
+    top    : 0;
+  }
+
+  @include a11y.cdk-high-contrast(active, off) {
+    outline : solid $height;
+    height  : 0;
+  }
+}
+
+// Structural styles for a tab header. Used by both `tri-tab-header` and `tri-tab-nav-bar`.
+@mixin paginated-tab-header {
+  .tri-tab-header {
+    display     : flex;
+    overflow    : hidden;
+    position    : relative;
+    flex-shrink : 0;
+  }
+
+  .tri-tab-header-pagination {
+    @include mixins.user-select(none);
+    position                    : relative;
+    display                     : none;
+    justify-content             : center;
+    align-items                 : center;
+    min-width                   : 32px;
+    cursor                      : pointer;
+    z-index                     : 2;
+    -webkit-tap-highlight-color : transparent;
+    touch-action                : none;
+
+    .tri-tab-header-pagination-controls-enabled & {
+      display : flex;
+    }
+  }
+
+  // The pagination control that is displayed on the left side of the tab header.
+  .tri-tab-header-pagination-before,
+  .tri-tab-header-rtl .tri-tab-header-pagination-after {
+    padding-left : 4px;
+
+    .tri-tab-header-pagination-chevron {
+      transform : rotate(-135deg);
+    }
+  }
+
+  // The pagination control that is displayed on the right side of the tab header.
+  .tri-tab-header-rtl .tri-tab-header-pagination-before,
+  .tri-tab-header-pagination-after {
+    padding-right : 4px;
+
+    .tri-tab-header-pagination-chevron {
+      transform : rotate(45deg);
+    }
+  }
+
+  .tri-tab-header-pagination-chevron {
+    border-style : solid;
+    border-width : 2px 2px 0 0;
+    content      : "";
+    height       : 8px;
+    width        : 8px;
+  }
+
+  .tri-tab-header-pagination-disabled {
+    box-shadow : none;
+    cursor     : default;
+  }
+
+  .tri-tab-list {
+    flex-grow  : 1;
+    position   : relative;
+    transition : transform 500ms cubic-bezier(0.35, 0, 0.25, 1);
+  }
+}
+
+// Structural styles for the element that wraps the paginated header items.
+@mixin paginated-tab-header-item-wrapper($parent) {
+  display : flex;
+
+  // We need to set the parent here explicitly, in order to prevent the alignment
+  // from any parent tab groups from propagating down to the children when nesting.
+  [mat-align-tabs="center"] > #{$parent} & {
+    justify-content : center;
+  }
+
+  [mat-align-tabs="end"] > #{$parent} & {
+    justify-content : flex-end;
+  }
+}
+
+@mixin paginated-tab-header-container {
+  display   : flex;
+  flex-grow : 1;
+  overflow  : hidden;
+  z-index   : 1;
+}

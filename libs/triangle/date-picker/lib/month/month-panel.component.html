@@ -1,0 +1,32 @@
+<div class="{{ prefixCls }}">
+  <div>
+    <div class="{{ prefixCls }}-header">
+      <a
+        (click)="previousYear()"
+        class="{{ prefixCls }}-prev-year-btn"
+        role="button"
+        title="{{ locale.previousYear }}"
+      ></a>
+
+      <a
+        (click)="yearPanelShow.emit()"
+        class="{{ prefixCls }}-year-select"
+        role="button"
+        title="{{ locale.yearSelect }}"
+      >
+        <span class="{{ prefixCls }}-year-select-content">{{ value.getYear() }}</span>
+        <span class="{{ prefixCls }}-year-select-arrow">x</span>
+      </a>
+
+      <a
+        (click)="nextYear()"
+        class="{{ prefixCls }}-next-year-btn"
+        role="button"
+        title="{{ locale.nextYear }}"
+      ></a>
+    </div>
+    <div class="{{ prefixCls }}-body">
+      <month-table (valueChange)="valueChange.emit($event)" [disabledDate]="disabledDate" [value]="value"></month-table>
+    </div>
+  </div>
+</div>

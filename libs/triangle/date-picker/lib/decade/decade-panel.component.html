@@ -1,0 +1,36 @@
+<div class="{{ prefixCls }}">
+  <div class="{{ prefixCls }}-header">
+    <a
+      (click)="previousCentury()"
+      class="{{ prefixCls }}-prev-century-btn"
+      role="button"
+      title="{{ locale.previousCentury }}"
+    ></a>
+
+    <div class="{{ prefixCls }}-century">
+      {{ startYear }}-{{ endYear }}
+    </div>
+    <a
+      (click)="nextCentury()"
+      class="{{ prefixCls }}-next-century-btn"
+      role="button"
+      title="{{ locale.nextCentury }}"
+    ></a>
+  </div>
+  <div class="{{ prefixCls }}-body">
+    <table cellSpacing="0" class="{{ prefixCls }}-table" role="grid">
+      <tbody class="{{ prefixCls }}-tbody">
+      <tr *ngFor="let row of panelDecades" role="row">
+        <td (click)="cell.onClick()"
+            *ngFor="let cell of row; trackBy: trackPanelDecade"
+            [ngClass]="cell.classMap"
+            role="gridcell"
+            title="{{ cell.title }}"
+        >
+          <a class="{{ prefixCls }}-decade">{{ cell.content }}</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

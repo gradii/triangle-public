@@ -1,0 +1,27 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$rate-prefix-cls : #{v.$tri-prefix}-rate;
+
+@mixin tri-rate-theme() {
+  // Rate
+  // ---
+  $rate-star-color : #f5a623 !default;
+  $rate-star-bg    : #e9e9e9 !default;
+
+  .#{$rate-prefix-cls} {
+    @at-root &-star {
+      color : $rate-star-bg;
+
+      @at-root &-half #{&}-first,
+      &-full #{&}-second {
+        color : $rate-star-color;
+      }
+
+      @at-root &-half:hover #{&}-first,
+      &-full:hover #{&}-second {
+        color : mixins.tint($rate-star-color, 20%);
+      }
+    }
+  }
+}

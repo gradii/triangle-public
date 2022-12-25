@@ -1,0 +1,73 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$desc-list-prefix-cls : "#{$tri-prefix}-desc-list";
+
+.#{$desc-list-prefix-cls} {
+  display : block;
+
+  @at-root & #{&}-title {
+    font-size     : 14px;
+    font-weight   : 500;
+    margin-bottom : 16px;
+  }
+  @at-root & #{&}-term {
+    line-height    : 22px;
+    padding-bottom : 16px;
+    margin-right   : 8px;
+    white-space    : nowrap;
+    display        : table-cell;
+
+    &:after {
+      content  : ":";
+      margin   : 0 8px 0 2px;
+      position : relative;
+      top      : -0.5px;
+    }
+  }
+  @at-root & #{&}-detail {
+    line-height    : 22px;
+    width          : 100%;
+    padding-bottom : 16px;
+    display        : table-cell;
+  }
+  // offset the padding-bottom of last row
+  .tri-row {
+    margin-bottom : -16px;
+    overflow      : hidden;
+  }
+
+  @at-root &#{&}-vertical {
+
+    .#{$desc-list-prefix-cls}-term {
+      padding-bottom : 8px;
+      display        : block;
+    }
+
+    .#{$desc-list-prefix-cls}-detail {
+      display : block;
+    }
+
+  }
+  @at-root &#{&}-small {
+
+    .#{$desc-list-prefix-cls}-title {
+      margin-bottom : 12px;
+    }
+
+    .#{$desc-list-prefix-cls}-term,
+    .#{$desc-list-prefix-cls}-detail {
+      padding-bottom : 8px;
+    }
+
+    // offset the padding-bottom of last row
+    .tri-row {
+      margin-bottom : -8px;
+    }
+  }
+  @at-root &#{&}-large {
+    .#{$desc-list-prefix-cls}-title {
+      font-size : 16px;
+    }
+  }
+}

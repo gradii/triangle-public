@@ -1,0 +1,48 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$calendar-prefix-cls            : "#{$tri-prefix}-calendar";
+$calendar-timepicker-prefix-cls : "#{$tri-prefix}-calendar-time-picker";
+
+@mixin _tri-month-panel-theme($theme) {
+  $primary    : tri-color($theme, primary);
+  $foreground : tri-color($theme, foreground);
+  $background : tri-color($theme, background);
+
+  .#{$calendar-prefix-cls}-month-panel {
+    border-radius : $border-radius-base;
+    background    : tri-color($background, component-background);
+  }
+
+  .#{$calendar-prefix-cls}-month-panel-selected-cell .#{$calendar-prefix-cls}-month-panel-month {
+    background : $primary;
+    color      : #fff;
+
+    @at-root &:hover {
+      background : $primary;
+      color      : #fff;
+    }
+  }
+
+  .#{$calendar-prefix-cls}-month-panel-cell {
+
+    @at-root &-disabled .#{$calendar-prefix-cls}-month-panel-month {
+      @at-root &,
+      &:hover {
+        cursor     : not-allowed;
+        color      : #bcbcbc;
+        background : tri-color($foreground, disabled-bg);
+      }
+    }
+  }
+
+  .#{$calendar-prefix-cls}-month-panel-month {
+    color      : tri-color($foreground, text-color);
+    background : transparent;
+
+    @at-root &:hover {
+      background : tri-color($foreground, item-hover-bg);
+      cursor     : pointer;
+    }
+  }
+}

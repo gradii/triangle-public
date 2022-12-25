@@ -1,0 +1,372 @@
+@use "./mixin";
+@use "./mixin-theme";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+@use "../../input/style/input-variables";
+@use "../../input/style/input-mixin";
+@use "../../input/style/input-theme";
+
+
+$form-prefix-cls         : "#{v.$tri-prefix}-form" !default;
+$form-component-height   : input-variables.$input-height-base !default;
+$form-feedback-font-size : v.$font-size-base !default;
+
+$foreground              : theme.$foreground !default;
+$background              : theme.$background !default;
+$success                 : theme.$success !default;
+$primary                 : theme.$primary !default;
+$error                   : theme.$error !default;
+$warning                 : theme.$warning !default;
+$label-required-color    : theming.tri-color(theme.$highlight) !default;
+
+$form-item-margin-bottom : 1.0rem !default;
+
+$label-color             : theming.tri-color($foreground, heading-color) !default;
+$text-color-secondary    : theming.tri-color($foreground, text-color-secondary);
+$border-color-base       : theming.tri-color($foreground, border-color-base);
+
+
+// Form items
+// You should wrap labels and controls in .#{$form-prefix-cls}-item for optimum spacing
+.#{$form-prefix-cls}-item {
+  font-size      : v.$font-size-base;
+  margin-bottom  : $form-item-margin-bottom;
+  color          : v.$text-color;
+  vertical-align : top;
+  display        : flex;
+
+  // nested FormItem
+  @at-root & > #{&},
+  &:not(.#{$form-prefix-cls}) > #{&} {
+    margin-bottom : -$form-item-margin-bottom;
+  }
+
+  @at-root &#{&}-vertical {
+    flex-direction : column;
+    align-items    : flex-start;
+  }
+
+  @at-root &-control {
+    line-height : $form-component-height;
+    position    : relative;
+    display     : inline-block;
+    flex        : 1;
+  }
+
+  //@at-root &-with-help {
+  //  //margin-bottom : $form-item-margin-bottom - v.$font-size-base * v.$line-height-base;
+  //}
+
+  @at-root &-label {
+    text-align     : right;
+    vertical-align : middle;
+    line-height    : $form-component-height;
+    display        : inline-block;
+    overflow       : hidden;
+    text-overflow  : ellipsis;
+    white-space    : nowrap;
+    min-width      : 4rem;
+
+    label {
+      color : $label-color;
+
+      @at-root &:after {
+        @if v.$form-item-trailing-colon {
+          content : ":";
+        } @else {
+          content : " ";
+        }
+        margin   : 0 8px 0 2px;
+        position : relative;
+        top      : -0.5px;
+      }
+    }
+  }
+
+  .#{v.$tri-prefix}-switch {
+    margin : 4px 0;
+  }
+
+  @at-root &-no-colon #{&}-label label:after {
+    content : " ";
+  }
+}
+
+
+.#{$form-prefix-cls}-explain,
+.#{$form-prefix-cls}-extra {
+  color       : $text-color-secondary;
+  line-height : 1.5;
+}
+
+.#{$form-prefix-cls}-extra {
+  padding-top : 4px;
+}
+
+.#{$form-prefix-cls}-text {
+  display       : inline-block;
+  padding-right : 8px;
+}
+
+.#{$form-prefix-cls}-split {
+  display    : block;
+  text-align : center;
+}
+
+.tri-form-item-control {
+  display : block;
+}
+
+// no form tag the has-feedback should also take effect
+.has-feedback {
+  // 由于组件结构变化(item-children), 导致表单项宽度不会撑开包裹它的元素
+  .tri-form-item-control {
+    width : 100%;
+  }
+
+  .#{v.$tri-prefix}-input {
+    padding-right : 2rem;
+
+  }
+
+  .#{$form-prefix-cls}-item-children-icon {
+    position : absolute;
+    top      : 0;
+    right    : 0;
+  }
+
+  > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-arrow,
+  > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-selection__clear,
+  :not(.#{v.$tri-prefix}-input-group-addon) > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-arrow,
+  :not(.#{v.$tri-prefix}-input-group-addon) > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-selection__clear {
+    right : 2rem;
+  }
+
+  > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-selection-selected-value,
+  :not(.#{v.$tri-prefix}-input-group-addon) > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-selection-selected-value {
+    padding-right : 2rem;
+  }
+
+  .#{v.$tri-prefix}-cascader-picker {
+    @at-root &-clear {
+      right : 2rem;
+    }
+  }
+
+  // Fix issue: https://github.com/ant-design/ant-design/issues/4783
+  .#{v.$tri-prefix}-calendar-picker {
+    @at-root &-icon,
+    &-clear {
+      right : 2rem;
+    }
+  }
+}
+
+// 不需要feedback的表单项
+.no-feedback {
+  @at-root tri-switch ~ .tri-form-item-children-icon,
+  tri-radio-group ~ .tri-form-item-children-icon, tri-radio ~ .tri-form-item-children-icon,
+  tri-checkbox-group ~ .tri-form-item-children-icon, tri-checkbox ~ .tri-form-item-children-icon,
+  tri-input-number ~ .tri-form-item-children-icon {
+    display : none;
+  }
+}
+
+// 表单下的输入框尺寸唯一: 大尺寸
+form {
+  > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-arrow,
+  > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-selection__clear,
+  :not(.#{v.$tri-prefix}-input-group-addon) > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-arrow,
+  :not(.#{v.$tri-prefix}-input-group-addon) > .#{v.$tri-prefix}-select .#{v.$tri-prefix}-select-selection__clear {
+    right : 1rem;
+  }
+
+  textarea.#{v.$tri-prefix}-input {
+    height : auto;
+  }
+
+  // input[type=file]
+  .#{v.$tri-prefix}-upload {
+    background : transparent;
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    width  : 16px;
+    height : 16px;
+  }
+
+  // Radios and checkboxes on same line
+  .#{v.$tri-prefix}-radio-inline,
+  .#{v.$tri-prefix}-checkbox-inline {
+    display        : inline-block;
+    vertical-align : middle;
+    font-weight    : normal;
+    cursor         : pointer;
+    margin-left    : 8px;
+
+    @at-root &:first-child {
+      margin-left : 0;
+    }
+  }
+
+  .#{v.$tri-prefix}-checkbox-vertical,
+  .#{v.$tri-prefix}-radio-vertical {
+    display : block;
+  }
+
+  .#{v.$tri-prefix}-checkbox-vertical + .#{v.$tri-prefix}-checkbox-vertical,
+  .#{v.$tri-prefix}-radio-vertical + .#{v.$tri-prefix}-radio-vertical {
+    margin-left : 0;
+  }
+
+  .#{v.$tri-prefix}-input-number {
+    margin-top   : -1px;
+    margin-right : 8px;
+  }
+
+  .#{v.$tri-prefix}-select,
+  .#{v.$tri-prefix}-cascader-picker {
+    width : 100%;
+    // Fix https://github.com/ant-design/ant-design/issues/6097
+    @at-root &:only-child {
+      display : block;
+    }
+  }
+
+  // Don't impact select inside input group
+  .#{v.$tri-prefix}-input-group .#{v.$tri-prefix}-select,
+  .#{v.$tri-prefix}-input-group .#{v.$tri-prefix}-cascader-picker {
+    width : auto;
+  }
+
+  // Don't impact select inside input group addon
+  .#{v.$tri-prefix}-input-group-addon .#{v.$tri-prefix}-select,
+  .#{v.$tri-prefix}-input-group-addon .#{v.$tri-prefix}-cascader-picker {
+    @at-root &:only-child {
+      display : inline-block;
+    }
+  }
+}
+
+// Input combined with select
+.#{v.$tri-prefix}-input-group-wrap {
+  .#{v.$tri-prefix}-select-selection {
+    border-bottom-left-radius : 0;
+    border-top-left-radius    : 0;
+    @at-root &:hover {
+      border-color : $border-color-base;
+    }
+  }
+
+  .#{v.$tri-prefix}-select-selection--single {
+    margin-left      : -1px;
+    height           : input-variables.$input-height-lg;
+    background-color : #eee;
+
+    .#{v.$tri-prefix}-select-selection__rendered {
+      padding-left  : 8px;
+      padding-right : 25px;
+      line-height   : 30px;
+    }
+  }
+
+  .#{v.$tri-prefix}-select-open .#{v.$tri-prefix}-select-selection {
+    border-color : $border-color-base;
+    box-shadow   : none;
+  }
+}
+
+// Form layout
+//== Vertical Form
+@mixin make-vertical-layout() {
+  padding     : 0 0 8px;
+  display     : block;
+  text-align  : left;
+  line-height : v.$line-height-base;
+
+  label:after {
+    display : none;
+  }
+}
+
+.#{$form-prefix-cls}-vertical .#{$form-prefix-cls}-item-label,
+  // when labelCol is 24, it is a vertical form
+.#{v.$tri-prefix}-col-24.#{$form-prefix-cls}-item-label,
+.#{v.$tri-prefix}-col-xl-24.#{$form-prefix-cls}-item-label {
+  @include make-vertical-layout();
+}
+
+@media (max-width : v.$screen-xs-max) {
+  .#{v.$tri-prefix}-col-xs-24.#{$form-prefix-cls}-item-label {
+    @include make-vertical-layout();
+  }
+}
+
+@media (max-width : v.$screen-sm-max) {
+  .#{v.$tri-prefix}-col-sm-24.#{$form-prefix-cls}-item-label {
+    @include make-vertical-layout();
+  }
+}
+
+@media (max-width : v.$screen-md-max) {
+  .#{v.$tri-prefix}-col-md-24.#{$form-prefix-cls}-item-label {
+    @include make-vertical-layout();
+  }
+}
+
+@media (max-width : v.$screen-lg-max) {
+  .#{v.$tri-prefix}-col-lg-24.#{$form-prefix-cls}-item-label {
+    @include make-vertical-layout();
+  }
+}
+
+.has-feedback .#{$form-prefix-cls}-item-children-icon {
+  position        : absolute;
+  top             : 0;
+  right           : 0;
+  bottom          : 0;
+  margin          : auto;
+  display         : inline-flex;
+  justify-content : center;
+  align-items     : center;
+  visibility      : visible;
+  pointer-events  : none;
+  width           : $form-component-height;
+  height          : $form-component-height;
+  line-height     : $form-component-height;
+  text-align      : center;
+  font-size       : $form-feedback-font-size;
+  animation       : zoomIn .3s #{ease-out-back};
+  z-index         : 1;
+
+  & #{v.$tri-prefix}-icon {
+    width       : 2rem;
+    height      : 2rem;
+    line-height : 2rem;
+  }
+}
+
+.is-validating {
+  @at-root &.has-feedback .#{$form-prefix-cls}-item-children-icon .#{v.$tri-prefix}-icon {
+    display   : inline-block;
+    animation : loadingCircle 1s infinite linear;
+  }
+  @at-root &.has-feedback .#{$form-prefix-cls}-item-children-icon {
+    display : inline-block;
+    color   : theming.tri-color($primary);
+  }
+}
+
+.#{v.$tri-prefix}-advanced-search-form {
+  .#{$form-prefix-cls}-item {
+    margin-bottom : 16px;
+  }
+
+  .#{v.$tri-prefix}-input,
+  .#{v.$tri-prefix}-input-group .#{v.$tri-prefix}-input,
+  .#{v.$tri-prefix}-input-group .#{v.$tri-prefix}-input-group-addon {
+    height : input-variables.$input-height-base;
+  }
+}

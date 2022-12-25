@@ -1,0 +1,15 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$calendar-prefix-cls            : "#{$tri-prefix}-calendar";
+$calendar-timepicker-prefix-cls : "#{$tri-prefix}-calendar-time-picker";
+
+@import "picker";
+@import "calendar";
+@import "range-picker";
+@import "time-picker";
+@import "month-panel";
+@import "year-panel";
+@import "decade-panel";
+@import "month-picker";
+@import "week-picker";

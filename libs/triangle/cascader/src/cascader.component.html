@@ -1,0 +1,76 @@
+<div
+  #origin="cdkOverlayOrigin"
+  #trigger
+  cdkOverlayOrigin>
+  <div *ngIf="showInput">
+    <input #input
+           (blur)="handleInputBlur($event)"
+           (change)="handlerInputChange($event)"
+           (focus)="handleInputFocus($event)"
+           [(ngModel)]="inputValue"
+           [attr.autoComplete]="'off'"
+           [attr.autofocus]="autoFocus ? 'autofocus' : null"
+           [attr.placeholder]="showPlaceholder ? placeHolder : null"
+           [class.tri-cascader-input]="true"
+           [class.tri-input-disabled]="disabled"
+           [class.tri-input-lg]="size === 'large'"
+           [class.tri-input-sm]="size === 'small'"
+           [disabled]="disabled"
+           [readonly]="!showSearch"
+           [size]="size"
+           tri-input>
+    <i (click)="clearSelection($event)"
+       *ngIf="showClearIcon"
+       [attr.title]="clearText"
+       class="anticon anticon-close-circle tri-cascader-picker-clear"></i>
+    <i *ngIf="showArrow && !isLoading"
+       [class.tri-cascader-picker-arrow-expand]="menuVisible"
+       class="anticon anticon-down tri-cascader-picker-arrow"></i>
+    <i *ngIf="isLoading"
+       class="anticon anticon-loading anticon-spin tri-cascader-picker-arrow"></i>
+    <span [class.tri-cascader-focused]="showSearch&&isFocused&&!inputValue"
+          [class.tri-cascader-show-search]="showSearch"
+          class="tri-cascader-picker-label">
+          <ng-container *ngIf="!isLabelRenderTemplate; else labelTemplate">{{ labelRenderText }}</ng-container>
+          <ng-template #labelTemplate>
+            <ng-template [ngTemplateOutletContext]="labelRenderContext" [ngTemplateOutlet]="labelRender"></ng-template>
+          </ng-template>
+        </span>
+  </div>
+  <ng-content></ng-content>
+</div>
+<ng-template
+  (backdropClick)="closeMenu()"
+  (detach)="closeMenu()"
+  (positionChange)="onPositionChange($event)"
+  [cdkConnectedOverlayOpen]="menuVisible"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayPositions]="positions"
+  cdkConnectedOverlay
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  cdkConnectedOverlayHasBackdrop>
+  <div #menu
+       (mouseleave)="onTriggerMouseLeave($event)"
+       [@dropDownAnimation]="dropDownPosition"
+       [class.tri-cascader-menus-hidden]="!menuVisible"
+       [class.tri-cascader-menus]="true"
+       [ngStyle]="menuStyle">
+
+    <ul *ngFor="let options of columns; let i = index;" class="tri-cascader-menu">
+      <div *ngIf="options.length>0&&options[0].title" class="tri-cascader-menu-title"><span>{{options[0].title}}</span>
+      </div>
+      <li (click)="onOptionClick(option, i, $event)"
+          (mouseenter)="onOptionMouseEnter(option, i, $event)"
+          (mouseleave)="onOptionMouseLeave(option, i, $event)"
+          *ngFor="let option of options"
+          [attr.title]="getOptionLabel(option)"
+          [class.tri-cascader-menu-item-active]="isActivedOption(option, i)"
+          [class.tri-cascader-menu-item-disabled]="option.disabled"
+          [class.tri-cascader-menu-item-expand]="!option.isLeaf"
+          [class.tri-cascader-menu-item-loading]="option.loading"
+          [class.tri-cascader-menu-item]="true">
+        {{ getOptionLabel(option) }}
+      </li>
+    </ul>
+  </div>
+</ng-template>

@@ -1,0 +1,70 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$foreground            : theme.$foreground;
+$background            : theme.$background;
+
+$card-prefix-cls       : "#{v.$tri-prefix}-card";
+$card-padding-base     : 24px;
+$card-padding-wider    : 32px;
+$card-head-height      : 3rem !default;
+$card-head-line-height : 1.5rem !default;
+
+$card-head-background  : theming.tri-color($background, component-background) !default;
+$card-head-color       : v.$heading-color;
+
+$card-actions-background:  theming.tri-color($background, component-background) !default;
+
+@mixin tri-card-theme() {
+  $primary : theme.$primary;
+
+
+  .#{$card-prefix-cls} {
+    background : $card-head-background;
+
+    @at-root &:not(#{&}-no-hovering):hover {
+      box-shadow   : v.$box-shadow-base;
+      border-color : transparent;
+    }
+
+    @at-root &-bordered {
+      border     : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-split);
+      box-shadow : 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+    }
+
+    @at-root &-header {
+      background    : $card-head-background;
+      border-bottom : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-split);
+
+      @at-root &-title {
+        color       : $card-head-color;
+        //border-left : 3px solid theming.tri-color($primary);
+      }
+
+      @at-root &-loading-block {
+        background : linear-gradient(
+            90deg,
+            rgba(207, 216, 220, 0.2),
+            rgba(207, 216, 220, 0.4),
+            rgba(207, 216, 220, 0.2)
+        );
+      }
+
+      //@at-root &-grid {
+      //  border     : 0;
+      //  box-shadow : 0 0 0 0.5px theming.tri-color($foreground, border-color-split),
+      //  0 0 0 0.5px theming.tri-color($foreground, border-color-split) inset;
+      //  @at-root &:hover {
+      //    box-shadow : v.$box-shadow-base;
+      //  }
+      //}
+    }
+
+    @at-root &-footer, &-actions {
+      background-color: $card-actions-background;
+      border-top: v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-split);
+    }
+  }
+}

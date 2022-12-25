@@ -1,0 +1,117 @@
+@import "../../../core/themes/theme";
+
+$calendar-prefix-cls            : "#{$tri-prefix}-calendar";
+$calendar-timepicker-prefix-cls : "#{$tri-prefix}-calendar-time-picker";
+
+$input-box-height               : 34px;
+
+@mixin tri-range-picker-theme($theme) {
+  $foreground : map-get($theme, foreground);
+  $background : map-get($theme, background);
+
+  .#{$calendar-prefix-cls}-range-picker-input {
+    background-color : transparent;
+    border           : 0;
+    @include placeholder($theme);
+
+    @at-root &[disabled] {
+      cursor : not-allowed;
+    }
+  }
+
+  .#{$calendar-prefix-cls}-range-picker-separator {
+    color : tri-color($foreground, text-color-secondary);
+  }
+
+  .#{$calendar-prefix-cls}-range {
+
+    @at-root &-middle {
+      color : tri-color($foreground, text-color-secondary);
+    }
+
+    .#{$calendar-prefix-cls}-input,
+    .#{$calendar-timepicker-prefix-cls}-input {
+      @include input();
+    }
+
+    .#{$calendar-prefix-cls}-in-range-cell {
+      @at-root &:before {
+        background : $item-active-bg;
+      }
+    }
+
+    @at-root div#{&}-quick-selector {
+      text-align : left;
+
+      > a {
+        margin-right : 8px;
+      }
+    }
+
+    .#{$calendar-prefix-cls},
+    .#{$calendar-prefix-cls}-month-panel,
+    .#{$calendar-prefix-cls}-year-panel {
+      @at-root &-header {
+        border-bottom : 0;
+      }
+      @at-root &-body {
+        border-top : $border-width-base $border-style-base $border-color-split;
+      }
+    }
+
+    @at-root &.#{$calendar-prefix-cls}-time {
+      .#{$calendar-timepicker-prefix-cls} {
+        height  : 207px;
+        width   : 100%;
+        top     : 68px;
+        z-index : 2; // cover .tri-calendar-range .tri-calendar-in-range-cell > div (z-index: 1)
+        @at-root &-panel {
+          height     : 267px;
+          margin-top : -34px;
+        }
+
+        @at-root &-inner {
+          padding-top : 40px;
+          height      : 100%;
+          background  : none;
+        }
+
+        @at-root &-combobox {
+          display          : inline-block;
+          height           : 100%;
+          background-color : $component-background;
+          border-top       : $border-width-base $border-style-base $border-color-split;
+        }
+        @at-root &-select {
+          height : 100%;
+          ul {
+            max-height : 100%;
+          }
+        }
+      }
+
+      .#{$calendar-prefix-cls}-footer .#{$calendar-prefix-cls}-time-picker-btn {
+        margin-right : 8px;
+      }
+
+      .#{$calendar-prefix-cls}-today-btn {
+        margin      : 8px 12px;
+        height      : 22px;
+        line-height : 22px;
+      }
+    }
+
+    @at-root &-with-ranges.#{$calendar-prefix-cls}-time .#{$calendar-timepicker-prefix-cls} {
+      height : 247px;
+      @at-root &-panel {
+        height : 281px;
+      }
+    }
+  }
+
+  .#{$calendar-prefix-cls}-range.#{$calendar-prefix-cls}-show-time-picker {
+    .#{$calendar-prefix-cls}-body {
+      border-top-color : transparent;
+    }
+  }
+}

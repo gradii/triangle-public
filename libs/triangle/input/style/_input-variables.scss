@@ -1,0 +1,35 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/variables" as v;
+@use "../../core/style/theming";
+
+// Input
+// ---
+$input-height-base           : v.$form-control-height-base !default;
+$input-height-lg             : v.$form-control-height-lg !default;
+$input-height-sm             : v.$form-control-height-sm !default;
+
+$input-line-height           : v.$line-height-base !default;
+$input-line-height-sm        : v.$line-height-sm !default;
+$input-line-height-lg        : v.$line-height-lg !default;
+
+$input-padding-horizontal    : 0.5rem !default;
+$input-padding-vertical-base : 0.25rem !default;
+$input-padding-vertical-sm   : 0.125rem !default;
+$input-padding-vertical-lg   : 0.375rem !default;
+
+$input-border-width          : v.$border-width-base !default;
+
+$_foreground              : theme.$foreground !default;
+$_background              : theme.$background !default;
+
+$input-color              : v.$text-color !default;
+$input-border-width       : v.$border-width-base !default;
+$input-bg                 : #fff !default;
+$input-addon-bg           : #eee !default;
+$input-addon-color        : $input-color !default;
+$input-hover-border-color : theming.tri-color(theme.$primary) !default;
+$input-disabled-bg        : map.get($_background, disabled-bg) !default;
+
+$input-placeholder-color  : map.get($_foreground, disabled-color) !default;
+$input-border-color       : map.get($_foreground, border-color-base) !default;

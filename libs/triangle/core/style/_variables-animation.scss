@@ -1,0 +1,50 @@
+$enable-transitions : true !default;
+
+
+// Animation
+$ease-base-out                          : cubic-bezier(0.7, 0.3, 0.1, 1) !default;
+$ease-base-in                           : cubic-bezier(0.9, 0, 0.3, 0.7) !default;
+$ease-out                               : cubic-bezier(0.215, 0.61, 0.355, 1) !default;
+$ease-in                                : cubic-bezier(0.55, 0.055, 0.675, 0.19) !default;
+$ease-in-out                            : cubic-bezier(0.645, 0.045, 0.355, 1) !default;
+$ease-out-back                          : cubic-bezier(0.12, 0.4, 0.29, 1.46) !default;
+$ease-in-back                           : cubic-bezier(0.71, -0.46, 0.88, 0.6) !default;
+$ease-in-out-back                       : cubic-bezier(0.71, -0.46, 0.29, 1.46) !default;
+$ease-out-circ                          : cubic-bezier(0.08, 0.82, 0.17, 1) !default;
+$ease-in-circ                           : cubic-bezier(0.6, 0.04, 0.98, 0.34) !default;
+$ease-in-out-circ                       : cubic-bezier(0.78, 0.14, 0.15, 0.86) !default;
+$ease-out-quint                         : cubic-bezier(0.23, 1, 0.32, 1) !default;
+$ease-in-quint                          : cubic-bezier(0.755, 0.05, 0.855, 0.06) !default;
+$ease-in-out-quint                      : cubic-bezier(0.86, 0, 0.07, 1) !default;
+
+
+// Easing Curves
+
+// The default animation curves used by material design.
+$tri-linear-out-slow-in-timing-function : cubic-bezier(0, 0, 0.2, 0.1) !default;
+$tri-fast-out-slow-in-timing-function   : cubic-bezier(0.4, 0, 0.2, 1) !default;
+$tri-fast-out-linear-in-timing-function : cubic-bezier(0.4, 0, 1, 1) !default;
+
+$ease-in-out-curve-function             : cubic-bezier(0.35, 0, 0.25, 1) !default;
+
+$swift-ease-out-duration                : 250ms !default;
+$swift-ease-out-timing-function         : cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+$swift-ease-out                         : all $swift-ease-out-duration $swift-ease-out-timing-function !default;
+
+$swift-ease-in-duration                 : 200ms !default;
+$swift-ease-in-timing-function          : cubic-bezier(0.55, 0, 0.55, 0.2) !default;
+$swift-ease-in                          : all $swift-ease-in-duration $swift-ease-in-timing-function !default;
+
+$swift-ease-in-out-duration             : 500ms !default;
+$swift-ease-in-out-timing-function      : $ease-in-out-curve-function !default;
+$swift-ease-in-out                      : all $swift-ease-in-out-duration $swift-ease-in-out-timing-function !default;
+
+$swift-linear-duration                  : 80ms !default;
+$swift-linear-timing-function           : linear !default;
+$swift-linear                           : all $swift-linear-duration $swift-linear-timing-function !default;
+
+
+// Animation
+$animation-duration-slow                : .3s !default; // Modal
+$animation-duration-base                : .2s !default;
+$animation-duration-fast                : .1s !default; // Tooltip

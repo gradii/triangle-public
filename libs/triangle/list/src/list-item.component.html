@@ -1,0 +1,12 @@
+<div class="tri-list-item-content">
+  <ng-content></ng-content>
+  <div class="tri-list-item-extra">
+    <ng-content select="[tri-list-item-extra]"></ng-content>
+  </div>
+  <ul *ngIf="actions?.length > 0" class="tri-list-item-action">
+    <li *ngFor="let i of actions; let last=last;">
+      <ng-template [ngTemplateOutlet]="i"></ng-template>
+      <em *ngIf="!last" class="tri-list-item-action-split"></em>
+    </li>
+  </ul>
+</div>

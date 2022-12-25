@@ -1,0 +1,15 @@
+<tri-select (ngModelChange)="yearChange.emit($event)" [ngModel]="activeYear"
+            [size]="size" class="tri-fullcalendar-year-select">
+  <tri-option *ngFor="let year of years" [value]="year.value">{{year.label}}</tri-option>
+</tri-select>
+
+<tri-select (ngModelChange)="monthChange.emit($event)" *ngIf="mode === 'month'"
+            [ngModel]="activeMonth"
+            [size]="size" class="tri-fullcalendar-month-select">
+  <tri-option *ngFor="let month of months" [value]="month.value">{{month.label}}</tri-option>
+</tri-select>
+
+<tri-radio-group (ngModelChange)="modeChange.emit($event)" [(ngModel)]="mode" [size]="size">
+  <label tri-radio-button value="month">{{ monthTypeText }}</label>
+  <label tri-radio-button value="year">{{ yearTypeText }}</label>
+</tri-radio-group>

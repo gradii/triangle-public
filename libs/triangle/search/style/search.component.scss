@@ -1,0 +1,229 @@
+//@import '../style/theme/color';
+//@import '../style/core/_font';
+//@import '../style/core/animation';
+//
+//.tri-search {
+//  .tri-serach-line {
+//    border-color: $transfer-dividing-line;
+//  }
+//}
+//
+//svg.svg-icon-search {
+//  path {
+//    fill: $devui-icon-fill;
+//    transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+//  }
+//
+//  &:hover {
+//    path {
+//      fill: $devui-icon-fill-hover;
+//    }
+//  }
+//}
+//
+//svg.svg-icon-clear {
+//  vertical-align: middle;
+//  position: relative;
+//  top: -0.1em;
+//
+//  path {
+//    fill: $devui-shape-icon-fill;
+//    transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+//  }
+//
+//  &:hover {
+//    path {
+//      fill: $devui-shape-icon-fill-hover;
+//    }
+//  }
+//}
+//
+//:host {
+//  display: inline-block;
+//}
+//
+//.tri-search {
+//  position: relative;
+//
+//  .tri-input {
+//    height: 28px;
+//    padding: 4px 8px;
+//    font-size: $transfer-font-size;
+//    padding-right: 28px;
+//    text-overflow: ellipsis;
+//
+//    &.tri-icon-left {
+//      padding-left: 32px;
+//    }
+//
+//    &.tri-search-no-border {
+//      border: none;
+//    }
+//
+//    &.tri-clear-exit:not(.tri-icon-left) {
+//      padding-right: 60px;
+//    }
+//
+//    &-sm {
+//      height: 26px;
+//      padding: 4px 8px;
+//      font-size: $transfer-font-size;
+//      padding-right: 24px;
+//
+//      &.tri-clear-exit:not(.tri-icon-left) {
+//        padding-right: 56px;
+//      }
+//    }
+//
+//    &-lg {
+//      height: 46px;
+//      padding: 12px 8px;
+//      font-size: $devui-font-size-lg;
+//      line-height: 24px;
+//      padding-right: 36px;
+//
+//      &.tri-clear-exit:not(.tri-icon-left) {
+//        padding-right: 72px;
+//      }
+//    }
+//
+//    &::-ms-clear {
+//      display: none;
+//    }
+//
+//    &:disabled {
+//      background-color: $transfer-disabled-bg;
+//      border-color: $transfer-disabled-line;
+//      color: $transfer-disabled-text;
+//
+//      & + .tri-search-icon {
+//        svg path {
+//          fill: $transfer-disabled-text;
+//        }
+//      }
+//    }
+//  }
+//
+//  .icon {
+//    cursor: pointer;
+//  }
+//
+//  .tri-search-icon {
+//    position: absolute;
+//    width: auto;
+//    pointer-events: all;
+//    cursor: pointer;
+//    height: 100%;
+//    line-height: 28px;
+//    padding: 0 12px;
+//    top: 0;
+//    right: 0;
+//    z-index: 2;
+//    text-align: center;
+//    display: flex;
+//    align-items: center;
+//    justify-content: center;
+//
+//    &.tri-icon-left {
+//      left: 8px;
+//      right: auto;
+//      padding-left: 0;
+//    }
+//
+//    > svg {
+//      height: 16px;
+//      width: 16px;
+//    }
+//
+//    &-sm {
+//      height: 26px;
+//      line-height: 26px;
+//      padding: 0 12px;
+//
+//      > svg {
+//        height: 14px;
+//        width: 14px;
+//      }
+//    }
+//
+//    &-lg {
+//      height: 46px;
+//      line-height: 46px;
+//
+//      > svg {
+//        height: 18px;
+//        width: 18px;
+//      }
+//    }
+//  }
+//
+//  .tri-search-clear {
+//    position: absolute;
+//    width: auto;
+//    top: 0;
+//    right: 36px;
+//    padding: 0 8px;
+//    pointer-events: all;
+//    cursor: pointer;
+//    height: 100%;
+//    line-height: 28px;
+//    font-size: $devui-font-size-lg;
+//    z-index: 2;
+//    display: none;
+//
+//    &.tri-icon-left {
+//      right: 0;
+//    }
+//
+//    &.tri-clear-exit {
+//      display: block;
+//    }
+//
+//    &-sm {
+//      line-height: 26px;
+//      padding: 0 8px;
+//
+//      > svg {
+//        height: 14px;
+//        width: 14px;
+//      }
+//    }
+//
+//    &-lg {
+//      right: 46px;
+//      line-height: 46px;
+//      padding: 0 8px;
+//
+//      > svg {
+//        height: 18px;
+//        width: 18px;
+//      }
+//    }
+//  }
+//
+//  .tri-search-line {
+//    position: absolute;
+//    right: 36px;
+//    height: 46%;
+//    top: 27%;
+//    width: 1px;
+//    border-left-width: 1px;
+//    border-left-style: solid;
+//    border-color: $transfer-line-color;
+//    line-height: 28px;
+//    display: none;
+//
+//    &.tri-clear-exit {
+//      display: block;
+//    }
+//
+//    &-sm {
+//      line-height: 26px;
+//    }
+//
+//    &-lg {
+//      line-height: 46px;
+//      right: 42px;
+//    }
+//  }
+//}

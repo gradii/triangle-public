@@ -1,0 +1,56 @@
+@use "./input-variables";
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$input-affix-width           : 1rem;
+
+$input-padding-horizontal    : 0.5rem !default;
+$input-padding-vertical-base : 0.25rem !default;
+$input-padding-vertical-sm   : 0.125rem !default;
+$input-padding-vertical-lg   : 0.375rem !default;
+
+// size mixins for input
+@mixin input-lg() {
+  padding     : $input-padding-vertical-lg $input-padding-horizontal;
+  height      : input-variables.$input-height-lg;
+  line-height : input-variables.$input-line-height-lg;
+}
+
+@mixin input-sm() {
+  padding     : $input-padding-vertical-sm $input-padding-horizontal;
+  height      : input-variables.$input-height-sm;
+  line-height : input-variables.$input-line-height-sm;
+}
+
+
+// Basic style for input
+@mixin input() {
+  position    : relative;
+  display     : inline-block;
+  padding     : $input-padding-vertical-base $input-padding-horizontal;
+  width       : 100%;
+  height      : input-variables.$input-height-base;
+  cursor      : text;
+  font-size   : v.$font-size-base;
+  line-height : input-variables.$input-line-height;
+  @include mixins.border-radius(v.$border-radius-base);
+  //@include placeholder($theme);
+  transition  : all .3s;
+
+
+  @at-root textarea#{&} {
+    max-width      : 100%;
+    height         : auto;
+    vertical-align : bottom;
+  }
+
+  // Size
+  @at-root &-lg {
+    @include input-lg();
+  }
+
+  @at-root &-sm {
+    @include input-sm();
+  }
+}
+

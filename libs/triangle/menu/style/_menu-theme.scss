@@ -1,0 +1,196 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+@use "../../layout/style/layout-theme";
+
+$foreground           : theme.$foreground;
+$background           : theme.$background;
+$primary              : theme.$primary;
+
+$menu-prefix-cls      : #{v.$tri-prefix}-menu !default;
+$menu-collapsed-width : 64px !default;
+$menu-font-size       : v.$font-size-base !default;
+
+// Menu
+// ---
+$menu-dark-bg         : layout-theme.$layout-header-background !default;
+$menu-dark-submenu-bg : #333 !default;
+
+@mixin tri-menu-theme() {
+
+  // default theme
+  .#{$menu-prefix-cls} {
+    box-shadow : v.$box-shadow-base;
+    color      : theming.tri-color($foreground, text-color);
+    background : theming.tri-color($background, component-background);
+
+    @at-root &-item-group-title {
+      color : theming.tri-color($foreground, text-color-secondary);
+    }
+
+    @at-root &-item:active,
+    &-submenu-title:active {
+      background : theming.tri-color($foreground, item-active-bg);
+    }
+
+    @at-root &-item > a {
+      color : theming.tri-color($foreground, text-color);
+      @at-root &:hover {
+        color : theming.tri-color($primary);
+      }
+      @at-root &:before {
+        background-color : transparent;
+      }
+    }
+
+    @at-root &-item-divider {
+      background-color : theming.tri-color($foreground, border-color-split);
+    }
+
+    @at-root &-item:hover,
+    &-item-active,
+    &:not(#{&}-inline) #{&}-submenu-open,
+    &-submenu-active,
+    &-submenu-title:hover {
+      color : theming.tri-color($primary);
+    }
+
+    @at-root &-horizontal > #{&}-item:hover,
+    &-horizontal > #{&}-item-active,
+    &-horizontal > #{&}-submenu #{&}-submenu-title:hover {
+      background-color : transparent;
+    }
+
+    @at-root &-item-selected {
+      color : theming.tri-color($primary);
+      > a,
+      > a:hover {
+        color : theming.tri-color($primary);
+      }
+    }
+
+    @at-root &:not(#{&}-horizontal) #{&}-item-selected {
+      background-color : theming.tri-color($background, item-active-bg);
+    }
+
+    @at-root & > #{&}-item-divider {
+      background-color : theming.tri-color($foreground, border-color-split);
+    }
+
+    @at-root &-submenu {
+      > .#{$menu-prefix-cls} {
+        background-color : theming.tri-color($background, component-background);
+      }
+    }
+
+    @at-root &-vertical #{&}-submenu-selected {
+      color : theming.tri-color($primary);
+      > a {
+        color : theming.tri-color($primary);
+      }
+    }
+
+    // Disabled state sets text to gray and nukes hover/tab effects
+    @at-root &-item-disabled,
+    &-submenu-disabled {
+      color        : theming.tri-color($foreground, disabled-color) !important;
+      background   : none;
+      border-color : transparent !important;
+      > a {
+        color : theming.tri-color($foreground, disabled-color) !important;
+      }
+
+      > .#{$menu-prefix-cls}-submenu-title {
+        color : theming.tri-color($foreground, disabled-color) !important;
+      }
+    }
+  }
+
+  //// dark theme
+  //.#{$menu-prefix-cls} {
+  //  @at-root &-dark,
+  //  &-dark #{&}-sub {
+  //    color      : theming.tri-color($foreground, text-color-secondary-dark);
+  //    background : $menu-dark-bg;
+  //  }
+  //
+  //  @at-root &-dark #{&}-inline#{&}-sub {
+  //    background : $menu-dark-submenu-bg;
+  //  }
+  //
+  //  @at-root &-dark#{&}-horizontal {
+  //    border-bottom-color : $menu-dark-bg;
+  //  }
+  //
+  //  @at-root &-dark#{&}-horizontal > #{&}-item,
+  //  &-dark#{&}-horizontal > #{&}-submenu {
+  //    border-color  : $menu-dark-bg;
+  //    border-bottom : 0;
+  //  }
+  //
+  //  @at-root &-dark #{&}-item,
+  //  &-dark #{&}-item-group-title,
+  //  &-dark #{&}-item > a {
+  //    color : theming.tri-color($foreground, text-color-secondary-dark);
+  //  }
+  //
+  //  @at-root &-dark#{&}-inline,
+  //  &-dark#{&}-vertical {
+  //    border-right : 0;
+  //  }
+  //
+  //  @at-root &-dark#{&}-inline #{&}-item,
+  //  &-dark#{&}-vertical #{&}-item {
+  //    border-right : 0;
+  //    margin-left  : 0;
+  //    left         : 0;
+  //    @at-root &:after {
+  //      border-right : 0;
+  //    }
+  //  }
+  //
+  //  @at-root &-dark #{&}-item:hover,
+  //  &-dark #{&}-item-active,
+  //  &-dark #{&}-submenu-active,
+  //  &-dark:not(#{&}-inline) #{&}-submenu-open,
+  //  &-dark #{&}-submenu-selected,
+  //  &-dark #{&}-submenu:hover,
+  //  &-dark #{&}-submenu-title:hover {
+  //    background-color : transparent;
+  //    color            : #fff;
+  //    > a {
+  //      color : #fff;
+  //    }
+  //  }
+  //
+  //  @at-root &-dark #{&}-item-selected {
+  //    border-right : 0;
+  //    color        : #fff;
+  //    @at-root &:after {
+  //      border-right : 0;
+  //    }
+  //    > a,
+  //    > a:hover {
+  //      color : #fff;
+  //    }
+  //  }
+  //
+  //  @at-root &#{&}-dark #{&}-item-selected {
+  //    background-color : theming.tri-color($foreground, primary-color);
+  //  }
+  //
+  //  // Disabled state sets text to dark gray and nukes hover/tab effects
+  //  @at-root &-dark #{&}-item-disabled,
+  //  &-dark #{&}-submenu-disabled {
+  //    @at-root &,
+  //    & > a {
+  //      opacity : 0.8;
+  //      color   : theming.tri-color($foreground, disabled-color-dark) !important;
+  //    }
+  //    > .#{$menu-prefix-cls}-submenu-title {
+  //      color : theming.tri-color($foreground, disabled-color-dark) !important;
+  //    }
+  //  }
+  //}
+}

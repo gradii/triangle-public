@@ -1,0 +1,20 @@
+//@import '../style/theme/color';
+//@import '../style/theme/corner';
+
+$border-radius : 0.25rem !default;
+
+:host {
+  display  : flex;
+  width    : 100%;
+  height   : auto;
+  position : relative;
+  border-radius: $border-radius;
+
+  &.tri-splitter-horizontal {
+    flex-direction : row;
+  }
+
+  &.tri-splitter-vertical {
+    flex-direction : column;
+  }
+}

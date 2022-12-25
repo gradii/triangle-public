@@ -1,0 +1,13 @@
+<div *ngIf="avatarStr || avatarTpl" class="tri-list-item-meta-avatar">
+  <ng-container *ngIf="avatarStr; else avatarTpl">
+    <tri-avatar [src]="avatarStr"></tri-avatar>
+  </ng-container>
+</div>
+<div *ngIf="title || description" class="tri-list-item-meta-content">
+  <h4 *ngIf="title" class="tri-list-item-meta-title">
+    <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
+  </h4>
+  <div *ngIf="description" class="tri-list-item-meta-description">
+    <ng-container *stringTemplateOutlet="description">{{ description }}</ng-container>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/mixins/compatibility";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+@use "./input-mixin";
+@use "./input-group-theme";
+//@use "./search-input";
+
+
+$_foreground              : theme.$foreground !default;
+$_background              : theme.$background !default;
+
+$input-color              : v.$text-color !default;
+$input-border-width       : v.$border-width-base !default;
+$input-bg                 : #fff !default;
+$input-addon-bg           : #eee !default;
+$input-addon-color        : $input-color !default;
+$input-hover-border-color : theming.tri-color(theme.$primary) !default;
+$input-disabled-bg        : map.get($_background, disabled-bg) !default;
+
+$input-placeholder-color  : map.get($_foreground, disabled-color) !default;
+$input-border-color       : map.get($_foreground, border-color-base) !default;
+
+
+@mixin tri-input-active-theme($color : null) {
+
+  @if $color == null {
+    $color : theming.tri-color($_foreground, outline-color);
+  }
+
+  border-color : theming.tri-color-palette($color, 5);
+  outline      : 0;
+  box-shadow   : 0 0 v.$outline-blur-size v.$outline-width rgba($color, 0.20);
+}
+
+@mixin tri-input-hover-theme($_input-hover-border-color: null) {
+
+  @if $_input-hover-border-color == null {
+    $_input-hover-border-color : $input-hover-border-color;
+  }
+
+  border-color : theming.tri-color-palette($_input-hover-border-color, 5);
+}
+
+@mixin tri-input-disabled-theme() {
+
+  background-color : $input-disabled-bg;
+  opacity          : 1;
+  cursor           : not-allowed;
+  color            : theming.tri-color($_foreground, disabled-color);
+  @at-root &:hover {
+    @include tri-input-hover-theme($input-border-color);
+  }
+}
+
+@mixin tri-input-theme() {
+
+  .#{v.$tri-prefix}-input-wrapper {
+    display : inline-block;
+  }
+
+  .#{v.$tri-prefix}-input {
+    color      : $input-color;
+    background : $input-bg none;
+    border     : v.$border-width-base v.$border-style-base $input-border-color;
+
+    @include input-mixin.input();
+
+    @include compatibility.placeholder();
+
+    @at-root &:hover {
+      @include tri-input-hover-theme();
+    }
+
+    @at-root &:focus {
+      @include tri-input-active-theme();
+    }
+
+    @at-root &-disabled {
+      @include tri-input-disabled-theme();
+    }
+  }
+}

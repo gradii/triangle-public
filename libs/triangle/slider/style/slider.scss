@@ -1,0 +1,138 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$slider-prefix-cls          : "#{$tri-prefix}-slider";
+// tooltip
+$slider-tooltip-arrow-width : 0.25rem;
+$slider-tooltip-distance    : $slider-tooltip-arrow-width + 0.25rem;
+
+@mixin vertical() {
+  @at-root &-vertical {
+    width   : 12px;
+    height  : 100%;
+    margin  : 6px 10px;
+    padding : 0 4px;
+
+    .#{$slider-prefix-cls}-rail {
+      height : 100%;
+      width  : 4px;
+    }
+
+    .#{$slider-prefix-cls}-track {
+      width : 4px;
+    }
+
+    .#{$slider-prefix-cls}-handle {
+      margin-left   : -5px;
+      margin-bottom : -7px;
+    }
+
+    .#{$slider-prefix-cls}-mark {
+      top    : 0;
+      left   : 12px;
+      width  : 18px;
+      height : 100%;
+    }
+
+    .#{$slider-prefix-cls}-mark-text {
+      left        : 4px;
+      white-space : nowrap;
+    }
+
+    .#{$slider-prefix-cls}-step {
+      width  : 4px;
+      height : 100%;
+    }
+
+    .#{$slider-prefix-cls}-dot {
+      top           : auto;
+      left          : 2px;
+      margin-bottom : -4px;
+    }
+  }
+}
+
+.#{$slider-prefix-cls} {
+  position : relative;
+  margin   : 10px 6px;
+  padding  : 4px 0;
+  height   : 12px;
+  cursor   : pointer;
+  @include vertical();
+
+  @at-root &-with-marks {
+    margin-bottom : 28px;
+  }
+
+  @at-root &-rail {
+    position      : absolute;
+    width         : 100%;
+    height        : 4px;
+    border-radius : 2px;
+    transition    : background-color 0.3s ease;
+  }
+
+  @at-root &-track {
+    position      : absolute;
+    height        : 4px;
+    border-radius : $border-radius-base;
+    transition    : background-color 0.3s ease;
+  }
+
+  @at-root &-handle {
+    position      : absolute;
+    margin-left   : -7px;
+    margin-top    : -5px;
+    width         : 14px;
+    height        : 14px;
+    cursor        : pointer;
+    border-radius : 50%;
+    transition    : border-color 0.3s ease, transform .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+
+    @at-root &:hover {
+      transform        : scale(1.2);
+      transform-origin : center center;
+    }
+
+  }
+
+  @at-root &-mark {
+    position  : absolute;
+    top       : 14px;
+    left      : 0;
+    width     : 100%;
+    font-size : $font-size-base;
+  }
+
+  @at-root &-mark-text {
+    position       : absolute;
+    display        : inline-block;
+    vertical-align : middle;
+    text-align     : center;
+    cursor         : pointer;
+  }
+
+  @at-root &-step {
+    position   : absolute;
+    width      : 100%;
+    height     : 4px;
+    background : transparent;
+  }
+
+  @at-root &-dot {
+    position       : absolute;
+    top            : -2px;
+    margin-left    : -4px;
+    width          : 8px;
+    height         : 8px;
+    cursor         : pointer;
+    border-radius  : 50%;
+    vertical-align : middle;
+    @at-root &:first-child {
+      margin-left : -4px;
+    }
+    @at-root &:last-child {
+      margin-left : -4px;
+    }
+  }
+}

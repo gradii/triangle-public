@@ -1,0 +1,16 @@
+@use "../mixins/import-once";
+
+@mixin loading-circle-keyframe() {
+  @include import-once.import-once("core:motion:other", false) {
+    @keyframes loadingCircle {
+      0% {
+        transform-origin : 50% 50%;
+        transform        : rotate(0deg);
+      }
+      100% {
+        transform-origin : 50% 50%;
+        transform        : rotate(360deg);
+      }
+    }
+  }
+}

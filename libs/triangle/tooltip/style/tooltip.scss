@@ -1,0 +1,147 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$tooltip-prefix-cls  : "#{v.$tri-prefix}-tooltip";
+
+//* Tooltip max width
+$tooltip-max-width   : 250px !default;
+//** Tooltip arrow width
+$tooltip-arrow-width : 0.3125rem !default;
+//** Tooltip distance with trigger
+$tooltip-distance    : $tooltip-arrow-width - 0.0625rem + 0.25rem !default;
+
+$tooltip-font-size   : v.$font-size-base * .875 !default;
+
+// Base class
+.#{$tooltip-prefix-cls} {
+  z-index     : v.$zindex-tooltip;
+  display     : block;
+  visibility  : visible;
+  font-size   : $tooltip-font-size;
+  line-height : v.$line-height-base;
+
+  @at-root &-hidden {
+    display : none;
+  }
+
+  @at-root &-placement-top,
+  &-placement-topLeft,
+  &-placement-topRight {
+    padding-bottom : $tooltip-distance;
+  }
+  @at-root &-placement-right,
+  &-placement-rightTop,
+  &-placement-rightBottom {
+    padding-left : $tooltip-distance;
+  }
+  @at-root &-placement-bottom,
+  &-placement-bottomLeft,
+  &-placement-bottomRight {
+    padding-top : $tooltip-distance;
+  }
+  @at-root &-placement-left,
+  &-placement-leftTop,
+  &-placement-leftBottom {
+    padding-right : $tooltip-distance;
+  }
+}
+
+// Wrapper for the tooltip content
+.#{$tooltip-prefix-cls}-inner {
+  max-width       : $tooltip-max-width;
+  padding         : 8px 10px;
+  text-align      : left;
+  text-decoration : none;
+  min-height      : 34px;
+}
+
+// Arrows
+.#{$tooltip-prefix-cls}-arrow {
+  position     : absolute;
+  width        : 0;
+  height       : 0;
+  border-color : transparent;
+  border-style : solid;
+}
+
+.#{$tooltip-prefix-cls} {
+  @at-root &-placement-top #{&}-arrow,
+  &-placement-topLeft #{&}-arrow,
+  &-placement-topRight #{&}-arrow {
+    bottom       : - $tooltip-arrow-width;
+    border-width : $tooltip-arrow-width $tooltip-arrow-width 0;
+  }
+
+  @at-root &-placement-top #{&}-arrow {
+    left      : 50%;
+    transform : translateX(-50%);
+  }
+
+  @at-root &-placement-topLeft #{&}-arrow {
+    left : 16px;
+  }
+
+  @at-root &-placement-topRight #{&}-arrow {
+    right : 16px;
+  }
+
+  @at-root &-placement-right #{&}-arrow,
+  &-placement-rightTop #{&}-arrow,
+  &-placement-rightBottom #{&}-arrow {
+    left         : - $tooltip-arrow-width;
+    border-width : $tooltip-arrow-width $tooltip-arrow-width $tooltip-arrow-width 0;
+  }
+
+  @at-root &-placement-right #{&}-arrow {
+    top       : 50%;
+    transform : translateY(-50%);
+  }
+
+  @at-root &-placement-rightTop #{&}-arrow {
+    top : 8px;
+  }
+
+  @at-root &-placement-rightBottom #{&}-arrow {
+    bottom : 8px;
+  }
+
+  @at-root &-placement-left #{&}-arrow,
+  &-placement-leftTop #{&}-arrow,
+  &-placement-leftBottom #{&}-arrow {
+    right        : - $tooltip-arrow-width;
+    border-width : $tooltip-arrow-width 0 $tooltip-arrow-width $tooltip-arrow-width;
+  }
+
+  @at-root &-placement-left #{&}-arrow {
+    top       : 50%;
+    transform : translateY(-50%);
+  }
+
+  @at-root &-placement-leftTop #{&}-arrow {
+    top : 8px;
+  }
+
+  @at-root &-placement-leftBottom #{&}-arrow {
+    bottom : 8px;
+  }
+
+  @at-root &-placement-bottom #{&}-arrow,
+  &-placement-bottomLeft #{&}-arrow,
+  &-placement-bottomRight #{&}-arrow {
+    top          : - $tooltip-arrow-width;
+    border-width : 0 $tooltip-arrow-width $tooltip-arrow-width;
+  }
+
+  @at-root &-placement-bottom #{&}-arrow {
+    left      : 50%;
+    transform : translateX(-50%);
+  }
+
+  @at-root &-placement-bottomLeft #{&}-arrow {
+    left : 16px;
+  }
+
+  @at-root &-placement-bottomRight #{&}-arrow {
+    right : 16px;
+  }
+}

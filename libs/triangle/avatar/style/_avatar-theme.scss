@@ -1,0 +1,17 @@
+@use "../../core/themes/theme";
+@use "../../core/style/variables" as v;
+
+$avatar-prefix-cls : "#{ v.$tri-prefix}-avatar";
+
+// Avatar
+$avatar-bg    : #ccc !default;
+$avatar-color : #fff !default;
+
+@mixin tri-avatar-theme() {
+
+  .#{$avatar-prefix-cls} {
+    background : $avatar-bg;
+    color      : $avatar-color;
+  }
+
+}

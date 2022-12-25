@@ -1,0 +1,99 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$dawer-prefix-cls  : #{ v.$tri-prefix}-drawer;
+$drawer-prefix-cls : $dawer-prefix-cls;
+
+@mixin tri-drawer-theme($theme) {
+  $foreground : map.get($theme, foreground);
+  $background : map.get($theme, background);
+
+  .#{$drawer-prefix-cls} {
+    > * {
+      transition : transform v.$animation-duration-slow v.$ease-base-in, box-shadow v.$animation-duration-slow v.$ease-base-in;
+    }
+
+    &-left {
+      &.#{$drawer-prefix-cls}-open {
+        .#{$drawer-prefix-cls}-content-wrapper {
+          box-shadow : v.$shadow-1-right;
+        }
+      }
+    }
+
+    &-right {
+      &.#{$drawer-prefix-cls}-open {
+        .#{$drawer-prefix-cls}-content-wrapper {
+          box-shadow : v.$shadow-1-left;
+        }
+      }
+    }
+
+    &-top {
+      &.#{$drawer-prefix-cls}-open {
+        .#{$drawer-prefix-cls}-content-wrapper {
+          box-shadow : v.$shadow-1-down;
+        }
+      }
+    }
+
+    &-bottom {
+      .#{$drawer-prefix-cls} {
+        &-content-wrapper {
+          bottom : 0;
+        }
+      }
+
+      &.#{$drawer-prefix-cls}-open {
+        .#{$drawer-prefix-cls}-content-wrapper {
+          box-shadow : v.$shadow-1-up;
+        }
+      }
+    }
+
+    &-title {
+      color : theming.tri-color($foreground, heading-color);
+    }
+
+    &-content {
+      background-color : theming.tri-color($background, component-background);
+      background-clip  : padding-box;
+      border           : 0;
+    }
+
+    &-close {
+      color      : theming.tri-color($foreground, text-color-secondary);
+      background : transparent;
+      border     : 0;
+
+      &:focus,
+      &:hover {
+        color : theming.tri-color($foreground, icon-color-hover);
+      }
+    }
+
+    &-header {
+      color         : theming.tri-color($foreground, text-color);
+      background    : theming.tri-color($background, component-background);
+      border-bottom : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-split);
+      border-radius : v.$border-radius-base v.$border-radius-base 0 0;
+    }
+
+    &-header-no-title {
+      color      : theming.tri-color($foreground, text-color);
+      background : theming.tri-color($background, component-background);
+    }
+
+    &-mask {
+      background-color : v.$modal-mask-bg;
+    }
+
+    &-open {
+      &-content {
+        box-shadow : v.$shadow-2;
+      }
+    }
+  }
+}

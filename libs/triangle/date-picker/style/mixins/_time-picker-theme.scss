@@ -1,0 +1,47 @@
+@mixin tri-time-picker-theme($theme) {
+  $foreground : map-get($theme, foreground);
+  $background : map-get($theme, background);
+
+  .#{$calendar-timepicker-prefix-cls} {
+
+    @at-root &-inner {
+      background-color : tri-color($background, component-background);
+    }
+
+    @at-root &-select {
+      border-right : $border-width-base $border-style-base tri-color($foreground, border-color-split);
+
+      li:hover {
+        background : tri-color($foreground, item-hover-bg);
+      }
+
+      @at-root li#{&}-option-selected {
+        background : $time-picker-selected-bg;
+      }
+
+      @at-root li#{&}-option-disabled {
+        color : $btn-disable-color;
+        @at-root &:hover {
+          background : transparent;
+          cursor     : not-allowed;
+        }
+      }
+    }
+  }
+
+  .#{$calendar-prefix-cls}-time {
+    .#{$calendar-prefix-cls}-day-select {
+      color : $heading-color;
+    }
+
+    .#{$calendar-prefix-cls}-footer {
+
+      .#{$calendar-prefix-cls}-time-picker-btn {
+
+        @at-root &-disabled {
+          color : $disabled-color;
+        }
+      }
+    }
+  }
+}

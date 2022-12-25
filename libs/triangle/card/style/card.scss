@@ -1,0 +1,194 @@
+@use "../../core/style/mixins";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$card-prefix-cls         : "#{v.$tri-prefix}-card";
+$card-padding-base       : 24px;
+$card-padding-wider      : 32px;
+$card-head-height        : 3rem !default;
+$card-footer-height      : 3rem !default;
+$card-head-line-height   : 1.5rem !default;
+$card-border-radius      : v.$border-radius-base !default;
+
+$card-actions-text-color : theming.tri-color(theme.$foreground, text-color) !default;
+
+.#{$card-prefix-cls} {
+  border-radius  : $card-border-radius;
+  font-size      : v.$font-size-base;
+  position       : relative;
+  display        : flex;
+  flex-direction : column;
+  align-items    : stretch;
+  overflow       : hidden;
+  transition     : transform, background-color, width, height, padding, margin .3s;
+
+  @at-root &:not(#{&}-no-hovering):hover {
+    box-shadow   : v.$box-shadow-base;
+    border-color : transparent;
+  }
+
+  @at-root &-bordered {
+  }
+
+  @at-root &-header {
+    height      : $card-head-height;
+    line-height : $card-head-line-height;
+    padding     : ($card-head-height - $card-head-line-height)*0.5 ($card-padding-base);
+    box-sizing  : border-box;
+    display     : flex;
+    align-items : center;
+
+    @at-root #{&}-title {
+      font-size     : v.$font-size-lg;
+      display       : inline-block;
+      text-overflow : ellipsis;
+      width         : 100%;
+      overflow      : hidden;
+      white-space   : nowrap;
+      font-weight   : 500;
+      line-height   : $card-head-line-height;
+      padding       : 0 0 0 5px;
+      margin        : 0 0 0 -5px;
+    }
+
+    @at-root #{&}-extra {
+      order       : 1;
+      margin-left : auto;
+      display     : inline-flex;
+      align-items : center;
+    }
+  }
+
+  @at-root &-body {
+    padding : $card-padding-base;
+    flex    : 1;
+  }
+
+  @at-root &-footer {
+    padding : .75rem $card-padding-base;
+    display : block;
+
+    &#{&}-align-end {
+      display         : flex;
+      justify-content : flex-end;
+      align-items     : center;
+
+      .tri-btn {
+        &:last-child {
+          margin-left  : 0;
+          margin-right : 0;
+        }
+      }
+    }
+
+    &:not(#{&}-align-end ) {
+      .tri-btn {
+        &:first-child {
+          margin-left  : 0;
+          margin-right : 0;
+        }
+      }
+    }
+
+    .tri-btn {
+      margin : 0 .5rem;
+    }
+  }
+
+  @at-root &-actions {
+    margin  : 0;
+    padding : 0;
+    display : block;
+    > .tri-btn-group {
+      width : 100%;
+
+      > .tri-btn {
+        border-radius : 0;
+        border-top    : none;
+        border-bottom : none;
+        flex          : 1;
+        border        : 0;
+        color         : $card-actions-text-color;
+
+        &:active, &:focus {
+          box-shadow : none !important;
+        }
+
+        &:not(:last-child):after {
+          display      : block;
+          content      : "";
+          border-right : 1px solid #cfcfcf;
+          height       : 1em;
+          position     : absolute;
+          right        : 0;
+        }
+
+        &:not(:first-child):before {
+          display      : block;
+          content      : "";
+          border-right : 1px solid #cfcfcf;
+          height       : 1em;
+          position     : absolute;
+          left         : 0;
+        }
+      }
+    }
+  }
+
+  @at-root &#{&}-compact {
+    .#{$card-prefix-cls}-body {
+      padding : 5px;
+    }
+  }
+
+  @at-root &-loading #{&}-body {
+    user-select : none;
+    padding     : 0;
+  }
+
+  @at-root &-loading-content {
+    padding : $card-padding-base;
+  }
+
+  @at-root &-loading-block {
+    display         : inline-block;
+    margin          : 5px 1% 0;
+    height          : 14px;
+    border-radius   : $card-border-radius;
+    background      : linear-gradient(90deg, rgba(207, 216, 220, .2), rgba(207, 216, 220, .4), rgba(207, 216, 220, .2));
+    animation       : card-loading 1.4s ease infinite;
+    background-size : 600% 600%;
+  }
+
+  @at-root &-wider-padding #{&}-head {
+    padding : 0 $card-padding-wider;
+  }
+
+  @at-root &-wider-padding #{&}-body {
+    padding : $card-padding-base $card-padding-wider;
+  }
+
+  @at-root &-wider-padding #{&}-extra {
+    right : $card-padding-wider;
+  }
+
+  @at-root &-padding-transition #{&}-head,
+  &-padding-transition #{&}-body {
+    transition : padding .3s;
+  }
+
+  @at-root &-padding-transition #{&}-extra {
+    transition : right .3s;
+  }
+}
+
+@keyframes card-loading {
+  0%,
+  100% {
+    background-position : 0 50%;
+  }
+  50% {
+    background-position : 100% 50%;
+  }
+}

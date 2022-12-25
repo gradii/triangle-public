@@ -1,0 +1,40 @@
+<tri-picker
+  (openChange)="onOpenChange($event)"
+  (valueChange)="onValueChange($event)"
+  [allowClear]="allowClear"
+  [autoFocus]="autoFocus"
+  [className]="className"
+  [disabled]="disabled"
+  [format]="format"
+  [isRange]="false"
+  [open]="open"
+  [placeholder]="placeholder"
+  [size]="size"
+  [style]="style"
+  [value]="value"
+>
+  <div *ngIf="realOpenState">
+    <div
+      [ngStyle]="popupStyle"
+      class="tri-calendar-picker-container {{ dropdownClassName }} tri-calendar-picker-container-placement-bottomLeft">
+      <div class="tri-calendar tri-calendar-month tri-calendar-month-calendar" tabindex="0">
+        <div class="tri-calendar-month-calendar-content">
+          <div class="tri-calendar-month-header-wrap">
+            <calendar-header
+              (panelModeChange)="onPanelModeChange($event)"
+              (valueChange)="onValueChange($event)"
+              [disabledMonth]="disabledDate"
+              [enableNext]="true"
+              [enablePrev]="true"
+              [forceToMonth]="true"
+              [locale]="locale.lang"
+              [panelMode]="panelMode"
+              [value]="value"
+            ></calendar-header>
+          </div>
+          <calendar-footer *ngIf="extraFooter" [extraFooter]="extraFooter"></calendar-footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</tri-picker>

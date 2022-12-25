@@ -1,0 +1,71 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$calendar-prefix-cls            : "#{$tri-prefix}-calendar";
+$calendar-timepicker-prefix-cls : "#{$tri-prefix}-calendar-time-picker";
+
+.#{$calendar-prefix-cls}-decade-panel {
+  position      : absolute;
+  top           : 0;
+  right         : 0;
+  bottom        : 0;
+  left          : 0;
+  z-index       : 10;
+  border-radius : $border-radius-base;
+  outline       : none;
+}
+
+.#{$calendar-prefix-cls}-decade-panel-hidden {
+  display : none;
+}
+
+.#{$calendar-prefix-cls}-decade-panel-header {
+  @include calendar-panel-header(#{$calendar-prefix-cls}-decade-panel);
+}
+
+.#{$calendar-prefix-cls}-decade-panel-body {
+  height : calc(100% - 34px);
+}
+
+.#{$calendar-prefix-cls}-decade-panel-table {
+  table-layout    : fixed;
+  width           : 100%;
+  height          : 100%;
+  border-collapse : separate;
+}
+
+.#{$calendar-prefix-cls}-decade-panel-cell {
+  text-align  : center;
+  white-space : nowrap;
+}
+
+.#{$calendar-prefix-cls}-decade-panel-decade {
+  display       : inline-block;
+  margin        : 0 auto;
+  background    : transparent;
+  text-align    : center;
+  height        : 24px;
+  line-height   : 24px;
+  padding       : 0 6px;
+  border-radius : 4px;
+  transition    : background 0.3s ease;
+
+  @at-root &:hover {
+    cursor : pointer;
+  }
+}
+
+.#{$calendar-prefix-cls}-decade-panel-selected-cell .#{$calendar-prefix-cls}-decade-panel-decade {
+  color : #fff;
+
+  @at-root &:hover {
+    color : #fff;
+  }
+}
+
+.#{$calendar-prefix-cls}-decade-panel-last-century-cell,
+.#{$calendar-prefix-cls}-decade-panel-next-century-cell {
+  .#{$calendar-prefix-cls}-decade-panel-decade {
+    user-select : none;
+  }
+}

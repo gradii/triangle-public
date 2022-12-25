@@ -1,0 +1,107 @@
+@use "sass:map";
+@use "../../core/style/density/private/compatibility";
+@use "../../core/style/variables";
+@use "../../core/style/theming";
+@use "../../core/style/typography/typography";
+@use "../../core/style/typography/typography-utils";
+@use "../../core/themes/theme";
+@use "./navbar-variables";
+
+@mixin _height($height) {
+  .tri-navbar-multiple-rows {
+    min-height : $height;
+  }
+  .tri-navbar-row, .tri-navbar-single-row {
+    height : $height;
+  }
+}
+
+@mixin _palette-styles($palette) {
+  background : theming.tri-color($palette);
+  color      : theming.tri-color($palette, default-contrast);
+}
+
+@mixin _form-field-overrides {
+  .tri-form-field-underline,
+  .tri-form-field-ripple,
+  .tri-focused .tri-form-field-ripple {
+    background-color : currentColor;
+  }
+
+  .tri-form-field-label,
+  .tri-focused .tri-form-field-label,
+  .tri-select-value,
+  .tri-select-arrow,
+  .tri-form-field.tri-focused .tri-select-arrow {
+    color : inherit;
+  }
+
+  .tri-input-element {
+    caret-color : currentColor;
+  }
+}
+
+@mixin color() {
+  $primary    : theme.$primary;
+  $secondary  : theme.$secondary;
+  $warn       : theme.$warning;
+  $background : theme.$background;
+  $foreground : theme.$foreground;
+
+  .tri-navbar {
+    background : theming.tri-color($background, app-bar);
+    color      : theming.tri-color($foreground, text);
+
+    &.tri-primary {
+      @include _palette-styles($primary);
+    }
+
+    &.tri-accent {
+      @include _palette-styles($secondary);
+    }
+
+    &.tri-warn {
+      @include _palette-styles($warn);
+    }
+
+    @include _form-field-overrides;
+  }
+}
+
+//@mixin typography() {
+//  $config : typography.tri-typography-config(theme.$typ);
+//  .tri-navbar,
+//  .tri-navbar h1,
+//  .tri-navbar h2,
+//  .tri-navbar h3,
+//  .tri-navbar h4,
+//  .tri-navbar h5,
+//  .tri-navbar h6 {
+//    @include typography-utils.tri-typography-level-to-styles($config, title);
+//    margin : 0;
+//  }
+//}
+
+//@mixin density() {
+//  $density-scale  : variables.$density;
+//  $height-desktop : compatibility.private-density-prop-value(
+//      navbar-variables.$desktop-density-config, $density-scale, height);
+//  $height-mobile  : compatibility.private-density-prop-value(
+//      navbar-variables.$mobile-density-config, $density-scale, height);
+//
+//  @include compatibility.private-density-legacy-compatibility() {
+//    // Set the default height for the navbar.
+//    @include _height($height-desktop);
+//
+//    @media (variables.$tri-xsmall) {
+//      @include _height($height-mobile);
+//    }
+//  }
+//}
+
+@mixin tri-navbar-theme() {
+  @include color();
+  //@include density();
+  //@include typography();
+}
+

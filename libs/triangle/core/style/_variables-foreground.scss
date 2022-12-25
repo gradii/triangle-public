@@ -1,0 +1,31 @@
+$border-radius-base : 4px !default; //no rem
+$border-radius-sm   : 2px !default; //no rem
+$border-radius-lg   : 6px !default; //no rem
+
+
+// Border color
+$border-width-base  : 1px !default; // width of the border for a component
+$border-style-base  : solid !default; // style of a components border
+
+// Outline
+$outline-blur-size  : 0 !default;
+$outline-width      : 2px !default;
+
+
+// Shadow
+$shadow-color       : rgba(0, 0, 0, .2) !default;
+$shadow-1-up        : 0 -1px 6px $shadow-color !default;
+$shadow-1-down      : 0 1px 6px $shadow-color !default;
+$shadow-1-left      : -1px 0 6px $shadow-color !default;
+$shadow-1-right     : 1px 0 6px $shadow-color !default;
+$shadow-2           : 0 2px 8px $shadow-color !default;
+$box-shadow-base    : $shadow-1-down !default;
+
+$box-shadow-sm      : 0 .125rem .25rem rgba(black, .075) !default;
+$box-shadow         : 0 .5rem 1rem rgba(black, .15) !default;
+$box-shadow-lg      : 0 1rem 3rem rgba(black, .175) !default;
+$box-shadow-inset   : inset 0 1px 2px rgba(black, .075) !default;
+
+
+$heading-color              : #262626 !default;
+$text-color                 : #595959 !default;

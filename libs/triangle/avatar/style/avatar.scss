@@ -1,0 +1,53 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$avatar-prefix-cls     : "#{v.$tri-prefix}-avatar";
+
+$avatar-size-base      : 2rem !default;
+$avatar-size-lg        : 2rem !default;
+$avatar-size-sm        : 1.5rem !default;
+$avatar-font-size-base : 1.125rem !default;
+$avatar-font-size-lg   : 1.5rem !default;
+$avatar-font-size-sm   : 0.875rem !default;
+$avatar-border-radius  : v.$border-radius-base !default;
+
+@mixin avatar-size($size, $font-size) {
+  width         : $size;
+  height        : $size;
+  line-height   : $size;
+  border-radius : $size * 0.5;
+
+  @at-root & > * {
+    line-height : $size;
+  }
+
+  @at-root &.#{$avatar-prefix-cls}-icon {
+    font-size : $font-size;
+  }
+}
+
+.#{$avatar-prefix-cls} {
+  display     : inline-block;
+  text-align  : center;
+  white-space : nowrap;
+  position    : relative;
+  overflow    : hidden;
+  @include avatar-size($avatar-size-base, $avatar-font-size-base);
+
+  @at-root &-lg {
+    @include avatar-size($avatar-size-lg, $avatar-font-size-lg);
+  }
+
+  @at-root &-sm {
+    @include avatar-size($avatar-size-sm, $avatar-font-size-sm);
+  }
+
+  @at-root &-square {
+    border-radius : $avatar-border-radius;
+  }
+
+  @at-root & > img {
+    width  : 100%;
+    height : 100%;
+  }
+}

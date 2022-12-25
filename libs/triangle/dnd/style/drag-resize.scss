@@ -1,0 +1,126 @@
+::ng-deep .tri-drag-placeholder .tri-drag-resize-indicator {
+  display : none;
+}
+
+:host.tri-drag-resize-resizing {
+  transition : none;
+}
+
+:host {
+  display  : block;
+  position : absolute;
+  top      : 0;
+  left     : 0;
+  bottom   : 0;
+  right    : 0;
+  /*background : rgb(30 143 233 / 13%);*/
+  z-index  : -1;
+}
+
+::ng-deep {
+  .tri-resize-placeholder {
+    transition-property: none;
+  }
+}
+
+:host ::ng-deep {
+  $handler-size        : 2px;
+  $handler-corner-size : 10px;
+
+  .gridster-item-resizable-handler {
+    position   : absolute;
+    z-index    : 2;
+    background : #1e89ef;
+    //left       : 0;
+    //top        : 0;
+    //transform  : translateX(-50%) translateY(-50%);
+  }
+
+  .tri-drag-resize-placeholder {
+    position   : absolute;
+    z-index    : -1;
+    background : rgba(30, 141, 232, 0.23);
+  }
+
+  .gridster-item-resizable-handler.handle-n {
+    cursor : ns-resize;
+    width  : 100%;
+    height : $handler-size;
+
+    top    : -$handler-size;
+    left   : 0;
+  }
+
+  .gridster-item-resizable-handler.handle-e {
+    cursor : ew-resize;
+    width  : $handler-size;
+    height : 100%;
+
+    right  : -$handler-size;
+    top    : 0;
+  }
+
+  .gridster-item-resizable-handler.handle-s {
+    cursor : ns-resize;
+    width  : 100%;
+    height : $handler-size;
+
+    bottom : -$handler-size;
+    left   : 0;
+  }
+
+  .gridster-item-resizable-handler.handle-w {
+    cursor : ew-resize;
+    width  : $handler-size;
+    height : 100%;
+
+    left   : -$handler-size;
+    top    : 0;
+  }
+
+  .gridster-item-resizable-handler.handle-ne {
+    cursor        : ne-resize;
+    width         : $handler-corner-size;
+    height        : $handler-corner-size;
+    border-radius : 50%;
+
+    top           : -$handler-corner-size*0.5;
+    right         : -$handler-corner-size*0.5;
+  }
+
+  .gridster-item-resizable-handler.handle-nw {
+    cursor        : nw-resize;
+    width         : $handler-corner-size;
+    height        : $handler-corner-size;
+    border-radius : 50%;
+
+    top           : -$handler-corner-size*0.5;
+    left          : -$handler-corner-size*0.5;
+  }
+
+  .gridster-item-resizable-handler.handle-se {
+    cursor        : se-resize;
+    width         : $handler-corner-size;
+    height        : $handler-corner-size;
+    border-radius : 50%;
+
+    bottom        : -$handler-corner-size*0.5;
+    right         : -$handler-corner-size*0.5;
+  }
+
+  .gridster-item-resizable-handler.handle-sw {
+    cursor        : sw-resize;
+    width         : $handler-corner-size;
+    height        : $handler-corner-size;
+    border-radius : 50%;
+
+    bottom        : -$handler-corner-size*0.5;
+    left          : -$handler-corner-size*0.5;
+  }
+}
+
+gridster-item:hover .gridster-item-resizable-handler.handle-se {
+  border-color : transparent transparent #ccc
+}
+
+

@@ -1,0 +1,42 @@
+<input
+  #inputElement
+  (click)="onOpen()"
+  [(ngModel)]="value"
+  [placeholder]="placeHolder || ('TimePicker.placeholder' | triI18n)"
+  [triTime]="format"
+  class="tri-time-picker-input"
+  readonly="readonly"
+  type="text">
+<span class="tri-time-picker-icon"></span>
+
+<ng-template
+  (backdropClick)="onClose()"
+  (detach)="onClose()"
+  [cdkConnectedOverlayOffsetY]="-2"
+  [cdkConnectedOverlayOpen]="open"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayPositions]="overlayPositions"
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop>
+  <tri-time-picker-panel
+    (timeClear)="onClose()"
+    [(ngModel)]="value"
+    [@DropDownAnimation]="'bottom'"
+    [addOn]="addOn"
+    [allowEmpty]="allowEmpty"
+    [clearText]="clearText"
+    [defaultOpenValue]="defaultOpenValue"
+    [disabledHours]="disabledHours"
+    [disabledMinutes]="disabledMinutes"
+    [disabledSeconds]="disabledSeconds"
+    [format]="format"
+    [hideDisabledOptions]="hideDisabledOptions"
+    [hourStep]="hourStep"
+    [minuteStep]="minuteStep"
+    [ngClass]="popupClassName"
+    [opened]="open"
+    [placeHolder]="placeHolder || ('TimePicker.placeholder' | triI18n)"
+    [secondStep]="secondStep">
+  </tri-time-picker-panel>
+</ng-template>
+

@@ -1,0 +1,31 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$breadcrumb-prefix-cls : "#{v.$tri-prefix}-breadcrumb";
+
+.#{$breadcrumb-prefix-cls} {
+  display   : block;
+  font-size : v.$font-size-base;
+
+  a {
+    transition : color .3s;
+  }
+
+  @at-root & > span:last-child {
+    font-weight : bold;
+  }
+
+  @at-root & > span:last-child #{&}-separator {
+    display : none;
+  }
+
+  @at-root &-separator {
+    margin : 0 8px;
+  }
+
+  @at-root &-link {
+    > .#{v.$iconfont-css} + span {
+      margin-left : 4px;
+    }
+  }
+}

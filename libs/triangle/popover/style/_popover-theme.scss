@@ -1,0 +1,75 @@
+@use "sass:color";
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$popover-prefix-cls    : "#{v.$tri-prefix}-popover";
+
+
+$foreground            : theme.$foreground;
+
+//** Tooltip text color
+$popover-color         : theming.tri-color($foreground, text-color) !default;
+//** Tooltip background color
+$popover-bg            : #fff !default;
+
+//** Tooltip arrow color
+$popover-arrow-color   : $popover-bg !default;
+
+$popover-border-radius : v.$border-radius-base !default;
+
+$popover-box-shadow    : v.$box-shadow-base !default;
+
+$border-color-split    : theming.tri-color($foreground, border-color-split) !default;
+
+@mixin tri-popover-theme() {
+  // Wrapper for the popover content
+  .#{$popover-prefix-cls}-inner {
+    color            : $popover-color;
+    background-color : $popover-bg;
+    border-radius    : $popover-border-radius;
+    box-shadow       : $popover-box-shadow;
+  }
+
+  .#{$popover-prefix-cls}-title {
+    border-bottom : 1px solid $border-color-split;
+    color         : $popover-color;
+  }
+
+  .#{$popover-prefix-cls}-inner-content {
+    color : $popover-color;
+  }
+
+  // Arrows
+  .#{$popover-prefix-cls}-arrow {
+    border-color : transparent;
+    border-style : solid;
+  }
+
+  .#{$popover-prefix-cls} {
+    @at-root &-placement-top #{&}-arrow,
+    &-placement-topLeft #{&}-arrow,
+    &-placement-topRight #{&}-arrow {
+      border-top-color : $popover-arrow-color;
+    }
+
+    @at-root &-placement-right #{&}-arrow,
+    &-placement-rightTop #{&}-arrow,
+    &-placement-rightBottom #{&}-arrow {
+      border-right-color : $popover-arrow-color;
+    }
+
+    @at-root &-placement-left #{&}-arrow,
+    &-placement-leftTop #{&}-arrow,
+    &-placement-leftBottom #{&}-arrow {
+      border-left-color : $popover-arrow-color;
+    }
+
+    @at-root &-placement-bottom #{&}-arrow,
+    &-placement-bottomLeft #{&}-arrow,
+    &-placement-bottomRight #{&}-arrow {
+      border-bottom-color : $popover-arrow-color;
+    }
+  }
+}

@@ -1,0 +1,121 @@
+@use "sass:map";
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+@use "../../core/style/variables" as v;
+@use "../../core/style/typography/typography";
+@use "../../core/style/legend/elevation";
+@use "../../core/style/typography/typography-utils";
+@use "./button-toggle-variables";
+
+$foreground    : theme.$foreground;
+$background    : theme.$background;
+$divider-color : theming.tri-color($foreground, divider);
+
+$primary       : theme.$primary;
+$warning       : theme.$warning;
+
+@mixin button-toggle-color() {
+
+  .tri-button-toggle-standalone,
+  .tri-button-toggle-group {
+    border : solid 1px $divider-color;
+  }
+
+  .tri-button-toggle {
+    color      : theming.tri-color($foreground, text);
+    background : theming.tri-color($background, card);
+
+    .tri-button-toggle-focus-overlay {
+      background-color : theming.tri-color($background, focused-button);
+    }
+  }
+
+  .tri-button-toggle-appearance-primary {
+    color      : white;
+    background : theming.tri-color($primary);
+
+    .tri-button-toggle-focus-overlay {
+      background-color : theming.tri-color($background, focused-button, 1);
+    }
+  }
+
+  .tri-button-toggle-appearance-warning {
+    color      : white;
+    background : theming.tri-color($warning);
+
+    .tri-button-toggle-focus-overlay {
+      background-color : theming.tri-color($background, focused-button, 1);
+    }
+  }
+
+  .tri-button-toggle-group.tri-button-toggle + .tri-button-toggle {
+    border-left : solid 1px $divider-color;
+  }
+
+  [dir="rtl"] .tri-button-toggle-group .tri-button-toggle + .tri-button-toggle {
+    border-left  : none;
+    border-right : solid 1px $divider-color;
+  }
+
+  .tri-button-toggle-group.tri-button-toggle-vertical {
+    .tri-button-toggle + .tri-button-toggle {
+      border-left  : none;
+      border-right : none;
+      border-top   : solid 1px $divider-color;
+    }
+  }
+
+  .tri-button-toggle-checked {
+    background-color : theming.tri-color($background, selected-button);
+    color            : theming.tri-color($foreground, text);
+
+    &.tri-button-toggle-appearance-primary {
+      background-color : theming.tri-color($primary, 800);
+      color            : white;
+    }
+
+    &.tri-button-toggle-appearance-warning {
+      background-color : theming.tri-color($warning, 800);
+      color            : white;
+    }
+  }
+
+  .tri-button-toggle-disabled {
+    color            : theming.tri-color($foreground, disabled-button);
+    background-color : theming.tri-color($background, disabled-button-toggle);
+
+    &.tri-button-toggle-appearance-primary {
+      color      : theming.tri-color($primary, lighter);
+      background : theming.tri-color($primary, 400);
+    }
+
+    &.tri-button-toggle-appearance-warning {
+      color      : theming.tri-color($warning, lighter);
+      background : theming.tri-color($warning, 400);
+    }
+
+    &.tri-button-toggle-checked {
+      background-color : theming.tri-color($background, selected-disabled-button);
+    }
+  }
+
+  .tri-button-toggle-standalone.tri-button-toggle-appearance,
+  .tri-button-toggle-group-appearance {
+    border : none;
+  }
+}
+
+@mixin button-toggle-typography() {
+}
+
+@mixin button-toggle-density() {
+  .tri-button-toggle-appearance-standard .tri-button-toggle-label-content {
+    line-height : 2rem;
+  }
+}
+
+@mixin tri-button-toggle-theme() {
+  @include button-toggle-color();
+  @include button-toggle-density();
+  @include button-toggle-typography();
+}

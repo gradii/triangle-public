@@ -1,0 +1,377 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$steps-prefix-cls           : "#{v.$tri-prefix}-steps";
+
+$steps-icon-size            : 26px !default;
+$steps-small-icon-size      : 18px !default;
+$steps-dot-size             : 5px !default;
+$steps-current-dot-size     : 7px !default;
+$steps-desciption-max-width : 120px !default;
+
+.#{$steps-prefix-cls} {
+  font-size   : 0;
+  line-height : v.$line-height-base;
+
+  .#{$steps-prefix-cls}-item {
+    position       : relative;
+    display        : inline-block;
+    vertical-align : top;
+
+    @at-root &.#{$steps-prefix-cls}-status-finish {
+
+      .#{$steps-prefix-cls}-tail > i:after {
+        width      : 100%;
+        transition : all .6s;
+        opacity    : 1;
+        //animation  : tailEffect .4s;
+      }
+    }
+
+    @at-root &.#{$steps-prefix-cls}-custom {
+      .#{$steps-prefix-cls}-head-inner {
+        background : none;
+        border     : 0;
+        width      : auto;
+        height     : auto;
+
+        > .#{$steps-prefix-cls}-icon {
+          font-size : $steps-icon-size;
+          width     : $steps-icon-size;
+          height    : $steps-icon-size;
+        }
+      }
+    }
+  }
+
+  .#{$steps-prefix-cls}-head,
+  .#{$steps-prefix-cls}-main {
+    position       : relative;
+    display        : inline-block;
+    vertical-align : top;
+  }
+
+  .#{$steps-prefix-cls}-head-inner {
+    display       : block;
+    width         : $steps-icon-size;
+    height        : $steps-icon-size;
+    line-height   : 23px;
+    text-align    : center;
+    border-radius : $steps-icon-size;
+    font-size     : v.$font-size-lg;
+    margin-right  : 8px;
+    transition    : background-color 0.3s ease, border-color 0.3s ease;
+
+    > .#{$steps-prefix-cls}-icon {
+      line-height : 1;
+      position    : relative;
+      @at-root &.#{v.$iconfont-css} {
+        font-size : v.$font-size-base;
+        @at-root &-cross,
+        &-check {
+          font-weight : bold;
+        }
+      }
+    }
+  }
+
+  .#{$steps-prefix-cls}-title {
+    font-size     : v.$font-size-lg;
+    line-height   : $steps-icon-size;
+    font-weight   : bold;
+    display       : inline-block;
+    padding-right : 10px;
+  }
+
+  .#{$steps-prefix-cls}-item:last-child {
+    .#{$steps-prefix-cls}-title {
+      padding-right : 0;
+      width         : 100%;
+    }
+
+    .#{$steps-prefix-cls}-tail {
+      display : none;
+    }
+  }
+
+  .#{$steps-prefix-cls}-description {
+    font-size : v.$font-size-base;
+  }
+
+  .#{$steps-prefix-cls}-tail {
+    position : absolute;
+    left     : 0;
+    width    : 100%;
+    top      : 13px;
+    padding  : 0 10px;
+
+    > i {
+      display        : inline-block;
+      vertical-align : top;
+      height         : 1px;
+      border-radius  : 1px;
+      width          : 100%;
+      position       : relative;
+      @at-root &:after {
+        position : absolute;
+        content  : "";
+        top      : 0;
+        width    : 0;
+        height   : 100%;
+        opacity  : 0;
+      }
+    }
+
+    > .#{$steps-prefix-cls}-tail-tip {
+      position  : absolute;
+      bottom    : 5px;
+      left      : 57%;
+      margin    : auto;
+      z-index   : 1;
+      font-size : 12px;
+      min-width : 100px;
+    }
+  }
+
+  @at-root &.#{$steps-prefix-cls}-small {
+    .#{$steps-prefix-cls}-head-inner {
+      width         : $steps-small-icon-size;
+      height        : $steps-small-icon-size;
+      line-height   : 15px;
+      text-align    : center;
+      border-radius : $steps-small-icon-size;
+      font-size     : v.$font-size-base;
+      margin-right  : 10px;
+
+      > .#{$steps-prefix-cls}-icon.#{v.$iconfont-css} {
+        @include mixins.iconfont-size-under-12px(9px);
+        top : 0;
+      }
+    }
+
+    .#{$steps-prefix-cls}-main {
+      margin-top : 0;
+    }
+
+    .#{$steps-prefix-cls}-title {
+      font-size   : v.$font-size-base;
+      line-height : $steps-small-icon-size;
+      font-weight : bold;
+    }
+
+    .#{$steps-prefix-cls}-description {
+      font-size : v.$font-size-base;
+    }
+
+    .#{$steps-prefix-cls}-tail {
+      top     : 8px;
+      padding : 0 8px;
+
+      > i {
+        height        : 1px;
+        border-radius : 1px;
+        width         : 100%;
+      }
+    }
+
+    .#{$steps-prefix-cls}-custom .#{$steps-prefix-cls}-head-inner > .#{$steps-prefix-cls}-icon {
+      font-size : $steps-small-icon-size;
+      width     : $steps-small-icon-size;
+      height    : $steps-small-icon-size;
+    }
+  }
+}
+
+.#{$steps-prefix-cls}-vertical {
+  > .#{$steps-prefix-cls}-item {
+    display : block;
+  }
+
+  > .#{$steps-prefix-cls}-item > .#{$steps-prefix-cls}-tail {
+    position : absolute;
+    left     : 13px;
+    top      : 0;
+    height   : 100%;
+    width    : 1px;
+    padding  : 30px 0 4px;
+
+    > i {
+      height : 100%;
+      width  : 1px;
+      @at-root &:after {
+        height : 0;
+        width  : 100%;
+      }
+    }
+  }
+
+  .#{$steps-prefix-cls}-status-finish {
+    .#{$steps-prefix-cls}-tail > i:after {
+      height : 100%;
+    }
+  }
+
+  .#{$steps-prefix-cls}-head {
+    float : left;
+    @at-root &-inner {
+      margin-right : 16px;
+    }
+  }
+
+  .#{$steps-prefix-cls}-main {
+    min-height : 47px;
+    overflow   : hidden;
+    display    : block;
+
+    .#{$steps-prefix-cls}-title {
+      line-height : $steps-icon-size;
+    }
+
+    .#{$steps-prefix-cls}-description {
+      padding-bottom : 12px;
+    }
+  }
+}
+
+.#{$steps-prefix-cls}-vertical.#{$steps-prefix-cls}-small {
+  .#{$steps-prefix-cls}-tail {
+    position : absolute;
+    left     : 9px;
+    top      : 0;
+    padding  : 22px 0 4px;
+
+    > i {
+      height : 100%;
+    }
+  }
+
+  .#{$steps-prefix-cls}-title {
+    line-height : $steps-small-icon-size;
+  }
+}
+
+.#{$steps-prefix-cls}-horizontal {
+  @at-root &.#{$steps-prefix-cls}-hidden {
+    visibility : hidden;
+  }
+  .#{$steps-prefix-cls}-description {
+    max-width : $steps-desciption-max-width;
+  }
+
+  .#{$steps-prefix-cls}-item:not(:first-child) .#{$steps-prefix-cls}-head {
+    padding-left : 10px;
+    margin-left  : -10px;
+  }
+}
+
+.#{$steps-prefix-cls}-dot {
+  .#{$steps-prefix-cls}-item {
+    .#{$steps-prefix-cls}-step {
+      display    : inline-block;
+      text-align : center;
+      width      : $steps-desciption-max-width;
+    }
+
+    @at-root &:not(:first-child) .#{$steps-prefix-cls}-head {
+      margin-left  : 0;
+      padding-left : 0;
+    }
+  }
+
+  .#{$steps-prefix-cls}-tail {
+    margin  : 0 0 0 $steps-desciption-max-width * 0.5;
+    padding : 0;
+    width   : 100%;
+    top     : 1px;
+
+    @at-root & > i {
+      height : 3px;
+    }
+  }
+
+  .#{$steps-prefix-cls}-head {
+    display       : inline-block;
+    padding-right : 0;
+    @at-root &-inner {
+      margin      : 0 auto;
+      width       : $steps-dot-size;
+      height      : $steps-dot-size;
+      line-height : $steps-dot-size;
+      border      : 0;
+
+      .#{$steps-prefix-cls}-icon-dot {
+        float         : left;
+        width         : 100%;
+        height        : 100%;
+        border-radius : $steps-dot-size * 0.5;
+        position      : relative;
+        @at-root &:after {
+          content  : "";
+          width    : 40px;
+          height   : 24px;
+          position : absolute;
+          top      : -8px;
+          left     : -16px;
+        }
+        @at-root &:hover {
+          transform : scale(1.3);
+        }
+      }
+    }
+  }
+
+  .#{$steps-prefix-cls}-main {
+    display    : block;
+    margin-top : 10px;
+
+    .#{$steps-prefix-cls}-title {
+      padding-right : 0;
+    }
+  }
+
+  .#{$steps-prefix-cls}-status-process {
+    .#{$steps-prefix-cls}-head {
+      top : -1px;
+      @at-root &-inner {
+        width       : $steps-current-dot-size;
+        height      : $steps-current-dot-size;
+        line-height : $steps-current-dot-size;
+
+        .#{$steps-prefix-cls}-icon-dot {
+          border-radius : $steps-current-dot-size * 0.5;
+        }
+      }
+    }
+  }
+
+  @at-root &.#{$steps-prefix-cls}-vertical {
+    .#{$steps-prefix-cls}-tail {
+      left    : 2px;
+      height  : 100%;
+      padding : 0;
+      top     : 15px;
+
+      > i {
+        height : 100%;
+        width  : 3px;
+      }
+    }
+
+    .#{$steps-prefix-cls}-head {
+      top  : 12px;
+      left : 1px;
+    }
+
+    .#{$steps-prefix-cls}-status-process {
+      .#{$steps-prefix-cls}-head {
+        left : 0;
+      }
+    }
+  }
+}
+
+@keyframes tailEffect {
+  to {
+    box-shadow : 0 0 3px 3px transparent;
+  }
+}

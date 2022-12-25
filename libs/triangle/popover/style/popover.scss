@@ -1,0 +1,172 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$popover-prefix-cls  : #{v.$tri-prefix}-popover;
+
+//* Tooltip max width
+$popover-min-width   : 177px !default;
+//** Tooltip arrow width
+$popover-arrow-width : 0.3125rem !default;
+//** Tooltip distance with trigger
+$popover-distance    : $popover-arrow-width - 0.0625rem + 0.25rem !default;
+
+// Base class
+.#{$popover-prefix-cls} {
+  z-index     : v.$zindex-popover;
+  cursor      : auto;
+  user-select : text;
+  white-space : normal;
+  font-size   : v.$font-size-base;
+  line-height : v.$line-height-base;
+  font-weight : normal;
+  text-align  : left;
+  display     : flex;
+
+  @at-root &-hidden {
+    display : none;
+  }
+
+  // Wrapper for the tooltip content
+  @at-root &-inner {
+    min-width       : $popover-min-width;
+    background-clip : padding-box;
+    border-radius   : v.$border-radius-base;
+    display         : flex;
+    flex-direction  : column;
+  }
+
+  @at-root &-title {
+    margin      : 0;
+    padding     : 0 16px;
+    line-height : 32px;
+    height      : 32px;
+    font-weight : 500;
+  }
+
+  @at-root &-inner-content {
+    padding : 0.5rem;
+  }
+
+  @at-root &-buttons {
+    text-align: right;
+    margin-top: .5rem;
+    button {
+      margin-left: .5rem;
+    }
+  }
+
+}
+
+
+.#{$popover-prefix-cls} {
+
+  // Arrows
+  @at-root &-arrow {
+    position     : absolute;
+    width        : 0;
+    height       : 0;
+    border-color : transparent;
+    border-style : solid;
+  }
+
+  @at-root &-placement-top,
+  &-placement-topLeft,
+  &-placement-topRight {
+    margin-bottom : $popover-distance;
+  }
+  @at-root &-placement-right,
+  &-placement-rightTop,
+  &-placement-rightBottom {
+    margin-left : $popover-distance;
+  }
+  @at-root &-placement-bottom,
+  &-placement-bottomLeft,
+  &-placement-bottomRight {
+    margin-top : $popover-distance;
+  }
+  @at-root &-placement-left,
+  &-placement-leftTop,
+  &-placement-leftBottom {
+    margin-right : $popover-distance;
+  }
+
+  @at-root &-placement-top #{&}-arrow,
+  &-placement-topLeft #{&}-arrow,
+  &-placement-topRight #{&}-arrow {
+    bottom       : - $popover-arrow-width;
+    border-width : $popover-arrow-width $popover-arrow-width 0;
+  }
+
+  @at-root &-placement-top #{&}-arrow {
+    left      : 50%;
+    transform : translateX(-50%);
+  }
+
+  @at-root &-placement-topLeft #{&}-arrow {
+    left : 16px;
+  }
+
+  @at-root &-placement-topRight #{&}-arrow {
+    right : 16px;
+  }
+
+  @at-root &-placement-right #{&}-arrow,
+  &-placement-rightTop #{&}-arrow,
+  &-placement-rightBottom #{&}-arrow {
+    left         : - $popover-arrow-width;
+    border-width : $popover-arrow-width $popover-arrow-width $popover-arrow-width 0;
+  }
+
+  @at-root &-placement-right #{&}-arrow {
+    top       : 50%;
+    transform : translateY(-50%);
+  }
+
+  @at-root &-placement-rightTop #{&}-arrow {
+    top : 8px;
+  }
+
+  @at-root &-placement-rightBottom #{&}-arrow {
+    bottom : 8px;
+  }
+
+  @at-root &-placement-left #{&}-arrow,
+  &-placement-leftTop #{&}-arrow,
+  &-placement-leftBottom #{&}-arrow {
+    right        : - $popover-arrow-width;
+    border-width : $popover-arrow-width 0 $popover-arrow-width $popover-arrow-width;
+  }
+
+  @at-root &-placement-left #{&}-arrow {
+    top       : 50%;
+    transform : translateY(-50%);
+  }
+
+  @at-root &-placement-leftTop #{&}-arrow {
+    top : 8px;
+  }
+
+  @at-root &-placement-leftBottom #{&}-arrow {
+    bottom : 8px;
+  }
+
+  @at-root &-placement-bottom #{&}-arrow,
+  &-placement-bottomLeft #{&}-arrow,
+  &-placement-bottomRight #{&}-arrow {
+    top          : - $popover-arrow-width;
+    border-width : 0 $popover-arrow-width $popover-arrow-width;
+  }
+
+  @at-root &-placement-bottom #{&}-arrow {
+    left      : 50%;
+    transform : translateX(-50%);
+  }
+
+  @at-root &-placement-bottomLeft #{&}-arrow {
+    left : 16px;
+  }
+
+  @at-root &-placement-bottomRight #{&}-arrow {
+    right : 16px;
+  }
+}

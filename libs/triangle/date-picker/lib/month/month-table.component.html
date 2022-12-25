@@ -1,0 +1,14 @@
+<table cellSpacing="0" class="{{ prefixCls }}-table" role="grid">
+  <tbody class="{{ prefixCls }}-tbody">
+  <tr *ngFor="let row of panelMonths" role="row">
+    <td (click)="monthCell.disabled ? null : monthCell.onClick()"
+        *ngFor="let monthCell of row; trackBy: trackPanelMonth"
+        [ngClass]="monthCell.classMap"
+        role="gridcell"
+        title="{{ monthCell.title }}"
+    >
+      <a class="{{ prefixCls }}-month">{{ monthCell.content }}</a>
+    </td>
+  </tr>
+  </tbody>
+</table>

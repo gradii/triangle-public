@@ -1,0 +1,83 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/style/legend/list-common";
+@use "../../core/style/legend/layout-common";
+
+// height of tile header or footer if it has one line
+$tri-grid-list-one-line-height : 48px;
+// height of tile header or footer if it has two lines
+$tri-grid-list-two-line-height : 68px;
+// side padding for text in tile headers and footers
+$tri-grid-list-text-padding    : 16px;
+
+.tri-grid-list {
+  display  : block;
+  position : relative;
+}
+
+.tri-grid-tile {
+  display  : block;
+  position : absolute;
+  overflow : hidden;
+
+  .tri-figure {
+    @include mixins.layout-fill;
+    display         : flex;
+
+    align-items     : center;
+    justify-content : center;
+    height          : 100%;
+
+    padding         : 0;
+    margin          : 0;
+  }
+
+  // Headers & footers
+  .tri-grid-tile-header,
+  .tri-grid-tile-footer {
+    @include list-common.tri-normalize-text();
+
+    display     : flex;
+    align-items : center;
+    height      : $tri-grid-list-one-line-height;
+    color       : #fff;
+    background  : rgba(0, 0, 0, 0.38);
+    overflow    : hidden;
+    padding     : 0 $tri-grid-list-text-padding;
+
+    // Positioning
+    position    : absolute;
+    left        : 0;
+    right       : 0;
+
+    &.tri-2-line {
+      height : $tri-grid-list-two-line-height;
+    }
+  }
+
+  .tri-grid-list-text {
+    @include list-common.tri-line-wrapper-base();
+  }
+
+  .tri-grid-tile-header {
+    top : 0;
+  }
+
+  .tri-grid-tile-footer {
+    bottom : 0;
+  }
+
+  .tri-grid-avatar {
+    padding-right : $tri-grid-list-text-padding;
+
+    [dir="rtl"] & {
+      padding-right : 0;
+      padding-left  : $tri-grid-list-text-padding;
+    }
+
+    &:empty {
+      display : none;
+    }
+  }
+}
+

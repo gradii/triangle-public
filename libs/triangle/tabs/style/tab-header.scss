@@ -1,0 +1,37 @@
+@use "../../core/style/mixins";
+@use "./tabs-common";
+
+@include tabs-common.paginated-tab-header();
+
+.tri-ink-bar {
+  @include tabs-common.ink-bar();
+}
+
+.tri-tab-labels {
+  @include tabs-common.paginated-tab-header-item-wrapper('.tri-tab-header');
+}
+
+.tri-tab-label-container {
+  @include tabs-common.paginated-tab-header-container();
+}
+
+.tri-tab-list {
+  @include mixins.noop-animation();
+}
+
+.tri-tab-label {
+  @include tabs-common.tab-label();
+  position : relative;
+}
+
+@media (mixins.$tri-xsmall) {
+  .tri-tab-label {
+    padding : 0 12px;
+  }
+}
+
+@media (mixins.$tri-small) {
+  .tri-tab-label {
+    padding : 0 12px;
+  }
+}

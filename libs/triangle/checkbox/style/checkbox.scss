@@ -1,0 +1,8 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../input/style/input-mixin";
+@use "./checkbox-mixin" with (
+  $checkbox-prefix-cls : "#{v.$tri-prefix}-checkbox"
+);
+
+@include checkbox-mixin.checkboxFn();

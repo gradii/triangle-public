@@ -1,0 +1,8 @@
+<a
+  (click)="isDisabled ? null : onClickToday()"
+  class="{{ prefixCls }}-today-btn {{ isDisabled ? prefixCls + '-today-btn-disabled' : '' }}"
+  role="button"
+  title="{{ title }}"
+>
+  {{ hasTimePicker ? locale.now : locale.today }}
+</a>

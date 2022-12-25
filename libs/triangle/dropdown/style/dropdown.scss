@@ -1,0 +1,172 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/themes/theme";
+
+$dropdown-prefix-cls : "#{v.$tri-prefix}-dropdown";
+
+.#{$dropdown-prefix-cls} {
+  position    : absolute;
+  left        : -9999px;
+  top         : -9999px;
+  z-index     : v.$zindex-dropdown;
+  display     : block;
+  font-size   : v.$font-size-base;
+  font-weight : normal;
+  line-height : 1.5;
+
+  @at-root &-wrap {
+    position : relative;
+
+    .#{v.$tri-prefix}-btn > .#{v.$iconfont-css}-down {
+      @include mixins.iconfont-size-under-12px(10px);
+    }
+
+    .#{v.$iconfont-css}-down:before {
+      transition : transform 0.2s ease;
+    }
+  }
+
+  @at-root &-wrap-open {
+    .#{v.$iconfont-css}-down:before {
+      transform : rotate(180deg);
+    }
+  }
+
+  @at-root &-hidden,
+  &-menu-hidden {
+    display : none;
+  }
+
+  @at-root &-menu {
+    outline         : none;
+    position        : relative;
+    list-style-type : none;
+    padding         : 0;
+    margin          : 0;
+    text-align      : left;
+    border-radius   : v.$border-radius-base;
+    box-shadow      : v.$box-shadow-base;
+    background-clip : padding-box;
+
+    @at-root &-item,
+    &-submenu-title {
+      padding     : 7px 8px;
+      margin      : 0;
+      clear       : both;
+      font-size   : v.$font-size-base;
+      font-weight : normal;
+      white-space : nowrap;
+      cursor      : pointer;
+      transition  : all .3s;
+
+      > a {
+        display    : block;
+        padding    : 7px 8px;
+        margin     : -7px -8px;
+        transition : all .3s;
+        @at-root &:focus {
+          text-decoration : none;
+        }
+      }
+
+      @at-root &:first-child,
+      &:first-child > a {
+        border-radius : v.$border-radius-base v.$border-radius-base 0 0;
+      }
+
+      @at-root &:last-child,
+      &:last-child > a {
+        border-radius : 0 0 v.$border-radius-base v.$border-radius-base;
+      }
+
+      @at-root &:only-child,
+      &:only-child > a {
+        border-radius : v.$border-radius-base;
+      }
+
+      @at-root &-divider {
+        height      : 1px;
+        overflow    : hidden;
+        line-height : 0;
+        margin      : 0.5em 0;
+      }
+    }
+
+    @at-root &-submenu-title:after {
+      font-family : "anticon" !important;
+      position    : absolute;
+      content     : "\e61f";
+      right       : 8px;
+      @include mixins.iconfont-size-under-12px(10px);
+    }
+
+    @at-root &-submenu-vertical {
+      position : relative;
+    }
+
+    @at-root &-submenu-vertical > #{&} {
+      top              : 0;
+      left             : 100%;
+      position         : absolute;
+      min-width        : 100%;
+      margin-left      : 4px;
+      transform-origin : 0 0;
+    }
+
+    @at-root &-submenu:first-child #{&}-submenu-title {
+      border-radius : v.$border-radius-base v.$border-radius-base 0 0;
+    }
+
+    @at-root &-submenu:last-child #{&}-submenu-title {
+      border-radius : 0 0 v.$border-radius-base v.$border-radius-base;
+    }
+  }
+
+  @at-root &.slide-down-enter.slide-down-enter-active#{&}-placement-bottomLeft,
+  &.slide-down-appear.slide-down-appear-active#{&}-placement-bottomLeft,
+  &.slide-down-enter.slide-down-enter-active#{&}-placement-bottomCenter,
+  &.slide-down-appear.slide-down-appear-active#{&}-placement-bottomCenter,
+  &.slide-down-enter.slide-down-enter-active#{&}-placement-bottomRight,
+  &.slide-down-appear.slide-down-appear-active#{&}-placement-bottomRight {
+    animation-name : antSlideUpIn;
+  }
+
+  @at-root &.slide-up-enter.slide-up-enter-active#{&}-placement-topLeft,
+  &.slide-up-appear.slide-up-appear-active#{&}-placement-topLeft,
+  &.slide-up-enter.slide-up-enter-active#{&}-placement-topCenter,
+  &.slide-up-appear.slide-up-appear-active#{&}-placement-topCenter,
+  &.slide-up-enter.slide-up-enter-active#{&}-placement-topRight,
+  &.slide-up-appear.slide-up-appear-active#{&}-placement-topRight {
+    animation-name : antSlideDownIn;
+  }
+
+  @at-root &.slide-down-leave.slide-down-leave-active#{&}-placement-bottomLeft,
+  &.slide-down-leave.slide-down-leave-active#{&}-placement-bottomCenter,
+  &.slide-down-leave.slide-down-leave-active#{&}-placement-bottomRight {
+    animation-name : antSlideUpOut;
+  }
+
+  @at-root &.slide-up-leave.slide-up-leave-active#{&}-placement-topLeft,
+  &.slide-up-leave.slide-up-leave-active#{&}-placement-topCenter,
+  &.slide-up-leave.slide-up-leave-active#{&}-placement-topRight {
+    animation-name : antSlideDownOut;
+  }
+}
+
+.#{$dropdown-prefix-cls}-trigger,
+.#{$dropdown-prefix-cls}-link {
+  .#{v.$iconfont-css}-down {
+    @include mixins.iconfont-size-under-12px(10px);
+  }
+}
+
+.#{$dropdown-prefix-cls}-button {
+  white-space : nowrap;
+
+  @at-root &.#{v.$tri-prefix}-btn-group > .#{v.$tri-prefix}-btn:last-child:not(:first-child) {
+    padding-right : 8px;
+  }
+  .#{v.$iconfont-css}-down {
+    @include mixins.iconfont-size-under-12px(10px);
+  }
+}

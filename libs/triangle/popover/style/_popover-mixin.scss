@@ -1,0 +1,27 @@
+
+@mixin popover-placemnet($prefix, $popover-distance ) {
+  // Offset the popover to account for the popover arrow
+  @at-root #{$prefix}-placement-top,
+  #{$prefix}-placement-topLeft,
+  #{$prefix}-placement-topRight {
+    padding-bottom : $popover-distance;
+  }
+
+  @at-root #{$prefix}-placement-right,
+  #{$prefix}-placement-rightTop,
+  #{$prefix}-placement-rightBottom {
+    padding-left : $popover-distance;
+  }
+
+  @at-root #{$prefix}-placement-bottom,
+  #{$prefix}-placement-bottomLeft,
+  #{$prefix}-placement-bottomRight {
+    padding-top : $popover-distance;
+  }
+
+  @at-root #{$prefix}-placement-left,
+  #{$prefix}-placement-leftTop,
+  #{$prefix}-placement-leftBottom {
+    padding-right : $popover-distance;
+  }
+}

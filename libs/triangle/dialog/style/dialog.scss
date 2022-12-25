@@ -1,0 +1,114 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$dialog-prefix-cls  : "#{v.$tri-prefix}-dialog" !default;
+$zindex-dialog-mask : 100 !default;
+$zindex-dialog      : 1000 !default;
+
+.#{$dialog-prefix-cls} {
+  position        : relative;
+  width           : 100%;
+  height          : 100%;
+  margin          : 0 auto;
+  outline         : 0;
+  @include mixins.border-radius(v.$border-radius-base);
+  overflow        : hidden;
+  background-clip : padding-box;
+  box-shadow      : v.$shadow-2;
+
+  @at-root &-wrap {
+    position                   : fixed;
+    overflow                   : auto;
+    top                        : 0;
+    right                      : 0;
+    bottom                     : 0;
+    left                       : 0;
+    z-index                    : $zindex-dialog;
+    -webkit-overflow-scrolling : touch;
+    outline                    : 0;
+  }
+
+  @at-root h3#{&}-title {
+    margin      : 0;
+    font-size   : v.$font-size-lg;
+    line-height : 21px;
+    font-weight : 500;
+  }
+
+  @at-root &-close {
+    cursor          : pointer;
+    border          : 0;
+    background      : transparent;
+    z-index         : 10;
+    font-weight     : 700;
+    line-height     : 1;
+    text-decoration : none;
+    transition      : color .3s ease;
+    outline         : 0;
+
+    @at-root &:focus,
+    &:hover {
+      color           : #444;
+      text-decoration : none;
+    }
+  }
+
+  @at-root &-header {
+    @include mixins.border-radius((v.$border-radius-base v.$border-radius-base 0 0));
+    padding : .8125rem 1rem;
+  }
+
+  @at-root &-content {
+    padding     : 1rem;
+    font-size   : v.$font-size-base;
+    line-height : 1.5;
+  }
+
+  @at-root &-actions {
+    padding    : .625rem 1rem .625rem .625rem;
+    text-align : right;
+    @include mixins.border-radius((0 0 v.$border-radius-base v.$border-radius-base));
+    button + button {
+      margin-left   : .5rem;
+      margin-bottom : 0;
+    }
+  }
+
+  @at-root &.zoom-enter,
+  &.zoom-appear {
+    animation-duration : v.$animation-duration-slow;
+    transform          : none; // reset scale avoid mousePosition bug
+    opacity            : 0;
+  }
+
+  @at-root &-mask {
+    position : fixed;
+    top      : 0;
+    right    : 0;
+    left     : 0;
+    bottom   : 0;
+    height   : 100%;
+    z-index  : $zindex-dialog-mask;
+    filter   : alpha(opacity=50);
+
+    @at-root &-hidden {
+      display : none;
+    }
+  }
+
+  @at-root &-open {
+    overflow : hidden;
+  }
+}
+
+@media (max-width : 768px) {
+  .#{$dialog-prefix-cls} {
+    width  : auto !important;
+    margin : 10px;
+  }
+  .vertical-center-dialog {
+    .#{$dialog-prefix-cls} {
+      flex : 1;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+@use "sass:map";
+@use "../../style/theming";
+@use "../../style/variables" as v;
+@use "../../style/typography/typography-utils";
+@use "../../themes/theme" as theme;
+
+@mixin tri-option-theme() {
+  $foreground : theme.$foreground;
+  $background : theme.$background;
+  $primary    : theme.$primary;
+  $secondary  : theme.$secondary;
+  $warning    : theme.$warning;
+
+  .tri-option {
+    color : theming.tri-color($foreground, text);
+
+    &:hover:not(.tri-option-disabled),
+    &:focus:not(.tri-option-disabled) {
+      background : theming.tri-color($background, hover);
+    }
+
+    // In multiple mode there is a checkbox to show that the option is selected.
+    &.tri-selected:not(.tri-option-multiple):not(.tri-option-disabled) {
+      background : theming.tri-color($background, hover);
+    }
+
+    &.tri-active {
+      background : theming.tri-color($background, hover);
+      color      : theming.tri-color($foreground, text);
+    }
+
+    &.tri-option-disabled {
+      color : theming.tri-color($foreground, hint-text);
+    }
+  }
+
+  .tri-primary .tri-option.tri-selected:not(.tri-option-disabled) {
+    color : theming.tri-color($primary, text);
+  }
+
+  .tri-accent .tri-option.tri-selected:not(.tri-option-disabled) {
+    color : theming.tri-color($secondary, text);
+  }
+
+  .tri-warn .tri-option.tri-selected:not(.tri-option-disabled) {
+    color : theming.tri-color($warning, text);
+  }
+}
+
+@mixin tri-option-typography($config) {
+  .tri-option {
+    font     : {
+      family : typography-utils.font-family($config);
+      size   : typography-utils.font-size($config, subheading-2);
+    }
+  }
+}

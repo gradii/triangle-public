@@ -1,0 +1,193 @@
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+
+@mixin tri-data-table-theme($theme) {
+
+  $data-table-line-height : 1.12 !default;
+
+  $primary                : theming.tri-color($theme, primary);
+  $success                : theming.tri-color($theme, success);
+  $error                  : theming.tri-color($theme, error);
+
+  .tri-data-table {
+
+    &-edit-command:not(.tri-btn) {
+      color : theming.tri-color($success);
+
+      &:hover {
+        color : theming.tri-color-palette(theming.tri-color($success), 5);
+      }
+    }
+
+    &-save-command:not(.tri-btn) {
+      color : theming.tri-color($primary);
+
+      &:hover {
+        color : theming.tri-color-palette(theming.tri-color($primary), 5);
+      }
+    }
+
+    &-remove-command:not(.tri-btn) {
+      color : theming.tri-color($error);
+
+      &:hover {
+        color : theming.tri-color-palette(theming.tri-color($error), 5);
+      }
+    }
+  }
+
+  .tri-data-table-toolbar {
+    background : rgba(0, 0, 0, 0);
+  }
+
+  .tri-data-table-header, .tri-header, .tri-data-table-header-wrap {
+    border-color : rgba(91, 108, 121, 0.08);
+  }
+
+  .tri-grouping-header {
+    border-color : rgba(91, 108, 121, 0.08);
+
+    .tri-group-indicator {
+      border-color : rgba(91, 108, 121, 0.08);
+    }
+  }
+
+  .tri-data-table td,
+  .tri-data-table-footer,
+  .tri-data-table-footer-wrap,
+  .tri-data-table-content-locked,
+  .tri-data-table-footer-locked,
+  .tri-data-table-header-locked,
+  .tri-filter-row > th {
+    border-width : 0 0 1px 1px;
+    border-style : solid;
+    border-color : rgba(91, 108, 121, 0.08);
+  }
+
+  .tri-data-table-header,
+    //.tri-data-table-toolbar,
+  .tri-grouping-header
+  .tri-drag-clue {
+    color            : #656565;
+    background-color : #fafafa;
+  }
+
+  .tri-group-footer td,
+  .tri-grouping-row td,
+  tbody .tri-group-cell {
+    color            : #656565;
+    background-color : #ededed;
+  }
+
+  .tri-data-table {
+    border : 1px solid #e6ebf5;
+  }
+
+  .tri-data-table {
+    tr {
+      &.tri-alt {
+        //todo remove disable
+        //background-color : rgba(0, 0, 0, 0.04);
+      }
+
+      &.tri-state-selected {
+        color            : inherit;
+        background-color : rgba(89, 186, 255, 0.25);
+      }
+    }
+
+    td {
+      &.tri-state-selected {
+        color            : inherit;
+        background-color : rgba(89, 186, 255, 0.25);
+      }
+
+      &.tri-state-focused {
+        box-shadow : inset 0 0 0 2px rgba(0, 0, 0, 0.13);
+      }
+    }
+
+    th.tri-state-focused {
+      box-shadow : inset 0 0 0 2px rgba(0, 0, 0, 0.13);
+    }
+
+    .tri-data-table-filter, .tri-header-column-menu, .tri-hierarchy-cell .tri-icon {
+      border-width : 0;
+      color        : #656565;
+    }
+
+    .tri-grouping-row {
+      background-color : #ededed;
+
+      .tri-icon {
+        color           : #656565;
+        text-decoration : none;
+      }
+    }
+
+    .tri-grouping-dropclue {
+      &::before {
+        border-color : #656565 transparent transparent;
+      }
+
+      &::after {
+        background-color : #656565;
+      }
+    }
+
+    .tri-tooltip.tri-tooltip-validation {
+      color            : #ffffff;
+      background-color : theming.tri-color($primary, 400);
+
+      .tri-callout-n {
+        border-bottom-color : theming.tri-color($primary, 400);
+      }
+
+      .tri-callout-e {
+        border-left-color : theming.tri-color($primary, 400);
+      }
+
+      .tri-callout-s {
+        border-top-color : theming.tri-color($primary, 400);
+      }
+
+      .tri-callout-w {
+        border-right-color : theming.tri-color($primary, 400);
+      }
+    }
+
+    .tri-dirty {
+      border-color : currentColor transparent transparent currentColor;
+    }
+
+    &[dir="rtl"] .tri-dirty {
+      border-color : currentColor currentColor transparent transparent;
+    }
+  }
+
+  col.tri-sorted, th.tri-sorted {
+    background-color : rgba(0, 0, 0, 0.02);
+  }
+
+  .tri-data-table-header {
+    .tri-i-sort-asc-sm, .tri-i-sort-desc-sm, .tri-sort-order {
+      color : #656565;
+    }
+
+    .tri-data-table-filter {
+      &:hover {
+        color            : #656565;
+        background-color : #ededed;
+      }
+
+      &:focus {
+        box-shadow : inset 0 0 0 2px rgba(0, 0, 0, 0.1);
+      }
+
+      &.tri-state-active {
+        color            : #ffffff;
+        background-color : theming.tri-color($primary);
+      }
+    }
+  }
+}

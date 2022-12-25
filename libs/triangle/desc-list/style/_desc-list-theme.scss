@@ -1,0 +1,27 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$desc-list-prefix-cls : "#{ v.$tri-prefix}-desc-list";
+
+@mixin tri-desc-list-theme($theme) {
+  $foreground : map.get($theme, foreground);
+
+  .#{$desc-list-prefix-cls} {
+    @at-root & #{&}-title {
+      color : theming.tri-color($foreground, heading-color);
+    }
+    @at-root & #{&}-term {
+      color : theming.tri-color($foreground, heading-color);
+    }
+    @at-root & #{&}-detail {
+      color : theming.tri-color($foreground, text-color);
+    }
+    @at-root &#{&}-small {
+      .#{$desc-list-prefix-cls}-title {
+        color : theming.tri-color($foreground, text-color);
+      }
+    }
+  }
+}

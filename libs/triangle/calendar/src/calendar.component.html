@@ -1,0 +1,77 @@
+<tri-calendar-header (modeChange)="onModeChange($event)" (monthChange)="onMonthSelect($event)"
+                     (yearChange)="onYearSelect($event)" [(mode)]="mode"
+                     [activeDate]="activeDate" [fullscreen]="fullscreen">
+</tri-calendar-header>
+
+<div [ngClass]="fullscreen ? 'tri-fullcalendar-fullscreen' : ''" class="tri-fullcalendar tri-fullcalendar-full">
+  <div class="tri-fullcalendar-calendar-body">
+    <ng-container *ngIf="mode === 'month'; then monthModeTable else yearModeTable"></ng-container>
+  </div>
+</div>
+
+<ng-template #monthModeTable>
+  <table cellspacing="0" class="tri-fullcalendar-table" role="grid">
+    <thead>
+    <tr role="row">
+      <th *ngFor="let day of daysInWeek" [title]="day.title" class="tri-fullcalendar-column-header" role="columnheader">
+        <span class="tri-fullcalendar-column-header-inner">{{ day.label }}</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody class="tri-fullcalendar-tbody">
+    <tr *ngFor="let week of dateMatrix; index as row"
+        [class.tri-fullcalendar-active-week]="row === activeDateRow"
+        [class.tri-fullcalendar-current-week]="row === currentDateRow">
+      <td (click)="onDateSelect(day.value, row, col)" *ngFor="let day of week; index as col"
+          [class.tri-fullcalendar-last-month-cell]="day.rel === 'last'"
+          [class.tri-fullcalendar-next-month-btn-day]="day.rel === 'next'"
+          [class.tri-fullcalendar-selected-day]="row === activeDateRow && col === activeDateCol"
+          [class.tri-fullcalendar-today]="row === currentDateRow && col === currentDateCol"
+          [title]="day.title"
+          class="tri-fullcalendar-cell"
+          role="gridcell">
+        <div class="tri-fullcalendar-date">
+          <ng-container *ngIf="_dateFullCell; else defaultCell">
+            <ng-container *ngTemplateOutlet="_dateFullCell; context: {$implicit: day.value}"></ng-container>
+          </ng-container>
+          <ng-template #defaultCell>
+            <div class="tri-fullcalendar-value">{{ day.label }}</div>
+            <div *ngIf="_dateCell" class="tri-fullcalendar-content">
+              <ng-container *ngTemplateOutlet="_dateCell; context: {$implicit: day.value}"></ng-container>
+            </div>
+          </ng-template>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ng-template>
+
+<ng-template #yearModeTable>
+  <table cellspacing="0" class="tri-fullcalendar-month-panel-table" role="grid">
+    <tbody class="tri-fullcalendar-month-panel-tbody">
+    <tr *ngFor="let row of [0, 1, 2, 3]" role="row">
+      <td (click)="onMonthSelect(row * 3 + col)" *ngFor="let col of [0, 1, 2]"
+          [class.tri-fullcalendar-month-panel-current-cell]="row === currentMonthRow && col === currentMonthCol"
+          [class.tri-fullcalendar-month-panel-selected-cell]="row === activeMonthRow && col === activeMonthCol"
+          [title]="monthsInYear[row * 3 + col].title"
+          class="tri-fullcalendar-month-panel-cell"
+          role="gridcell">
+        <div class="tri-fullcalendar-month">
+          <ng-container *ngIf="_monthFullCell; else defaultCell">
+            <ng-container
+              *ngTemplateOutlet="_monthFullCell; context: {$implicit: monthsInYear[row * 3 + col].start}"></ng-container>
+          </ng-container>
+          <ng-template #defaultCell>
+            <div class="tri-fullcalendar-value">{{ monthsInYear[row * 3 + col].label }}</div>
+            <div *ngIf="_monthCell" class="tri-fullcalendar-content">
+              <ng-container
+                *ngTemplateOutlet="_monthCell; context: {$implicit: monthsInYear[row * 3 + col].start}"></ng-container>
+            </div>
+          </ng-template>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ng-template>

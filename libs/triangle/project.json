@@ -1,0 +1,60 @@
+{
+  "name": "triangle",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/triangle/src",
+  "prefix": "tri",
+  "targets": {
+    "replace-version": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["yarn triangle:replace-version"],
+        "cwd": "."
+      }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "baseBranch": "master",
+        "releaseAs": "patch",
+        "postTargets": ["triangle:build"]
+      }
+    },
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/libs/triangle"],
+      "dependsOn": [
+      ],
+      "options": {
+        "project": "libs/triangle/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/triangle/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/triangle/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/triangle"],
+      "options": {
+        "jestConfig": "libs/triangle/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/triangle/src/**/*.ts",
+          "libs/triangle/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

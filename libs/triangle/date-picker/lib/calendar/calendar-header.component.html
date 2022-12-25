@@ -1,0 +1,68 @@
+<div class="{{ prefixCls }}-header">
+  <div style="position: relative;">
+    <a (click)="previousYear()"
+       *ngIf="enablePrev && !showTimePicker"
+       class="{{ prefixCls }}-prev-year-btn"
+       role="button"
+       title="{{ locale.previousYear }}"
+    ></a>
+    <a (click)="previousMonth()"
+       *ngIf="enablePrev && !showTimePicker"
+       class="{{ prefixCls }}-prev-month-btn"
+       role="button"
+       title="{{ locale.previousMonth }}"
+    ></a>
+
+    <span class="{{ prefixCls }}-{{ locale.monthBeforeYear ? 'my-select' : 'ym-select' }}">
+      <ng-container *ngFor="let selector of yearMonthDaySelectors">
+        <a (click)="selector.onClick ? selector.onClick() : null"
+           class="{{ selector.className }}"
+           role="button"
+           title="{{ selector.title || null }}"
+        >
+          {{ selector.label }}
+        </a>
+      </ng-container>
+    </span>
+
+    <a (click)="nextMonth()"
+       *ngIf="enableNext && !showTimePicker"
+       class="{{ prefixCls }}-next-month-btn"
+       role="button"
+       title="{{ locale.nextMonth }}"
+    ></a>
+    <a (click)="nextYear()"
+       *ngIf="enableNext && !showTimePicker"
+       class="{{ prefixCls }}-next-year-btn"
+       role="button"
+       title="{{ locale.nextYear }}"
+    ></a>
+  </div>
+
+  <ng-container [ngSwitch]="panelMode">
+    <ng-container *ngSwitchCase="'decade'">
+      <decade-panel
+        (valueChange)="onChooseDecade($event)"
+        [locale]="locale"
+        [value]="value"
+      ></decade-panel>
+    </ng-container>
+    <ng-container *ngSwitchCase="'year'">
+      <year-panel
+        (decadePanelShow)="changePanel('decade')"
+        (valueChange)="onChooseYear($event)"
+        [locale]="locale"
+        [value]="value"
+      ></year-panel>
+    </ng-container>
+    <ng-container *ngSwitchCase="'month'">
+      <month-panel
+        (valueChange)="onChooseMonth($event)"
+        (yearPanelShow)="changePanel('year')"
+        [disabledDate]="disabledMonth"
+        [locale]="locale"
+        [value]="value"
+      ></month-panel>
+    </ng-container>
+  </ng-container>
+</div>

@@ -1,0 +1,92 @@
+@use "sass:map";
+@use "sass:math";
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/style/typography/typography";
+@use "../../core/style/typography/typography-utils";
+@use "./form-field-variable";
+@use "./form-field-mixin";
+
+$foreground                   : theme.$foreground;
+$background                   : theme.$background;
+$success                      : theme.$success;
+$primary                      : theme.$primary;
+$error                        : theme.$error;
+$warning                      : theme.$warning;
+
+$fill-background              : map.get(v.$tri-gray, 200) !default;
+$fill-disabled-background     : theming.tri-color($background, disabled-bg) !default;
+$underline-color              : theming.tri-color($foreground, divider) !default;
+$label-disabled-color         : theming.tri-color($foreground, disabled-text) !default;
+
+$line-height                  : v.$line-height-base !default;
+
+
+// The unit-less line-height from the font config.
+//$line-height                  : typography-utils.line-height(input);
+// The amount to scale the font for the floating label and subscript.
+$subscript-font-scale         : 0.75;
+// The padding on top of the infix.
+$infix-padding-top            : 0.25rem;
+// The padding below the infix.
+$infix-padding-bottom         : 0;
+// The margin applied to the form-field-infix to reserve space for the floating label.
+$infix-margin-top             : form-field-variable.$fill-line-spacing;
+// The amount we offset the label from the input text in the fill appearance.
+$fill-appearance-label-offset : -1rem;
+
+@mixin form-field-fill-color() {
+  .tri-form-field-appearance-fill.tri-form-field-can-float {
+    //.tri-form-field-flex {
+    //  background-color : $fill-background;
+    //}
+
+    &.tri-form-field-disabled .tri-form-field-flex {
+      background-color : $fill-disabled-background;
+    }
+
+    &.tri-form-field-disabled {
+      .tri-form-field-label {
+        color : $label-disabled-color;
+      }
+    }
+  }
+}
+
+@mixin form-field-fill-typography() {
+
+  .tri-form-field-appearance-fill.tri-form-field-can-float {
+    .tri-form-field-flex {
+      padding-top : form-field-variable.$fill-line-spacing;
+    }
+
+    .tri-form-field-label-wrapper {
+      padding-top : form-field-variable.$fill-line-spacing;
+
+      .tri-form-field-label {
+        padding-left  : .5rem;
+        padding-right : .5rem;
+      }
+    }
+
+    &.tri-form-field-should-float .tri-form-field-label,
+    .tri-input-server:focus + .tri-form-field-label-wrapper .tri-form-field-label {
+      @include form-field-mixin.label-floating(
+          $subscript-font-scale, $infix-padding-top + $fill-appearance-label-offset,
+          $infix-margin-top);
+    }
+  }
+}
+
+@mixin private-form-field-fill-density() {
+}
+
+@mixin form-field-fill-theme($theme-or-color-config) {
+  @include mixins.import-once("tri-form-field-fill") {
+    @include form-field-fill-color();
+    @include private-form-field-fill-density();
+    @include form-field-fill-typography();
+  }
+}

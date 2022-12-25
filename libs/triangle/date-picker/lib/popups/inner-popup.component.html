@@ -1,0 +1,41 @@
+<calendar-header
+  (panelModeChange)="panelModeChange.emit($event)"
+  (valueChange)="headerChange.emit($event)"
+  [(panelMode)]="panelMode"
+  [(value)]="value"
+  [enableNext]="enableNext"
+  [enablePrev]="enablePrev"
+  [locale]="locale"
+  [showTimePicker]="showTimePicker"
+></calendar-header>
+
+<ng-container *ngIf="showTimePicker && timeOptions">
+  <tri-time-picker-panel
+    (ngModelChange)="onSelectTime($event)"
+    [addOn]="timeOptions.addOn"
+    [defaultOpenValue]="timeOptions.defaultOpenValue"
+    [disabledHours]="timeOptions.disabledHours"
+    [disabledMinutes]="timeOptions.disabledMinutes"
+    [disabledSeconds]="timeOptions.disabledSeconds"
+    [format]="timeOptions.format"
+    [hideDisabledOptions]="timeOptions.hideDisabledOptions"
+    [hourStep]="timeOptions.hourStep"
+    [inDatePicker]="true"
+    [minuteStep]="timeOptions.minuteStep"
+    [ngModel]="value.nativeDate"
+    [secondStep]="timeOptions.secondStep"
+  ></tri-time-picker-panel>
+</ng-container>
+
+<div class="{{ prefixCls }}-body">
+  <date-table
+    (dayHover)="dayHover.emit($event)"
+    (valueChange)="onSelectDate($event)"
+    [dateRender]="dateRender"
+    [disabledDate]="disabledDate"
+    [hoverValue]="hoverValue"
+    [selectedValue]="selectedValue"
+    [showWeek]="showWeek"
+    [value]="value"
+  ></date-table>
+</div>

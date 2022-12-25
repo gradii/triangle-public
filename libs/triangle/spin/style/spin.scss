@@ -1,0 +1,188 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+
+$spin-prefix-cls  : "#{$tri-prefix}-spin";
+
+// Spin
+// ---
+$spin-dot-size-sm : 0.875rem !default;
+$spin-dot-size    : 1.25rem !default;
+$spin-dot-size-lg : 2rem !default;
+
+
+.#{$spin-prefix-cls} {
+  vertical-align : middle;
+  text-align     : center;
+  opacity        : 0;
+  position       : absolute;
+  transition     : transform 0.3s $ease-in-out-circ;
+  font-size      : $font-size-base;
+  display        : none;
+
+  @at-root &-spinning {
+    opacity  : 1;
+    position : static;
+    display  : inline-block;
+  }
+
+  @at-root &-nested-loading {
+    position : relative;
+  }
+
+  @at-root &-nested-loading {
+    > div > .#{$spin-prefix-cls} {
+      position   : absolute;
+      height     : 100%;
+      max-height : 320px;
+      width      : 100%;
+      z-index    : 4;
+
+      .#{$spin-prefix-cls}-dot {
+        position : absolute;
+        top      : 50%;
+        left     : 50%;
+        margin   : -$spin-dot-size * 0.5;
+      }
+
+      .#{$spin-prefix-cls}-text {
+        position    : absolute;
+        top         : 50%;
+        width       : 100%;
+        padding-top : ($spin-dot-size - $font-size-base) * 0.5 + 0.125rem;
+      }
+
+      @at-root &.#{$spin-prefix-cls}-show-text .#{$spin-prefix-cls}-dot {
+        margin-top : -$spin-dot-size * 0.5 - 0.625rem;
+      }
+    }
+
+    > div > .#{$spin-prefix-cls}-sm {
+      .#{$spin-prefix-cls}-dot {
+        margin : -$spin-dot-size-sm * 0.5;
+      }
+
+      .#{$spin-prefix-cls}-text {
+        padding-top : ($spin-dot-size-sm - $font-size-base) * 0.5 + 0.125rem;
+      }
+
+      @at-root &.#{$spin-prefix-cls}-show-text .#{$spin-prefix-cls}-dot {
+        margin-top : -$spin-dot-size-sm * 0.5 - 0.625rem;
+      }
+    }
+
+    > div > .#{$spin-prefix-cls}-lg {
+      .#{$spin-prefix-cls}-dot {
+        margin : -$spin-dot-size-lg * 0.5;
+      }
+
+      .#{$spin-prefix-cls}-text {
+        padding-top : ($spin-dot-size-lg - $font-size-base) * 0.5 + 0.125rem;
+      }
+
+      @at-root &.#{$spin-prefix-cls}-show-text .#{$spin-prefix-cls}-dot {
+        margin-top : -$spin-dot-size-lg * 0.5 - 0.625rem;
+      }
+    }
+  }
+
+  @at-root &-container {
+    transition : all 0.3s $ease-in-out;
+    position   : relative;
+  }
+
+  @at-root &-blur {
+    overflow          : hidden;
+    opacity           : 0.7;
+    filter            : blur(0.5px);
+    /* autoprefixer: on */
+    -webkit-transform : translateZ(0);
+    @at-root &:after {
+      content    : "";
+      position   : absolute;
+      left       : 0;
+      right      : 0;
+      top        : 0;
+      bottom     : 0;
+      transition : all .3s;
+      z-index    : 10;
+    }
+  }
+
+  // dots
+  // ------------------------------
+
+  @at-root &-dot {
+    position  : relative;
+    display   : inline-block;
+    @include square($spin-dot-size);
+    transform : rotate(45deg);
+    animation : antRotate 1.2s infinite linear;
+    i {
+      width            : 9px;
+      height           : 9px;
+      border-radius    : 100%;
+      transform        : scale(0.75);
+      display          : block;
+      position         : absolute;
+      opacity          : 0.3;
+      animation        : antSpinMove 1s infinite linear alternate;
+      transform-origin : 50% 50%;
+      @at-root &:nth-child(1) {
+        left : 0;
+        top  : 0;
+      }
+      @at-root &:nth-child(2) {
+        right           : 0;
+        top             : 0;
+        animation-delay : 0.4s;
+      }
+      @at-root &:nth-child(3) {
+        right           : 0;
+        bottom          : 0;
+        animation-delay : 0.8s;
+      }
+      @at-root &:nth-child(4) {
+        left            : 0;
+        bottom          : 0;
+        animation-delay : 1.2s;
+      }
+    }
+  }
+
+  // Sizes
+  // ------------------------------
+  // small
+  @at-root &-sm #{&}-dot {
+    @include square($spin-dot-size-sm);
+    i {
+      width  : 6px;
+      height : 6px;
+    }
+  }
+
+  // large
+  @at-root &-lg #{&}-dot {
+    @include square($spin-dot-size-lg);
+    i {
+      width  : 14px;
+      height : 14px;
+    }
+  }
+
+  @at-root &#{&}-show-text #{&}-text {
+    display : block;
+  }
+}
+
+@keyframes antSpinMove {
+  to {
+    opacity : 1;
+  }
+}
+
+@keyframes antRotate {
+  to {
+    transform : rotate(405deg);
+  }
+}

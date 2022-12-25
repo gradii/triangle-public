@@ -1,0 +1,33 @@
+<ng-template #itemsTpl>
+  <ng-container *ngFor="let item of dataSource; let index = index">
+    <ng-template [ngTemplateOutletContext]="{ $implicit: item, index: index }"
+                 [ngTemplateOutlet]="renderItem"></ng-template>
+  </ng-container>
+</ng-template>
+<div *ngIf="header" class="tri-list-header">
+  <ng-container *stringTemplateOutlet="header">{{ header }}</ng-container>
+</div>
+<tri-spin [spinning]="loading">
+  <ng-container *ngIf="dataSource">
+    <div *ngIf="loading && dataSource.length === 0" [style.min-height.px]="53"></div>
+    <tri-row *ngIf="grid; else itemsTpl" [gutter]="grid.gutter" >
+      <tri-col *ngFor="let item of dataSource; let index = index" [lg]="grid.lg" [md]="grid.md" [sm]="grid.sm"
+           [span]="grid.span" [xXl]="grid.xxl" [xl]="grid.xl"
+           [xs]="grid.xs">
+        <ng-template [ngTemplateOutletContext]="{ $implicit: item, index: index }"
+                     [ngTemplateOutlet]="renderItem"></ng-template>
+      </tri-col>
+    </tri-row>
+    <div *ngIf="!loading && dataSource.length === 0" class="tri-list-empty-text">
+      <tri-embed-empty [componentName]="'list'" [specificContent]="noResult"></tri-embed-empty>
+    </div>
+  </ng-container>
+  <ng-content></ng-content>
+</tri-spin>
+<div *ngIf="footer" class="tri-list-footer">
+  <ng-container *stringTemplateOutlet="footer">{{ footer }}</ng-container>
+</div>
+<ng-template [ngTemplateOutlet]="loadMore"></ng-template>
+<div *ngIf="pagination" class="tri-list-pagination">
+  <ng-template [ngTemplateOutlet]="pagination"></ng-template>
+</div>

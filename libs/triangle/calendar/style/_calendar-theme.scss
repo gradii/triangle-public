@@ -1,0 +1,126 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$full-calendar-prefix-cls : "#{ v.$tri-prefix}-fullcalendar";
+
+@mixin tri-calendar-theme($theme) {
+  $foreground : map.get($theme, foreground);
+  $background : map.get($theme, background);
+
+  $primary    : map.get($theme, primary);
+
+  .#{$full-calendar-prefix-cls} {
+    border-top : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+
+    table,
+    th,
+    td {
+      border : 0;
+    }
+
+    @at-root &-value {
+      color : theming.tri-color($foreground, text-color);
+      @at-root &:hover {
+        background : theming.tri-color($background, item-hover-bg);
+        cursor     : pointer;
+      }
+
+      @at-root &:active {
+        background : theming.tri-color($primary);
+        color      : #fff;
+      }
+    }
+
+    @at-root &-today #{&}-value,
+    &-month-panel-current-cell #{&}-value {
+      box-shadow : 0 0 0 1px theming.tri-color($primary);
+    }
+
+    @at-root &-selected-day #{&}-value,
+    &-month-panel-selected-cell #{&}-value {
+      background : theming.tri-color($primary);
+      color      : #fff;
+    }
+
+    @at-root &-disabled-cell-first-of-row #{&}-value {
+      border-top-left-radius    : v.$border-radius-base;
+      border-bottom-left-radius : v.$border-radius-base;
+    }
+
+    @at-root &-disabled-cell-last-of-row #{&}-value {
+      border-top-right-radius    : v.$border-radius-base;
+      border-bottom-right-radius : v.$border-radius-base;
+    }
+
+    @at-root &-last-month-cell #{&}-value,
+    &-next-month-btn-day #{&}-value {
+      color : theming.tri-color($foreground, disabled-color);
+    }
+
+    @at-root &-fullscreen {
+      border-top : 0;
+    }
+
+    @at-root &-fullscreen #{&}-month,
+    &-fullscreen #{&}-date {
+      color      : theming.tri-color($foreground, text-color);
+      border-top : 2px solid theming.tri-color($foreground, border-color-split);
+
+      @at-root &:hover {
+        background : theming.tri-color($background, item-hover-bg);
+        cursor     : pointer;
+      }
+
+      @at-root &:active {
+        background : $primary-2;
+      }
+    }
+
+    @at-root &-fullscreen #{&}-value {
+      background : transparent;
+    }
+
+    @at-root &-fullscreen #{&}-today #{&}-value {
+      color : theming.tri-color($foreground, text-color);
+    }
+
+    @at-root &-fullscreen #{&}-month-panel-current-cell #{&}-month,
+    &-fullscreen #{&}-today #{&}-date {
+      border-top-color : theming.tri-color($primary);
+      background       : transparent;
+    }
+
+    @at-root &-fullscreen #{&}-month-panel-current-cell #{&}-value,
+    &-fullscreen #{&}-today #{&}-value {
+      box-shadow : none;
+    }
+
+    @at-root &-fullscreen #{&}-month-panel-selected-cell #{&}-month,
+    &-fullscreen #{&}-selected-day #{&}-date {
+      background : theming.tri-color($primary, 50);
+    }
+
+    @at-root &-fullscreen #{&}-month-panel-selected-cell #{&}-value,
+    &-fullscreen #{&}-selected-day #{&}-value {
+      color : theming.tri-color($primary);
+    }
+
+    @at-root &-fullscreen #{&}-last-month-cell #{&}-date,
+    &-fullscreen #{&}-next-month-btn-day #{&}-date {
+      color : theming.tri-color($foreground, disabled-color);
+    }
+
+    @at-root &-disabled-cell:not(#{&}-today) #{&}-date {
+      @at-root &,
+      &:hover {
+        background : transparent;
+      }
+    }
+
+    @at-root &-disabled-cell #{&}-value {
+      color : theming.tri-color($foreground, disabled-color);
+    }
+  }
+}

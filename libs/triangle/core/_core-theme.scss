@@ -1,0 +1,64 @@
+@use "sass:map";
+@use "./style/functions";
+@use "./style/variables" as v;
+@use "./style/utilities";
+@use "./style/mixins";
+
+@use "./style/reboot";
+@use "./style/root";
+@use "./style/api";
+
+@use "./style/cdk/overlay";
+@use "./style/cdk/a11y";
+@use "./style/cdk/text-field";
+
+@use "./style/reboot-theme";
+
+// Core styles that can be used to apply material design treatments to any element.
+@use "./style/legend/elevation";
+@use "./src/ripple/ripple";
+@use "./src/ripple/ripple-theme";
+@use "./src/option/option-theme";
+@use "./src/option/optgroup-theme";
+@use "./src/selection/pseudo-checkbox/pseudo-checkbox-theme";
+
+// Core style from component directory
+@use "./src/grid/grid";
+@use "style/theming";
+
+// Mixin that renders all of the core styles that are not theme-dependent.
+@mixin tri-core($typography-config: null, $utilities: ()) {
+  //@include angular-material-typography($typography-config);
+  @include reboot.tri-reboot();
+  @include root.tri-root();
+  @include ripple.tri-ripple();
+  @include api.tri-api($utilities);
+  @include a11y.cdk-a11y();
+  @include overlay.cdk-overlay();
+  @include text-field.cdk-text-field();
+}
+
+// Mixin that renders all of the core styles that depend on the theme.
+@mixin tri-core-theme() {
+  @include reboot-theme.tri-reboot-theme();
+  @include ripple-theme.tri-ripple-theme();
+  @include option-theme.tri-option-theme();
+  @include optgroup-theme.tri-optgroup-theme();
+  @include pseudo-checkbox-theme.tri-pseudo-checkbox-theme();
+
+  // Provides external CSS classes for each elevation value. Each CSS class is formatted as
+  // `tri-elevation-z$zValue` where `$zValue` corresponds to the z-space to which the element is
+  // elevated.
+  @for $zValue from 0 through 24 {
+    .#{elevation.$tri-elevation-prefix}#{$zValue} {
+      @include elevation.tri-theme-elevation($zValue);
+    }
+  }
+
+  // Marker that is used to determine whether the user has added a theme to their page.
+  @at-root {
+    .tri-theme-loaded-marker {
+      display : none;
+    }
+  }
+}

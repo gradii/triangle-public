@@ -1,0 +1,20 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$empty-prefix-cls : #{ v.$tri-prefix}-empty;
+
+@mixin tri-empty-theme($theme) {
+  $background : map.get($theme, background);
+  .#{$empty-prefix-cls} {
+    // antd internal empty style
+    &-normal {
+      color : theming.tri-color($foreground, disabled-color);
+    }
+
+    &-small {
+      color : theming.tri-color($foreground, disabled-color);
+    }
+  }
+}

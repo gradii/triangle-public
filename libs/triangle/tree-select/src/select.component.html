@@ -1,0 +1,54 @@
+<div (keydown)="onKeyDown($event)"
+     [allowClear]="allowClear"
+     [class.tri-select-selection--multiple]="selectService.isMultipleOrTags"
+     [class.tri-select-selection--single]="selectService.isSingleMode"
+     [clearIcon]="clearIcon"
+     [loading]="loading"
+     [maxTagCount]="maxTagCount"
+     [maxTagPlaceholder]="maxTagPlaceholder"
+     [open]="_open"
+     [placeHolder]="placeHolder"
+     [removeIcon]="removeIcon"
+     [showArrow]="showArrow"
+     [showSearch]="showSearch"
+     [suffixIcon]="suffixIcon"
+     [tokenSeparators]="tokenSeparators"
+     cdkOverlayOrigin
+     class="tri-select-selection"
+     tabindex="0"
+     tri-select-top-control>
+</div>
+<ng-template
+  (backdropClick)="closeDropDown()"
+  (detach)="closeDropDown();"
+  (positionChange)="onPositionChange($event)"
+  [cdkConnectedOverlayBackdropClass]="'tri-overlay-transparent-backdrop'"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayMinWidth]="dropdownMatchSelectWidth? null : triggerWidth"
+  [cdkConnectedOverlayOpen]="_open"
+  [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
+  [cdkConnectedOverlayWidth]="dropdownMatchSelectWidth? triggerWidth : null"
+  cdkConnectedOverlay>
+  <div
+    [@slideAnimation]="dropDownPosition"
+    [class.tri-select-dropdown--multiple]="selectService.isMultipleOrTags"
+    [class.tri-select-dropdown--single]="selectService.isSingleMode"
+    [class.tri-select-dropdown-placement-bottomLeft]="dropDownPosition === 'bottom'"
+    [class.tri-select-dropdown-placement-topLeft]="dropDownPosition === 'top'"
+    [ngClass]="dropdownClassName"
+    [ngStyle]="dropdownStyle"
+    class="tri-select-dropdown">
+    <div (keydown)="onKeyDown($event)"
+         (scrollToBottom)="scrollToBottom.emit()"
+         [menuItemSelectedIcon]="menuItemSelectedIcon"
+         [notFoundContent]="notFoundContent"
+         style="overflow: auto;transform: translateZ(0px);"
+         tri-option-container>
+    </div>
+    <ng-template [ngTemplateOutlet]="dropdownRender"></ng-template>
+  </div>
+</ng-template>
+<!--can not use ViewChild since it will match sub options in option group -->
+<ng-template>
+  <ng-content></ng-content>
+</ng-template>

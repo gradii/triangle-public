@@ -1,0 +1,123 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$progress-prefix-cls : "#{v.$tri-prefix}-progress" !default;
+
+.#{$progress-prefix-cls} {
+  display : inline-block;
+
+  @at-root &-line, &-inline {
+    width     : 100%;
+    font-size : v.$font-size-base;
+    position  : relative;
+  }
+
+  @at-root &-outer {
+    display       : inline-block;
+    width         : 100%;
+    margin-right  : 0;
+    padding-right : 0;
+    @at-root .#{$progress-prefix-cls}-show-info #{&} {
+      padding-right : 2.75em;
+      margin-right  : -2.75em;
+    }
+    @at-root .#{$progress-prefix-cls}-inline #{&} {
+      padding-right : 0;
+      margin-right  : 0;
+    }
+
+  }
+
+  @at-root &-inner {
+    display        : inline-block;
+    width          : 100%;
+    border-radius  : 100px;
+    vertical-align : middle;
+    @at-root .#{$progress-prefix-cls}-inline #{&} {
+      border-radius : 0;
+    }
+  }
+
+  @at-root &-bg {
+    border-radius : 100px;
+    transition    : all .4s v.$ease-out-circ 0s;
+    position      : relative;
+    @at-root .#{$progress-prefix-cls}-inline #{&} {
+      border-radius : 0;
+    }
+  }
+
+  @at-root &-text {
+    width          : 2em;
+    text-align     : left;
+    font-size      : 1em;
+    margin-left    : 0.75em;
+    vertical-align : middle;
+    display        : inline-block;
+    .#{v.$iconfont-css} {
+      font-size : v.$font-size-base;
+    }
+
+    @at-root .#{$progress-prefix-cls}-inline #{&} {
+      position : absolute;
+      left     : 0;
+      width    : 100%;
+    }
+  }
+
+  @at-root &-status-active {
+    .#{$progress-prefix-cls}-bg:before {
+      content       : "";
+      opacity       : 0;
+      position      : absolute;
+      top           : 0;
+      left          : 0;
+      right         : 0;
+      bottom        : 0;
+      border-radius : 10px;
+      animation     : #{v.$tri-prefix}-progress-active 2.4s v.$ease-out-quint infinite;
+    }
+
+    @at-root .#{$progress-prefix-cls}-inline#{&} .#{$progress-prefix-cls}-bg:before {
+      border-radius : 0;
+    }
+  }
+
+  @at-root &-circle #{&}-inner {
+    position         : relative;
+    line-height      : 1;
+    background-color : transparent;
+  }
+
+  @at-root &-circle #{&}-text {
+    display     : block;
+    position    : absolute;
+    width       : 100%;
+    text-align  : center;
+    line-height : 1;
+    top         : 50%;
+    transform   : translateY(-50%);
+    left        : 0;
+    font-family : tahoma;
+    margin      : 0;
+
+    .#{v.$iconfont-css} {
+      font-size : 14 / 12em;
+    }
+  }
+}
+
+@keyframes #{v.$tri-prefix}-progress-active {
+  0% {
+    opacity : 0.1;
+    width   : 0;
+  }
+  20% {
+    opacity : 0.5;
+    width   : 0;
+  }
+  100% {
+    opacity : 0;
+    width   : 100%;
+  }
+}

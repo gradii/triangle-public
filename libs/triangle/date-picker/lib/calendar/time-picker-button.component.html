@@ -1,0 +1,7 @@
+<a
+  (click)="timePickerDisabled ? null : onClick()"
+  class="{{ prefixCls }}-time-picker-btn {{ timePickerDisabled ? prefixCls + '-time-picker-btn-disabled' : '' }}"
+  role="button"
+>
+  {{ showTimePicker ? locale.dateSelect : locale.timeSelect }}
+</a>

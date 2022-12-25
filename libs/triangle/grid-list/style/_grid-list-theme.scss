@@ -1,0 +1,14 @@
+@use "../../core/themes/theme";
+@use "../../core/style/legend/list-common";
+@use "../../core/style/legend/layout-common";
+
+@mixin tri-grid-list-theme() {
+  .tri-grid-tile {
+    // Headers & footers
+    .tri-grid-tile-header,
+    .tri-grid-tile-footer {
+      color      : #fff;
+      background : rgba(0, 0, 0, 0.38);
+    }
+  }
+}

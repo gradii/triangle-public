@@ -1,0 +1,66 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$tag-prefix-cls : "#{v.$tri-prefix}-tag";
+
+// Tag
+// --
+$tag-font-size  : v.$font-size-base !default;
+
+.#{$tag-prefix-cls}, .tri-tag-ghost {
+  display       : inline-block;
+  line-height   : 20px;
+  height        : 22px;
+  padding       : 0 8px;
+  //border-radius : $border-radius-base;
+  border-radius : 3px;
+  //font-size     : $tag-font-size;
+  font-size     : 10px;
+  transition    : all 0.3s v.$ease-in-out-circ;
+  opacity       : 1;
+  margin-right  : 8px;
+  cursor        : pointer;
+  white-space   : nowrap;
+
+  @at-root &:hover {
+    opacity : 0.85;
+  }
+
+  @at-root &-text {
+    a:first-child:last-child {
+      display : inline-block;
+      margin  : 0 -8px;
+      padding : 0 8px;
+    }
+  }
+
+  .#{v.$iconfont-css}-cross {
+    @include mixins.iconfont-size-under-12px(10px);
+    cursor      : pointer;
+    font-weight : bold;
+    margin-left : 3px;
+    transition  : all 0.3s ease;
+    opacity     : 0.66;
+
+    @at-root &:hover {
+      opacity : 1;
+    }
+  }
+
+  @at-root &-close {
+    width   : 0 !important;
+    padding : 0;
+    margin  : 0;
+  }
+
+  @at-root &-zoom-enter,
+  &-zoom-appear {
+    animation           : antFadeIn .2s v.$ease-in-out-circ;
+    animation-fill-mode : both;
+  }
+
+  @at-root &-zoom-leave {
+    animation           : antZoomOut .3s v.$ease-in-out-circ;
+    animation-fill-mode : both;
+  }
+}

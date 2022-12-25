@@ -1,0 +1,37 @@
+
+@use "functions";
+
+// vertical paddings
+$padding-lg                             : 1.5rem !default; // containers
+$padding-md                             : 1rem !default; // small containers and buttons
+$padding-sm                             : 0.75rem !default; // Form controls and items
+$padding-xs                             : 0.5rem !default; // small items
+
+// vertical padding for all form controls
+$control-padding-horizontal             : $padding-sm !default;
+$control-padding-horizontal-sm          : $padding-xs !default;
+
+// form control
+$form-control-height-base               : 2rem !default;
+$form-control-height-lg                 : 2.5rem !default;
+$form-control-height-sm                 : 1.5rem !default;
+
+
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+// You can add more entries to the $spacers map, should you need more variation.
+
+$spacer                                 : 1rem !default;
+$spacers                                : (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+) !default;
+
+$negative-spacers                       : functions.negativify-map($spacers) !default;

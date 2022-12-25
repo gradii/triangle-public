@@ -1,0 +1,18 @@
+@use "sass:math";
+
+
+// Used to make instances of the _tri-form-field-label-floating mixin negligibly different,
+// and prevent Google's CSS Optimizer from collapsing the declarations. This is needed because some
+// of the selectors contain pseudo-classes not recognized in all browsers. If a browser encounters
+// an unknown pseudo-class it will discard the entire rule set.
+$fill-dedupe                  : 0;
+
+// Applies a floating label above the form field control itself.
+@mixin label-floating($font-scale, $infix-padding, $infix-margin-top) {
+  transform    : translateY(-$infix-margin-top - $infix-padding + $fill-dedupe) scale($font-scale);
+  width        : math.div(100%, $font-scale) + $fill-dedupe;
+
+  $fill-dedupe : $fill-dedupe + 0.00001 !global;
+  //padding-left: 0;
+  //padding-right: 0;
+}

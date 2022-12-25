@@ -1,0 +1,269 @@
+//@import "../inputs/input-mixin";
+//@import "../button/mixin";
+//@import "../grid/mixin";
+@use "sass:map";
+@use "./mixin";
+@use "./mixin-theme";
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+@use "../../core/style/variables" as v;
+@use "../../input/style/input-theme";
+
+$form-prefix-cls : "#{ v.$tri-prefix}-form";
+@include mixin.reset-form();
+
+@mixin tri-form-theme() {
+  $foreground              : theme.$foreground;
+  $background              : theme.$background;
+  $success                 : theme.$primary;
+  $primary                 : theme.$primary;
+  $error                   : theme.$error;
+  $warning                 : theme.$warning;
+
+  // Form
+  // ---
+  $label-required-color    : theming.tri-color(theme.$highlight);
+  $label-color             : theming.tri-color($foreground, heading-color);
+  $form-item-margin-bottom : 1rem !default;
+
+  .#{$form-prefix-cls}-item-required:before {
+    color : $label-required-color;
+  }
+
+  // Form items
+  // You should wrap labels and controls in .#{$form-prefix-cls}-item for optimum spacing
+  .#{$form-prefix-cls}-item {
+    color : theming.tri-color($foreground, text-color);
+    @at-root &-label {
+      label {
+        color : $label-color;
+      }
+    }
+  }
+
+  .#{$form-prefix-cls}-explain,
+  .#{$form-prefix-cls}-extra {
+    color : theming.tri-color($foreground, text-color-secondary);
+  }
+
+  form {
+    .#{ v.$tri-prefix}-upload {
+      background : transparent;
+    }
+  }
+
+  // Input combined with select
+  .#{ v.$tri-prefix}-input-group-wrap {
+    .#{ v.$tri-prefix}-select-selection {
+      border-bottom-left-radius : 0;
+      border-top-left-radius    : 0;
+      @at-root &:hover {
+        border-color : theming.tri-color($foreground, border-color-base);
+      }
+    }
+
+    .#{ v.$tri-prefix}-select-selection--single {
+      background-color : #eee;
+    }
+
+    .#{ v.$tri-prefix}-select-open .#{ v.$tri-prefix}-select-selection {
+      border-color : theming.tri-color($foreground, border-color-base);
+      box-shadow   : none;
+    }
+  }
+
+  // success时表单项的边框
+  .has-success {
+    @include mixin-theme.form-control-validation(theming.tri-color($success), theming.tri-color($success));
+
+    // select
+    .#{ v.$tri-prefix}-select {
+      @at-root &-open .#{ v.$tri-prefix}-select-selection,
+      &-focused #{ v.$tri-prefix}-select-selection {
+        @include input-theme.tri-input-active-theme(theming.tri-color($success));
+      }
+    }
+
+    .#{ v.$tri-prefix}-select-selection:hover {
+      //@include active($success-color);
+      border-color : theming.tri-color($success) !important;
+      box-shadow   : none;
+    }
+
+    .#{ v.$tri-prefix}-input-group-addon .#{ v.$tri-prefix}-select {
+      @at-root &-selection {
+        border-color : transparent;
+        box-shadow   : none;
+      }
+    }
+
+    .#{ v.$tri-prefix}-cascader-picker:focus #{ v.$tri-prefix}-input,
+    .#{ v.$tri-prefix}-cascader:hover {
+      border-color : theming.tri-color($success) !important;
+      box-shadow   : none;
+    }
+
+    // radio-group
+    .#{ v.$tri-prefix}-radio-group label.tri-radio-button-wrapper-checked {
+      border-width : 1px;
+      border-color : theming.tri-color($success);
+      box-shadow   : -1px 0 0 0 theming.tri-color($success);
+      @at-root &-focused,
+      &:focus {
+        @include input-theme.tri-input-active-theme(theming.tri-color($success));
+      }
+      @at-root &:not([disabled]):hover {
+        border-color : theming.tri-color($success);
+      }
+    }
+
+    // input-number, timepicker
+    .#{ v.$tri-prefix}-input-number,
+    .#{ v.$tri-prefix}-time-picker-input {
+      @at-root &-focused,
+      &:focus {
+        @include input-theme.tri-input-active-theme(theming.tri-color($success));
+      }
+      @at-root &:not([disabled]):hover {
+        border-color : theming.tri-color($success);
+      }
+    }
+
+    .#{ v.$tri-prefix}-mention-wrapper {
+      .#{ v.$tri-prefix}-mention-editor {
+        @at-root &,
+        &:not([disabled]):hover {
+          @at-root &,
+          &:not([disabled]):hover {
+            border-color : theming.tri-color($success);
+          }
+        }
+      }
+
+      @at-root &.#{ v.$tri-prefix}-mention-active .#{ v.$tri-prefix}-mention-editor,
+      & .#{ v.$tri-prefix}-mention-editor:not([disabled]):focus {
+        @include input-theme.tri-input-active-theme(theming.tri-color($success));
+      }
+    }
+  }
+
+  .has-success {
+    .#{$form-prefix-cls}-item-children-icon {
+      .#{v.$iconfont-css} {
+        color : theming.tri-color($success);
+      }
+    }
+  }
+
+  .has-error {
+    .#{$form-prefix-cls}-item-children-icon {
+      .#{v.$iconfont-css} {
+        color : theming.tri-color($error);
+      }
+    }
+  }
+
+  .has-warning {
+    .#{$form-prefix-cls}-item-children-icon {
+      .#{v.$iconfont-css} {
+        color : theming.tri-color($warning);
+      }
+    }
+  }
+
+  .has-warning {
+    @include mixin-theme.form-control-validation(theming.tri-color($warning), theming.tri-color($warning));
+    //select
+    .#{ v.$tri-prefix}-select {
+      @at-root &-selection {
+        border-color : theming.tri-color($warning);
+      }
+      @at-root &-open .#{ v.$tri-prefix}-select-selection,
+      &-focused .#{ v.$tri-prefix}-select-selection {
+        @include input-theme.tri-input-active-theme(theming.tri-color($warning));
+      }
+    }
+
+    // arrow and icon
+    .#{ v.$tri-prefix}-calendar-picker-icon:after,
+    .#{ v.$tri-prefix}-picker-icon:after,
+    .#{ v.$tri-prefix}-select-arrow,
+    .#{ v.$tri-prefix}-cascader-picker-arrow {
+      color : theming.tri-color($warning);
+    }
+
+    //input-number, timepicker
+    .#{ v.$tri-prefix}-input-number,
+    .#{ v.$tri-prefix}-time-picker-input {
+      border-color : theming.tri-color($warning);
+      @at-root &-focused,
+      &:focus {
+        @include input-theme.tri-input-active-theme(theming.tri-color($warning));
+      }
+      @at-root &:not([disabled]):hover {
+        border-color : theming.tri-color($warning);
+      }
+    }
+  }
+
+  .has-success .has-feedback {
+    color : #444444 !important;
+  }
+
+  .has-error {
+    @include mixin-theme.form-control-validation(theming.tri-color($error), theming.tri-color($error));
+
+    //select
+    .#{ v.$tri-prefix}-select {
+      @at-root &-selection {
+        border-color : theming.tri-color($error);
+      }
+      @at-root &-open .#{ v.$tri-prefix}-select-selection,
+      &-focused .#{ v.$tri-prefix}-select-selection {
+        @include input-theme.tri-input-active-theme(theming.tri-color($error));
+      }
+    }
+
+    .#{ v.$tri-prefix}-input-group-addon .#{ v.$tri-prefix}-select {
+      @at-root &-selection {
+        border-color : transparent;
+        box-shadow   : none;
+      }
+    }
+
+    // arrow and icon
+    .#{ v.$tri-prefix}-calendar-picker-icon:after,
+    .#{ v.$tri-prefix}-picker-icon:after,
+    .#{ v.$tri-prefix}-select-arrow,
+    .#{ v.$tri-prefix}-cascader-picker-arrow {
+      color : theming.tri-color($error);
+    }
+
+    //input-number, timepicker
+    .#{ v.$tri-prefix}-input-number,
+    .#{ v.$tri-prefix}-time-picker-input {
+      border-color : theming.tri-color($error);
+      @at-root &:not([disabled]):hover {
+        border-color : theming.tri-color($error);
+      }
+    }
+
+    .#{ v.$tri-prefix}-mention-wrapper {
+      .#{ v.$tri-prefix}-mention-editor {
+        @at-root &,
+        &:not([disabled]):hover {
+          border-color : theming.tri-color($error);
+        }
+      }
+    }
+  }
+
+  .is-validating {
+    @at-root &.has-feedback:after {
+      color : theming.tri-color($primary);
+    }
+    @at-root &.has-feedback .#{form-prefix-cls}-item-children-icon {
+      color : theming.tri-color($primary);
+    }
+  }
+}

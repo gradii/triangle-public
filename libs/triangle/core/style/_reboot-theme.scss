@@ -1,0 +1,49 @@
+@use "sass:map";
+@use "theming";
+
+@use "../themes/theme";
+
+
+@mixin tri-reboot-theme() {
+
+  $foreground : theme.$foreground;
+  $background : theme.$background;
+
+  $primary    : theme.$primary;
+  $warning    : theme.$warning;
+
+  body {
+    color            : theming.tri-color($foreground, text-color);
+    background-color : theming.tri-color($background, body-background);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color : theming.tri-color($foreground, heading-color);
+  }
+
+  a {
+    color : theming.tri-color($foreground, link-color);
+
+    &:hover {
+      color : theming.tri-color($foreground, link-hover-color);
+    }
+
+    &:active {
+      color : theming.tri-color($foreground, link-active-color);
+    }
+  }
+
+  caption {
+    color : theming.tri-color($foreground, text-color-secondary);
+  }
+
+  mark {
+    background-color : theming.tri-color($warning, 100);
+  }
+
+  ::selection {
+    background : theming.tri-color($primary);
+    color      : #fff;
+  }
+
+}

@@ -1,0 +1,9 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"rootDir": ".",
+		"paths": {
+			"@gradii/triangle": ["libs/triangle/src/index.ts"]
+		}
+	}
+}

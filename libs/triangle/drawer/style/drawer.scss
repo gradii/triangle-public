@@ -1,0 +1,170 @@
+@use "../../core/style/variables";
+@use "../../core/style/legend/layout-common";
+@use "../../core/style/legend/vendor-prefixes";
+@use "../../core/style/cdk/a11y";
+
+$tri-drawer-content-z-index     : 1 !default;
+$tri-drawer-side-drawer-z-index : 2 !default;
+$tri-drawer-backdrop-z-index    : 3 !default;
+$tri-drawer-over-drawer-z-index : 4 !default;
+
+// stylelint-disable max-line-length
+// Mixin that creates a new stacking context.
+// see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context
+// stylelint-enable
+@mixin tri-drawer-stacking-context($z-index: 1) {
+  position : relative;
+
+  // Use a z-index to create a new stacking context. (We can't use transform because it breaks fixed
+  // positioning inside of the transformed element).
+  z-index  : $z-index;
+}
+
+.tri-drawer-container {
+  // We need a stacking context here so that the backdrop and drawers are clipped to the
+  // TriDrawerContainer. This creates a new z-index stack so we use low numbered z-indices.
+  // We create another stacking context in the '.tri-drawer-content' and in each drawer so that
+  // the application content does not get messed up with our own CSS.
+  @include tri-drawer-stacking-context();
+
+  box-sizing                 : border-box;
+  -webkit-overflow-scrolling : touch;
+
+  // Need this to take up space in the layout.
+  display                    : block;
+
+  // Hide the drawers when they're closed.
+  overflow                   : hidden;
+
+  &[fullscreen] {
+    @include layout-common.tri-fill();
+
+    &.tri-drawer-container-has-open {
+      overflow : hidden;
+    }
+  }
+
+  // When the consumer explicitly enabled the backdrop,
+  // we have to pull the side drawers above it.
+  &.tri-drawer-container-explicit-backdrop .tri-drawer-side {
+    z-index : $tri-drawer-backdrop-z-index;
+  }
+
+  // Note that the `NoopAnimationsModule` is being handled inside of the component code.
+  &.ng-animate-disabled, .ng-animate-disabled & {
+    .tri-drawer-backdrop, .tri-drawer-content {
+      transition : none;
+    }
+  }
+}
+
+.tri-drawer-backdrop {
+  @include layout-common.tri-fill();
+
+  display    : block;
+
+  // Because of the new stacking context, the z-index stack is new and we can use our own
+  // numbers.
+  z-index    : $tri-drawer-backdrop-z-index;
+
+  // We use 'visibility: hidden | visible' because 'display: none' will not animate any
+  // transitions, while visibility will interpolate transitions properly.
+  // see https://developer.mozilla.org/en-US/docs/Web/CSS/visibility, the Interpolation
+  // section.
+  visibility : hidden;
+
+  &.tri-drawer-shown {
+    visibility : visible;
+  }
+
+  .tri-drawer-transition & {
+    transition        : {
+      duration        : variables.$swift-ease-out-duration;
+      timing-function : variables.$swift-ease-out-timing-function;
+      property        : background-color, visibility;
+    }
+  }
+
+  @include a11y.cdk-high-contrast(active, off) {
+    opacity : 0.5;
+  }
+}
+
+.tri-drawer-content {
+  @include tri-drawer-stacking-context($tri-drawer-content-z-index);
+
+  display  : block;
+  height   : 100%;
+  overflow : auto;
+
+  .tri-drawer-transition & {
+    transition        : {
+      duration        : variables.$swift-ease-out-duration;
+      timing-function : variables.$swift-ease-out-timing-function;
+      property        : transform, margin-left, margin-right;
+    }
+  }
+}
+
+.tri-drawer {
+  $high-contrast-border : solid 1px currentColor;
+
+  @include tri-drawer-stacking-context($tri-drawer-over-drawer-z-index);
+
+  display               : block;
+  position              : absolute;
+  top                   : 0;
+  bottom                : 0;
+  z-index               : 3;
+  outline               : 0;
+  box-sizing            : border-box;
+  overflow-y            : auto; // TODO(kara): revisit scrolling behavior for drawers
+  transform             : translate3d(-100%, 0, 0);
+
+  &, [dir="rtl"] &.tri-drawer-end {
+    @include a11y.cdk-high-contrast(active, off) {
+      border-right : $high-contrast-border;
+    }
+  }
+
+  [dir="rtl"] &, &.tri-drawer-end {
+    @include a11y.cdk-high-contrast(active, off) {
+      border-left  : $high-contrast-border;
+      border-right : none;
+    }
+  }
+
+  &.tri-drawer-side {
+    z-index : $tri-drawer-side-drawer-z-index;
+  }
+
+  &.tri-drawer-end {
+    right     : 0;
+    transform : translate3d(100%, 0, 0);
+  }
+
+  [dir="rtl"] & {
+    transform : translate3d(100%, 0, 0);
+
+    &.tri-drawer-end {
+      left      : 0;
+      right     : auto;
+      transform : translate3d(-100%, 0, 0);
+    }
+  }
+}
+
+// Note that this div isn't strictly necessary on all browsers, however we need it in
+// order to avoid a layout issue in Chrome. The issue is that in RTL mode the browser doesn't
+// account for the sidenav's scrollbar while positioning, which ends up pushing it partially
+// out of the screen. We work around the issue by having the scrollbar be on this inner container.
+.tri-drawer-inner-container {
+  width                      : 100%;
+  height                     : 100%;
+  overflow                   : auto;
+  -webkit-overflow-scrolling : touch;
+}
+
+.tri-sidenav-fixed {
+  position : fixed;
+}

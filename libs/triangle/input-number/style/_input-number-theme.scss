@@ -1,0 +1,99 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+
+@use "../../input/style/input-mixin";
+@use "../../input/style/input-theme";
+@use "../../core/style/mixins/compatibility";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$input-number-prefix-cls : "#{v.$tri-prefix}-input-number";
+
+@mixin handler-disabled() {
+  opacity : 0.72;
+  color   : #ccc !important;
+  cursor  : not-allowed;
+}
+
+@mixin tri-input-number-theme() {
+  $primary    : theme.$primary;
+  $foreground : theme.$foreground;
+  $background : theme.$background;
+
+
+  .#{$input-number-prefix-cls} {
+    @include input-theme.tri-input-theme();
+    //font-size     : $font-size-base;
+    //height        : $input-height-base;
+    border        : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+    border-radius : v.$border-radius-base;
+
+    @at-root &-handler {
+      color : theming.tri-color($foreground, text-color-secondary);
+      @at-root &:active {
+        background : #f4f4f4;
+      }
+      @at-root &:hover #{&}-up-inner,
+      &:hover #{&}-down-inner {
+        color : theming.tri-color($primary, 400);
+      }
+    }
+
+    @at-root &-handler-up-inner,
+    &-handler-down-inner {
+      color : theming.tri-color($foreground, text-color-secondary);
+    }
+
+    @at-root &-input {
+      color            : theming.tri-color($foreground, input-color);
+      background-color : theming.tri-color($foreground, input-bg);
+      border           : 0;
+      border-radius    : v.$border-radius-base;
+      @include compatibility.placeholder();
+
+      @at-root &[disabled] {
+        @include input-theme.tri-input-disabled-theme();
+      }
+    }
+
+    @at-root &-handler-wrap {
+      border-left   : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+      background    : theming.tri-color($background, component-background);
+      border-radius : 0 v.$border-radius-base v.$border-radius-base 0;
+    }
+
+    @at-root &-handler-down {
+      border-top : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+    }
+
+    @at-root &-disabled {
+      .#{$input-number-prefix-cls}-input {
+        background-color : theming.tri-color($background, disabled-bg);
+      }
+    }
+
+    @at-root &-handler-down-disabled,
+    &-handler-up-disabled,
+    &-disabled {
+      .#{$input-number-prefix-cls}-handler-down-inner,
+      .#{$input-number-prefix-cls}-handler-up-inner {
+        @include handler-disabled();
+      }
+    }
+
+    @at-root &-disabled {
+      .#{$input-number-prefix-cls}-input {
+        opacity : 0.72;
+        cursor  : not-allowed;
+      }
+
+      .#{$input-number-prefix-cls}-handler-wrap {
+        display : none;
+      }
+
+      .#{$input-number-prefix-cls}-handler {
+        @include handler-disabled();
+      }
+    }
+  }
+}

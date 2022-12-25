@@ -1,0 +1,32 @@
+@use '../../core/style/cdk/a11y';
+
+$row-padding: 16px !default;
+
+.tri-navbar {
+  @include a11y.cdk-high-contrast(active, off) {
+    outline: solid 1px;
+  }
+}
+
+.tri-navbar-row, .tri-navbar-single-row {
+  display: flex;
+  box-sizing: border-box;
+
+  padding: 0 $row-padding;
+  width: 100%;
+
+  // Flexbox Vertical Alignment
+  flex-direction: row;
+  align-items: center;
+
+  // Per Material specs a navbar cannot have multiple lines inside of a single row.
+  // Disable text wrapping inside of the navbar. Developers are still able to overwrite it.
+  white-space: nowrap;
+}
+
+.tri-navbar-multiple-rows {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 100%;
+}

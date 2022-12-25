@@ -1,0 +1,57 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/mixins";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$layout-prefix-cls         : "#{ v.$tri-prefix}-layout";
+
+$_foreground               : theme.$foreground;
+$_background               : theme.$background;
+
+// Layout
+$layout-body-background    : #ececec !default;
+$layout-header-background  : #404040 !default;
+$layout-sider-background   : $layout-header-background !default;
+$layout-trigger-background : mixins.tint(theming.tri-color($_foreground, heading-color), 20%) !default;
+$layout-trigger-color      : #fff !default;
+
+
+@mixin tri-layout-theme() {
+
+  .#{$layout-prefix-cls} {
+    background : $layout-body-background;
+
+    @at-root &-header-light {
+      background : theming.tri-color($_background, background-color-base);
+    }
+
+    @at-root &-header-dark {
+      background : $layout-header-background;
+    }
+
+    @at-root &-footer {
+      color : theming.tri-color($_foreground, text-color);
+    }
+
+    @at-root &-sider {
+      background : $layout-sider-background;
+
+      @at-root &-trigger {
+        background : $layout-trigger-background;
+        color      : $layout-trigger-color;
+      }
+
+      @at-root &-zero-width {
+        @at-root &-trigger {
+          background : $layout-sider-background;
+          color      : #fff;
+
+          @at-root &:hover {
+            background : mixins.tint($layout-sider-background, 10%);
+          }
+        }
+      }
+    }
+  }
+}

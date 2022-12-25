@@ -1,0 +1,32 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$breadcrumb-prefix-cls : "#{ v.$tri-prefix}-breadcrumb";
+
+@mixin tri-breadcrumb-theme($theme) {
+  $foreground : map.get($theme, foreground);
+  $primary    : map.get($theme, primary);
+
+  .#{$breadcrumb-prefix-cls} {
+    color : theming.tri-color($foreground, text-color);
+
+    a {
+      color : theming.tri-color($foreground, text-color);
+
+      @at-root &:hover {
+        color : theming.tri-color($primary, 400);
+      }
+    }
+
+    @at-root & > span:last-child {
+      color : theming.tri-color($foreground, text-color);
+    }
+
+    @at-root &-separator {
+      color : rgba(0, 0, 0, 0.3);
+    }
+
+  }
+}

@@ -1,0 +1,81 @@
+@import "./typography";
+@import "../../autocomplete/style/autocomplete-theme";
+@import "../../badge/style/badge-theme";
+//@import '../../bottom-sheet/bottom-sheet-theme';
+@import "../../button/style/button-theme";
+//@import '../../button-toggle/button-toggle-theme';
+@import "../../card/style/card-theme";
+@import "../../checkbox/style/checkbox-theme";
+//@import '../../chips/style/chips-theme';
+//@import '../../table/table-theme';
+//@import '../../datepicker/datepicker-theme';
+@import "../../dialog/style/dialog-theme";
+@import "../../expansion/expansion-theme";
+@import "../../grid-list/grid-list-theme";
+@import "../../icon/style/icon-theme";
+@import "../../input/style/input-theme";
+@import "../../list/style/list-theme";
+@import "../../menu/style/menu-theme";
+@import "../../paginator/paginator-theme";
+@import "../../progress-bar/progress-bar-theme";
+@import "../../progress-spinner/progress-spinner-theme";
+@import "../../radio/style/radio-theme";
+@import "../../select/style/select-theme";
+@import "../../sidenav/style/sidenav-theme";
+@import "../../slide-toggle/slide-toggle-theme";
+@import "../../slider/style/slider-theme";
+@import "../../stepper/stepper-theme";
+@import "../../sort/sort-theme";
+@import "../../tabs/tabs-theme";
+@import "../../toolbar/toolbar-theme";
+@import "../../tooltip/tooltip-theme";
+@import "../../snack-bar/snack-bar-theme";
+@import "../option/option-theme";
+@import "../option/optgroup-theme";
+@import "../../form-field/form-field-theme";
+@import "../../tree/style/tree-theme";
+
+
+// Includes all of the typographic styles.
+@mixin gradii-triangle-typography-global($config: null) {
+  @if $config == null {
+    $config : tri-typography-config();
+  }
+
+  //@include tri-badge-typography($config);
+  //@include tri-base-typography($config);
+  //@include tri-autocomplete-typography($config);
+  //@include tri-bottom-sheet-typography($config);
+  //@include tri-button-typography($config);
+  //@include tri-button-toggle-typography($config);
+  //@include tri-card-typography($config);
+  //@include tri-checkbox-typography($config);
+  //@include tri-chips-typography($config);
+  //@include tri-table-typography($config);
+  //@include tri-datepicker-typography($config);
+  //@include tri-dialog-typography($config);
+  //@include tri-expansion-panel-typography($config);
+  //@include tri-form-field-typography($config);
+  //@include tri-grid-list-typography($config);
+  //@include tri-icon-typography($config);
+  //@include tri-input-typography($config);
+  //@include tri-menu-typography($config);
+  //@include tri-paginator-typography($config);
+  //@include tri-progress-bar-typography($config);
+  //@include tri-progress-spinner-typography($config);
+  //@include tri-radio-typography($config);
+  //@include tri-select-typography($config);
+  //@include tri-sidenav-typography($config);
+  //@include tri-slide-toggle-typography($config);
+  //@include tri-slider-typography($config);
+  //@include tri-stepper-typography($config);
+  //@include tri-sort-typography($config);
+  //@include tri-tabs-typography($config);
+  //@include tri-toolbar-typography($config);
+  //@include tri-tooltip-typography($config);
+  //@include tri-list-typography($config);
+  //@include tri-option-typography($config);
+  //@include tri-optgroup-typography($config);
+  //@include tri-snack-bar-typography($config);
+  //@include tri-tree-typography($config);
+}

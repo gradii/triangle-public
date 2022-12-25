@@ -1,0 +1,118 @@
+@use "sass:math";
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/themes/theme";
+
+$switch-prefix-cls             : "#{v.$tri-prefix}-switch";
+$switch-duration               : .36s;
+
+$switch-height                 : 1.5rem;
+$switch-line-height            : math.div($switch-height, v.$font-size-base);
+$switch-inner-height           : $switch-height - math.div(4px, v.$root-font-size);
+$switch-inner-padding-x        : ($switch-height - $switch-inner-height)*0.5;
+$switch-inner-padding-y        : ($switch-height - $switch-inner-height)*0.5;
+
+$switch-height-sm              : 1.35rem;
+$switch-line-height-sm         : $switch-height-sm * 0.9;
+$switch-inner-height-sm        : $switch-height-sm - math.div(2px, v.$root-font-size);
+$switch-inner-padding-x-sm     : math.div(1px, v.$root-font-size) * 1rem;
+$switch-inner-padding-y-sm     : ($switch-height-sm - $switch-inner-height-sm)*0.5;
+
+$switch-inner-active-scalar    : 1.5;
+$switch-inner-active-scalar-sm : 1.25;
+
+.#{$switch-prefix-cls} {
+  position       : relative;
+  display        : inline-block;
+  box-sizing     : border-box;
+  height         : $switch-height;
+  min-width      : $switch-height*2;
+  vertical-align : middle;
+  border-radius  : $switch-height * 0.5;
+  cursor         : pointer;
+  transition     : all $switch-duration;
+  user-select    : none;
+
+  @at-root &-inner {
+    color        : #fff;
+    font-size    : v.$font-size-base;
+    line-height  : $switch-line-height;
+    margin-left  : $switch-inner-height + $switch-inner-padding-x*2;
+    margin-right : .375rem;
+    display      : block;
+  }
+
+  @at-root &:after {
+    position      : absolute;
+    @include mixins.square($switch-inner-height);
+    left          : $switch-inner-padding-x;
+    top           : $switch-inner-padding-y;
+
+    border-radius : $switch-inner-height * 0.5;
+    content       : " ";
+    cursor        : pointer;
+    transition    : all $switch-duration v.$ease-in-out-circ;
+  }
+
+  @at-root &:active:after {
+    width : $switch-inner-height * $switch-inner-active-scalar
+  }
+
+  @at-root &:focus:active {
+    box-shadow : none;
+  }
+
+  @at-root &-checked {
+
+    .#{$switch-prefix-cls}-inner {
+      margin-left  : 0.375rem;
+      margin-right : $switch-inner-height + $switch-inner-padding-x*2;
+    }
+
+    @at-root &:after {
+      left        : 100%;
+      margin-left : - ($switch-inner-height + $switch-inner-padding-x);
+    }
+
+    @at-root &:active:after {
+      margin-left : - ($switch-inner-height*$switch-inner-active-scalar + $switch-inner-padding-x);
+    }
+  }
+
+  @at-root &-small {
+    height    : $switch-height-sm;
+    min-width : $switch-height-sm*2;
+
+    .#{$switch-prefix-cls}-inner {
+      line-height  : $switch-line-height-sm;
+      margin-left  : $switch-inner-height-sm + $switch-inner-padding-x-sm*2;
+      margin-right : .1875rem;
+    }
+
+    @at-root &:after {
+      @include mixins.square($switch-inner-height-sm);
+      top  : $switch-inner-padding-y-sm;
+      left : $switch-inner-padding-x-sm;
+    }
+
+    @at-root &:active:after {
+      width : $switch-inner-height-sm*$switch-inner-active-scalar-sm;
+    }
+  }
+
+  @at-root &-small#{&}-checked {
+    @at-root &:after {
+      left        : 100%;
+      margin-left : - ($switch-inner-height-sm + $switch-inner-padding-x-sm);
+    }
+
+    .#{$switch-prefix-cls}-inner {
+      margin-left  : .1875rem;
+      margin-right : $switch-inner-height-sm + $switch-inner-padding-x-sm*2;
+    }
+  }
+
+  @at-root &-small:active#{&}-checked:after {
+    margin-left : - ($switch-inner-height-sm*$switch-inner-active-scalar-sm + $switch-inner-padding-x-sm);
+  }
+}

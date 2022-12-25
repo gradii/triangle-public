@@ -1,0 +1,39 @@
+<div
+  class="{{ prefixCls }}-footer {{ isRange ? prefixCls + '-range-bottom' : '' }} {{ hasTimePicker ? prefixCls + '-footer-show-ok' : '' }}">
+  <div *ngIf="rangeQuickSelector" class="{{ prefixCls }}-footer-extra {{ prefixCls }}-range-quick-selector">
+    <ng-container *ngTemplateOutlet="rangeQuickSelector"></ng-container>
+  </div>
+  <div *ngIf="extraFooter"
+       class="{{ prefixCls }}-footer-extra {{ isRange ? prefixCls + '-range-quick-selector' : '' }}">
+    <ng-container [ngSwitch]="true">
+      <ng-container *ngSwitchCase="isTemplateRef(extraFooter)">
+        <ng-container *stringTemplateOutlet="extraFooter"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="isNonEmptyString(extraFooter)">
+        <span [innerHTML]="extraFooter"></span>
+      </ng-container>
+    </ng-container>
+  </div>
+  <span *ngIf="showToday || hasTimePicker" class="{{ prefixCls }}-footer-btn">
+    <today-button
+      (clickToday)="clickToday.emit($event)"
+      *ngIf="showToday"
+      [disabledDate]="disabledDate"
+      [hasTimePicker]="hasTimePicker"
+      [locale]="locale"
+    ></today-button>
+    <time-picker-button
+      (showTimePickerChange)="showTimePickerChange.emit($event)"
+      *ngIf="hasTimePicker"
+      [locale]="locale"
+      [showTimePicker]="showTimePicker"
+      [timePickerDisabled]="timePickerDisabled"
+    ></time-picker-button>
+    <ok-button
+      (clickOk)="clickOk.emit()"
+      *ngIf="hasTimePicker"
+      [locale]="locale"
+      [okDisabled]="okDisabled"
+    ></ok-button>
+  </span>
+</div>

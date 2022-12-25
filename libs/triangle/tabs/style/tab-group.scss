@@ -1,0 +1,52 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables";
+@use "../../core/style/cdk/a11y";
+
+@use "./tabs-common";
+
+.tri-tab-group {
+  display        : flex;
+  flex-direction : column;
+
+  &.tri-tab-group-inverted-header {
+    flex-direction : column-reverse;
+  }
+}
+
+// Note that we only want to target direct descendant tabs.
+.tri-tab-group[tri-stretch-tabs] > .tri-tab-header .tri-tab-label {
+  flex-basis : 0;
+  flex-grow  : 1;
+}
+
+// The bottom section of the view; contains the tab bodies
+.tri-tab-body-wrapper {
+  @include mixins.noop-animation();
+  position   : relative;
+  overflow   : hidden;
+  display    : flex;
+  flex-basis : 100%;
+  transition : height tabs-common.$tri-tab-animation-duration mixins.$ease-in-out-curve-function;
+}
+
+// Wraps each tab body
+.tri-tab-body {
+  @include mixins.tri-fill();
+  display    : block;
+  overflow   : hidden;
+
+  // Fix for auto content wrapping in IE11
+  flex-basis : 100%;
+
+  &.tri-tab-body-active {
+    position   : relative;
+    overflow-x : hidden;
+    overflow-y : auto;
+    z-index    : 1;
+    flex-grow  : 1;
+  }
+
+  .tri-tab-group.tri-tab-group-dynamic-height &.tri-tab-body-active {
+    overflow-y : hidden;
+  }
+}

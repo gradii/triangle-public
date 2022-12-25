@@ -1,0 +1,22 @@
+/* stylelint-disable material/no-prefixes */
+@mixin user-select($value) {
+  user-select         : $value;
+}
+
+@mixin input-placeholder {
+  &::placeholder {
+    @content;
+  }
+}
+
+@mixin cursor-grab {
+  cursor : grab;
+}
+
+@mixin cursor-grabbing {
+  cursor : grabbing;
+}
+
+@mixin backface-visibility($value) {
+  backface-visibility         : $value;
+}

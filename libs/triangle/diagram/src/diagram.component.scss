@@ -1,0 +1,41 @@
+
+$background-color: #fafafa !default;
+
+$background-grid-line-color: rgba(128, 128, 128, 0.15) !default;
+:host {
+  position : relative;
+  cursor   : move;
+  overflow : hidden;
+}
+
+:host {
+  display          : flex;
+  height           : 100%;
+  width            : 100%;
+  /*background-color : #fafafa;*/
+  background-image : linear-gradient(
+      0deg,
+      transparent 24%,
+      $background-grid-line-color 25%,
+      $background-grid-line-color 26%,
+      transparent 27%,
+      transparent 74%,
+      $background-grid-line-color 75%,
+      $background-grid-line-color 76%,
+      transparent 77%,
+      transparent
+  ),
+  linear-gradient(
+      90deg,
+      transparent 24%,
+      rgba(128, 128, 128, 0.15) 25%,
+      rgba(128, 128, 128, 0.15) 26%,
+      transparent 27%,
+      transparent 74%,
+      rgba(128, 128, 128, 0.15) 75%,
+      rgba(128, 128, 128, 0.15) 76%,
+      transparent 77%,
+      transparent
+  );
+  background-size  : 30px 30px;
+}

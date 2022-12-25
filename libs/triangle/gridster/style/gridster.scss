@@ -1,0 +1,69 @@
+gridster {
+  position    : relative;
+  box-sizing  : border-box;
+  background  : grey;
+  width       : 100%;
+  height      : 100%;
+  user-select : none;
+  display     : block;
+
+  &.fit {
+    overflow-x : hidden;
+    overflow-y : hidden;
+  }
+
+  &.scrollVertical {
+    overflow-x : hidden;
+    overflow-y : auto;
+  }
+
+  &.scrollHorizontal {
+    overflow-x : auto;
+    overflow-y : hidden;
+  }
+
+  &.fixed {
+    overflow : auto;
+  }
+
+  &.mobile {
+    overflow-x : hidden;
+    overflow-y : auto;
+  }
+
+  &.mobile &-item {
+    position : relative;
+  }
+
+  &.gridSize {
+    height : initial;
+    width  : initial;
+  }
+
+  &.gridSize.fit {
+    height : 100%;
+    width  : 100%;
+  }
+
+  & .#{&}-column, & .#{&}-row {
+    position   : absolute;
+    display    : none;
+    transition : .3s;
+    box-sizing : border-box;
+  }
+
+  &.display-grid .#{&}-column, &.display-grid .#{&}-row {
+    display : block;
+  }
+
+  & .#{&}-column {
+    border-left  : 1px solid white;
+    border-right : 1px solid white;
+  }
+
+  & .#{&}-row {
+    border-top    : 1px solid white;
+    border-bottom : 1px solid white;
+  }
+
+}

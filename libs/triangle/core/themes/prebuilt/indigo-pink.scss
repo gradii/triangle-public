@@ -1,0 +1,19 @@
+@use "../../style/theming";
+@use "../../style/variables" as v;
+@use "../theme" with (
+  $primary : theming.tri-palette(v.$tri-indigo),
+  $secondary  : theming.tri-palette(v.$tri-pink, A200, A100, A400),
+  $info    : theming.tri-palette(v.$tri-blue, A200, A100, A400),
+  $success : theming.tri-palette(v.$tri-green, A200, A100, A400),
+);
+
+@use "../theme-global";
+@use "../../core-theme";
+
+
+// Include non-theme styles for core.
+@include core-theme.tri-core();
+
+
+//// Include all theme styles for the components.
+@include theme-global.gradii-triangle-theme-global();

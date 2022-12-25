@@ -1,0 +1,1 @@
+mit. angular material icon

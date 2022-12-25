@@ -1,0 +1,83 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables";
+
+$option-prefix-cls    : "#{mixins.$tri-prefix}-option";
+
+$option-group-padding : 0.875rem;
+
+.#{$option-prefix-cls} {
+  @include menu-item-base();
+
+  position       : relative;
+  cursor         : pointer;
+  outline        : none;
+
+  display        : flex;
+  flex-direction : row;
+  align-items    : center;
+
+  max-width      : 100%;
+
+  padding        : 0.3125rem mixins.$control-padding-horizontal;
+  overflow       : hidden;
+  color          : mixins.$text-color;
+  font-weight    : normal;
+  //line-height   : rem-convert(rem, 22px);
+  //line-height    : 22px;
+  white-space    : nowrap;
+  text-overflow  : ellipsis;
+  transition     : background 0.3s ease;
+
+  &[aria-disabled="true"] {
+    user-select : none;
+    cursor      : default;
+  }
+
+
+  @at-root &:first-child {
+    @include mixins.border-radius((mixins.$border-radius-base mixins.$border-radius-base 0 0));
+  }
+
+  @at-root &:last-child {
+    @include mixins.border-radius((0 0 mixins.$border-radius-base mixins.$border-radius-base));
+  }
+
+  @at-root &:hover:not(#{&}-disabled),
+  &:focus:not(#{&}-disabled) {
+    background-color : $item-hover-bg;
+  }
+
+  @at-root &-selected {
+    background-color : $background-color-base;
+    font-weight      : bold;
+    color            : mixins.$text-color;
+  }
+
+  @at-root &-active {
+    background-color : $item-active-bg;
+  }
+
+  @at-root &-disabled {
+    color : $disabled-color;
+  }
+
+  @at-root &-divider {
+    height           : 1px;
+    margin           : 1px 0;
+    overflow         : hidden;
+    background-color : #e5e5e5;
+    line-height      : 0;
+  }
+
+
+  &-group &:not(#{&}-multiple) {
+    padding-left : $option-group-padding * 2;
+  }
+
+  [dir="rtl"] & {
+    padding-left  : $option-group-padding;
+    padding-right : $option-group-padding * 2;
+  }
+
+}
+

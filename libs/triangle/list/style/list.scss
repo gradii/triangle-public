@@ -1,0 +1,264 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+
+
+$_foreground                          : theme.$foreground;
+$_background                          : theme.$background;
+
+$list-prefix-cls                      : #{v.$tri-prefix}-list !default;
+
+$list-header-background               : transparent !default;
+$list-footer-background               : transparent !default;
+$list-empty-text-padding              : 1rem !default;
+$list-item-padding                    : 0.75rem 0 !default;
+$list-item-padding-sm                 : 0.5rem 1rem !default;
+$list-item-padding-lg                 : 16px 24px !default;
+$list-item-meta-margin-bottom         : 1rem !default;
+$list-item-meta-avatar-margin-right   : 1rem !default;
+$list-item-meta-title-margin-bottom   : 0.75rem !default;
+$list-customize-card-bg               : theming.tri-color($_background, component-background) !default;
+$list-item-meta-description-font-size : v.$font-size-base !default;
+
+
+.#{$list-prefix-cls} {
+  @include mixins.reset-component();
+
+  position : relative;
+
+  * {
+    outline : none;
+  }
+
+  &-pagination {
+    margin-top : 2rem;
+    text-align : right;
+
+    // https://github.com/ant-design/ant-design/issues/20037
+    .#{v.$tri-prefix}-pagination-options {
+      text-align : left;
+    }
+  }
+
+  &-more {
+    margin-top : 0.75rem;
+    text-align : center;
+
+    button {
+      padding-right : 32px;
+      padding-left  : 32px;
+    }
+  }
+
+  &-adjust-hue {
+    min-height : 40px;
+    text-align : center;
+  }
+
+  &-empty-text {
+    padding    : $list-empty-text-padding;
+    color      : theming.tri-color($_foreground, disabled-color);
+    font-size  : v.$font-size-base;
+    text-align : center;
+  }
+
+  &-items {
+    margin     : 0;
+    padding    : 0;
+    list-style : none;
+  }
+
+  &-item {
+    display         : flex;
+    align-items     : center;
+    justify-content : space-between;
+    padding         : $list-item-padding;
+    color           : theming.tri-color($_foreground, text-color);
+
+    &-meta {
+      display     : flex;
+      flex        : 1;
+      align-items : flex-start;
+      max-width   : 100%;
+
+      &-avatar {
+        margin-right : $list-item-meta-avatar-margin-right;
+      }
+
+      &-content {
+        flex  : 1 0;
+        width : 0;
+
+        color : theming.tri-color($_foreground, text-color);
+      }
+
+      &-title {
+        margin-bottom : 4px;
+        color         : theming.tri-color($_foreground, text-color);
+        font-size     : v.$font-size-base;
+        line-height   : v.$line-height-base;
+
+        > a {
+          color      : theming.tri-color($_foreground, text-color);
+          transition : all 0.3s;
+
+          &:hover {
+            color : theming.tri-color($_foreground, primary-color);
+          }
+        }
+      }
+
+      &-description {
+        color       : theming.tri-color($_foreground, text-color-secondary);
+        font-size   : $list-item-meta-description-font-size;
+        line-height : v.$line-height-base;
+      }
+    }
+
+    &-action {
+      flex        : 0 0 auto;
+      margin-left : 48px;
+      padding     : 0;
+      font-size   : 0;
+      list-style  : none;
+
+      & > li {
+        position    : relative;
+        display     : inline-block;
+        padding     : 0 0.5rem;
+        color       : theming.tri-color($_foreground, text-color-secondary);
+        font-size   : v.$font-size-base;
+        line-height : v.$line-height-base;
+        text-align  : center;
+
+        &:first-child {
+          padding-left : 0;
+        }
+      }
+
+      &-split {
+        position         : absolute;
+        top              : 50%;
+        right            : 0;
+        width            : 1px;
+        height           : 14px;
+        margin-top       : -7px;
+        background-color : theming.tri-color($_foreground, border-color-split);
+      }
+    }
+  }
+
+  &-header {
+    background : $list-header-background;
+  }
+
+  &-footer {
+    background : $list-footer-background;
+  }
+
+  &-header,
+  &-footer {
+    padding-top    : 0.75rem;
+    padding-bottom : 0.75rem;
+  }
+
+  &-empty {
+    padding    : 1rem 0;
+    color      : theming.tri-color($_foreground, text-color-secondary);
+    font-size  : 12px;
+    text-align : center;
+  }
+
+  &-split &-item {
+    border-bottom : 1px solid theming.tri-color($_foreground, border-color-split);
+
+    &:last-child {
+      border-bottom : none;
+    }
+  }
+
+  &-split &-header {
+    border-bottom : 1px solid theming.tri-color($_foreground, border-color-split);
+  }
+
+  &-split#{&}-empty #{&}-footer {
+    border-top : 1px solid theming.tri-color($_foreground, border-color-split);
+  }
+
+  &-loading &-adjust-hue-nested-loading {
+    min-height : 32px;
+  }
+
+  &-split#{&}-something-after-last-item .#{v.$tri-prefix}-adjust-hue-container > &-items > &-item:last-child {
+    border-bottom : 1px solid theming.tri-color($_foreground, border-color-split);
+  }
+
+  &-lg &-item {
+    padding : $list-item-padding-lg;
+  }
+
+  &-sm &-item {
+    padding : $list-item-padding-sm;
+  }
+
+  &-vertical &-item {
+    align-items : initial;
+
+    &-main {
+      display : block;
+      flex    : 1;
+    }
+
+    &-extra {
+      margin-left : 40px;
+    }
+
+    &-meta {
+      margin-bottom : $list-item-meta-margin-bottom;
+
+      &-title {
+        margin-bottom : $list-item-meta-title-margin-bottom;
+        color         : v.$heading-color;
+        font-size     : v.$font-size-lg;
+        line-height   : 24px;
+      }
+    }
+
+    &-action {
+      margin-top  : 1rem;
+      margin-left : auto;
+
+      > li {
+        padding : 0 1rem;
+
+        &:first-child {
+          padding-left : 0;
+        }
+      }
+    }
+  }
+
+  &-grid .#{v.$tri-prefix}-col > &-item {
+    display        : block;
+    max-width      : 100%;
+    margin-bottom  : 1rem;
+    padding-top    : 0;
+    padding-bottom : 0;
+    border-bottom  : none;
+  }
+
+  // ============================ without flex ============================
+  &-item-no-flex {
+    display : block;
+  }
+
+  // Horizontal
+  &:not(.#{$list-prefix-cls}-vertical) {
+    .#{$list-prefix-cls}-item-no-flex {
+      .#{$list-prefix-cls}-item-action {
+        float : right;
+      }
+    }
+  }
+}

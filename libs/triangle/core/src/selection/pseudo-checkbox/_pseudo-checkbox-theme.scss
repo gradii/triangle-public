@@ -1,0 +1,62 @@
+@use "sass:map";
+@use "../../../style/theming";
+@use "../../../themes/theme";
+
+
+@mixin tri-pseudo-checkbox-theme() {
+  $foreground                   : theme.$foreground;
+  $is-dark-theme                : theme.$is-dark;
+  $primary                      : theme.$primary;
+  $secondary                    : theme.$secondary;
+  $warning                      : theme.$warning;
+  $background                   : theme.$background;
+
+  // NOTE(traviskaufman): While the spec calls for translucent blacks/whites for disabled colors,
+  // this does not work well with elements layered on top of one another. To get around this we
+  // blend the colors together based on the base color and the theme background.
+  $white-30pct-opacity-on-dark  : #686868;
+  $black-26pct-opacity-on-light : #b0b0b0;
+  $disabled-color               : if($is-dark-theme, $white-30pct-opacity-on-dark, $black-26pct-opacity-on-light);
+  $colored-box-selector         : ".tri-pseudo-checkbox-checked, .tri-pseudo-checkbox-indeterminate";
+
+  .tri-pseudo-checkbox {
+    color : theming.tri-color($foreground, secondary-text);
+
+    &::after {
+      color : theming.tri-color($background, background);
+    }
+  }
+
+  .tri-pseudo-checkbox-disabled {
+    color : $disabled-color;
+  }
+
+  .tri-primary .tri-pseudo-checkbox-checked,
+  .tri-primary .tri-pseudo-checkbox-indeterminate {
+    background : theming.tri-color($primary);
+  }
+
+  // Default to the accent color. Note that the pseudo checkboxes are meant to inherit the
+  // theme from their parent, rather than implementing their own theming, which is why we
+  // don't attach to the `tri-*` classes. Also note that this needs to be below `.tri-primary`
+  // in order to allow for the color to be overwritten if the checkbox is inside a parent that
+  // has `tri-accent` and is placed inside another parent that has `tri-primary`.
+  .tri-pseudo-checkbox-checked,
+  .tri-pseudo-checkbox-indeterminate,
+  .tri-accent .tri-pseudo-checkbox-checked,
+  .tri-accent .tri-pseudo-checkbox-indeterminate {
+    background : theming.tri-color($primary);
+  }
+
+  .tri-warn .tri-pseudo-checkbox-checked,
+  .tri-warn .tri-pseudo-checkbox-indeterminate {
+    background : theming.tri-color($warning);
+  }
+
+  .tri-pseudo-checkbox-checked,
+  .tri-pseudo-checkbox-indeterminate {
+    &.tri-pseudo-checkbox-disabled {
+      background : $disabled-color;
+    }
+  }
+}

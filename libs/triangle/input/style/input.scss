@@ -1,0 +1,12 @@
+@use "../../core/themes/theme";
+@use "../../core/style/variables" as v;
+
+@use "./input-mixin";
+@use "./search-input";
+
+@use "./input-variables";
+
+.#{v.$tri-prefix}-input-full-width {
+  width: 100%;
+  flex: 1 0 auto;
+}

@@ -1,0 +1,192 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/style/theming";
+@use "../../input/style/input-mixin";
+@use "../../input/style/input-theme";
+@use "../../core/themes/theme";
+
+$checkbox-prefix-cls       : "#{v.$tri-prefix}-checkbox" !default;
+
+$primary                   : theme.$primary !default;
+$foreground                : theme.$foreground !default;
+$background                : theme.$background !default;
+
+$checkbox-size             : v.$checkbox-size - 0.125rem !default;
+$checkbox-inner-prefix-cls : "#{$checkbox-prefix-cls}-inner" !default;
+
+@mixin checkboxFn() {
+
+  @keyframes triCheckboxRipperEffect {
+    0% {
+      transform : scale(1);
+      opacity   : 0.5;
+    }
+    100% {
+      transform : scale(1.6);
+      opacity   : 0;
+    }
+  }
+
+  @keyframes triCheckboxInnerEffect {
+    0% {
+      transform : scale(.1);
+      opacity   : 0.2;
+    }
+    100% {
+      transform : scale(1);
+      opacity   : 1;
+    }
+  }
+
+  // 一般状态
+  .#{$checkbox-prefix-cls} {
+    position       : relative;
+    top            : 0.1em;
+    line-height    : 1;
+    white-space    : nowrap;
+    outline        : none;
+    cursor         : pointer;
+    display        : inline-block;
+    width          : $checkbox-size;
+    height         : $checkbox-size;
+    vertical-align : text-bottom;
+
+    @at-root .#{$checkbox-prefix-cls}-wrapper:hover #{&}-inner,
+    &:hover #{&}-inner,
+    &-input:focus + #{&}-inner {
+      outline-color : theming.tri-color($primary);
+    }
+
+    @at-root &-checked:after {
+      position            : absolute;
+      top                 : 0;
+      left                : 0;
+      bottom              : 0;
+      right               : 0;
+      border-radius       : v.$border-radius-sm;
+      outline             : 1px solid theming.tri-color($primary);
+      content             : "";
+
+      animation           : triCheckboxRipperEffect 0.36s ease-in-out;
+      animation-fill-mode : both;
+      visibility          : hidden;
+    }
+
+    @at-root &:hover:after,
+    .#{$checkbox-prefix-cls}-wrapper:hover #{&}:after {
+      visibility : visible;
+    }
+
+    @at-root &-inner {
+      position         : relative;
+      display          : block;
+      width            : $checkbox-size;
+      height           : $checkbox-size;
+      outline          : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+      border-radius    : v.$border-radius-sm;
+      background-color : #fff;
+      transition       : all .3s;
+      font-size        : $checkbox-size;
+
+      @at-root & > tri-icon {
+        position   : absolute;
+        transform  : scale(0);
+        transition : transform .1s v.$ease-in-back;
+      }
+    }
+
+    @at-root &-input {
+      position : absolute;
+      left     : 0;
+      z-index  : 1;
+      cursor   : pointer;
+      opacity  : 0;
+      top      : 0;
+      bottom   : 0;
+      right    : 0;
+      width    : 100%;
+      height   : 100%;
+    }
+  }
+
+  // 半选状态
+  .#{$checkbox-prefix-cls}-indeterminate .#{$checkbox-inner-prefix-cls} > tri-icon {
+    transform : scale(1);
+    color     : white;
+  }
+
+  .#{$checkbox-prefix-cls}-indeterminate.#{$checkbox-prefix-cls}-disabled .#{$checkbox-inner-prefix-cls} > tri-icon {
+    color : theming.tri-color($foreground, disabled-color);
+  }
+
+  // 选中状态
+  .#{$checkbox-prefix-cls}-checked .#{$checkbox-inner-prefix-cls} > tri-icon {
+    transform : scale(1);
+    color     : white;
+    animation : triCheckboxInnerEffect .2s mixins.$ease-out;
+  }
+
+  .#{$checkbox-prefix-cls}-checked,
+  .#{$checkbox-prefix-cls}-indeterminate {
+    .#{$checkbox-inner-prefix-cls} {
+      background-color : theming.tri-color($primary);
+      outline-color    : theming.tri-color($primary);
+    }
+  }
+
+  .#{$checkbox-prefix-cls}-disabled {
+    cursor : not-allowed;
+
+    @at-root &.#{$checkbox-prefix-cls}-checked {
+      .#{$checkbox-inner-prefix-cls} > tri-icon {
+        animation-name : none;
+        color          : theming.tri-color($foreground, disabled-color);
+      }
+    }
+
+    .#{$checkbox-prefix-cls}-input {
+      cursor : not-allowed;
+    }
+
+    .#{$checkbox-inner-prefix-cls} {
+      outline-color    : theming.tri-color($foreground, border-color-base) !important;
+      background-color : input-theme.$input-disabled-bg;
+      @at-root & > tri-icon {
+        animation-name : none;
+        color          : input-theme.$input-disabled-bg;
+      }
+    }
+
+    @at-root & + span {
+      color  : theming.tri-color($foreground, disabled-color);
+      cursor : not-allowed;
+    }
+  }
+
+  .#{$checkbox-prefix-cls}-wrapper {
+    box-sizing  : border-box;
+    cursor      : pointer;
+    font-size   : mixins.$font-size-base;
+    display     : inline-flex;
+    align-items : baseline;
+    list-style  : none;
+    line-height : unset;
+    @at-root &:not(:last-child) {
+      margin-right : 8px;
+    }
+  }
+
+  .#{$checkbox-prefix-cls}-wrapper + span,
+  .#{$checkbox-prefix-cls} + span {
+    padding-left  : .5rem;
+    padding-right : .5rem;
+  }
+
+  .#{$checkbox-prefix-cls}-group {
+    font-size : mixins.$font-size-base;
+    @at-root &-item {
+      display : inline-block;
+    }
+  }
+}
+

@@ -1,0 +1,160 @@
+@use "sass:map";
+@use "../style/variables" as v;
+//@use "../style/mixins";
+@use "../style/theming";
+
+
+$primary                    : theming.tri-palette(v.$tri-indigo) !default;
+$secondary                  : theming.tri-palette(v.$tri-gray, A200, A100, A400) !default;
+$gray                       : theming.tri-palette(v.$tri-gray, A200, A100, A400) !default;
+$grey                       : $gray;
+$info                       : theming.tri-palette(v.$tri-blue) !default;
+$success                    : theming.tri-palette(v.$tri-green) !default;
+$error                      : theming.tri-palette(v.$tri-red) !default;
+$highlight                  : theming.tri-palette(v.$tri-red) !default;
+$warning                    : theming.tri-palette(v.$tri-yellow) !default;
+$is-dark                    : false !default;
+
+
+// Background palette for light themes.
+$_light-theme-background : (
+  status-bar: map.get($gray, 300),
+  app-bar: map.get($gray, 100),
+  background: map.get($gray, 50),
+  hover: rgba(black, 0.04),
+  card: white,
+  dialog: white,
+  disabled-button: rgba(black, 0.12),
+  raised-button: white,
+  focused-button: v.$dark-focused,
+  selected-button: map.get($gray, 300),
+  selected-disabled-button: map.get($gray, 400),
+  disabled-button-toggle: map.get($gray, 200),
+  unselected-chip: map.get($gray, 300),
+  disabled-list-option: map.get($gray, 200),
+  tooltip: map.get($gray, 700),
+  body-background : #fafafa,
+  component-background : #fff,
+  item-active-bg : map.get($primary, 500),
+  item-hover-bg : map.get($primary, 50),
+  background-color-base : map.get($gray, 50),
+  background-color-active : #eee,
+  disabled-bg : map.get($gray, 50), //$background-color-base,
+);
+
+// Background palette for dark themes.
+$_dark-theme-background  : (
+  status-bar: black,
+  app-bar: map.get($gray, 900),
+  background: #303030,
+  hover: rgba(white, 0.04), // TODO(kara): check style with Material Design UX
+  card: map.get($gray, 800),
+  dialog: map.get($gray, 800),
+  disabled-button: rgba(white, 0.12),
+  raised-button: map.get($gray, 800),
+  focused-button: v.$light-focused,
+  selected-button: map.get($gray, 900),
+  selected-disabled-button: map.get($gray, 800),
+  disabled-button-toggle: black,
+  unselected-chip: map.get($gray, 700),
+  disabled-list-option: black,
+  tooltip: map.get($gray, 700),
+  body-background : #fafafa,
+  component-background : #fff,
+  item-active-bg : map.get($primary, 500),
+  item-hover-bg : map.get($primary, 50),
+  background-color-base : map.get($gray, 50),
+  background-color-active : #eee,
+  disabled-bg : map.get($gray, 50), //$background-color-base,
+);
+
+// Foreground palette for light themes.
+$_light-theme-foreground : (
+  base: black,
+  divider: v.$dark-dividers,
+  dividers: v.$dark-dividers,
+  disabled: v.$dark-disabled-text,
+  disabled-button: rgba(black, 0.26),
+  disabled-text: v.$dark-disabled-text,
+  elevation: black,
+  hint-text: v.$dark-disabled-text,
+  secondary-text: v.$dark-secondary-text,
+  icon: rgba(black, 0.54),
+  icons: rgba(black, 0.54),
+  text: rgba(black, 0.87),
+  slider-min: rgba(black, 0.87),
+  slider-off: rgba(black, 0.26),
+  slider-off-active: rgba(black, 0.38),
+  normal-color : #d9d9d9,
+  body-color : map.get($gray, 900),
+  heading-color : #262626,
+  text-color : #595959,
+  text-color-secondary : #919191,
+  heading-color-dark : #f7f7f7,
+  text-color-dark : #e8e8e8,
+  text-color-secondary-dark : #ababab,
+  icon-color : inherit,
+  icon-color-hover : fade(#000, 75%),
+  link-color : map.get($primary, 500),
+  link-hover-color : map.get($primary, 400),
+  link-active-color : map.get($primary, 700),
+  outline-color : map.get($primary, 500),
+  //Border color
+  border-color-base : #d9d9d9, // base border outline a component
+  border-color-split : #e9e9e9, // split border inside a component
+  // Default background color for disabled states, Collapse wrappers,
+  // and several active and hover states.
+  //background-color-base : map_get($tri-gray, 50),
+  //background-color-active : #eee,
+  // Disabled states
+  disabled-color : rgba(#000, 0.25),
+  placeholder-color: rgba(#000, 0.25),
+  disabled-color-dark : rgba(#fff, 0.35),
+);
+
+// Foreground palette for dark themes.
+$_dark-theme-foreground  : (
+  base: white,
+  divider: v.$light-dividers,
+  dividers: v.$light-dividers,
+  disabled: v.$light-disabled-text,
+  disabled-button: rgba(white, 0.3),
+  disabled-text: v.$light-disabled-text,
+  elevation: black,
+  hint-text: v.$light-disabled-text,
+  secondary-text: v.$light-secondary-text,
+  icon: white,
+  icons: white,
+  text: white,
+  slider-min: white,
+  slider-off: rgba(white, 0.3),
+  slider-off-active: rgba(white, 0.3),
+  normal-color : #d9d9d9,
+  body-color : map.get($gray, 900),
+  heading-color : #262626,
+  text-color : #595959,
+  text-color-secondary : #919191,
+  heading-color-dark : #f7f7f7,
+  text-color-dark : #e8e8e8,
+  text-color-secondary-dark : #ababab,
+  icon-color : inherit,
+  icon-color-hover : fade(#000, 75%),
+  link-color : map.get($primary, 500),
+  link-hover-color : map.get($primary, 400),
+  link-active-color : map.get($primary, 700),
+  outline-color : map.get($primary, 500),
+  //Border color
+  border-color-base : #d9d9d9, // base border outline a component
+  border-color-split : #e9e9e9, // split border inside a component
+  // Default background color for disabled states, Collapse wrappers,
+  // and several active and hover states.
+  //background-color-base : map_get($tri-gray, 50),
+  //background-color-active : #eee,
+  // Disabled states
+  disabled-color : rgba(#000, 0.25),
+  placeholder-color: rgba(#000, 0.25),
+  disabled-color-dark : rgba(#fff, 0.35),
+);
+
+$foreground                 : $_light-theme-foreground;
+$background                 : $_light-theme-background;

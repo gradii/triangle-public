@@ -1,0 +1,505 @@
+@use "sass:map";
+@use "variables" as v;
+
+// Utilities
+
+@function utilities-theme($theme) {
+
+  $utilities : () !default;
+  // stylelint-disable-next-line scss/dollar-variable-default
+  $utilities : map.merge(
+      (
+        "align": (
+          property: vertical-align,
+          class: align,
+          values: baseline top middle bottom text-bottom text-top
+        ),
+        "float": (
+          responsive: true,
+          property: float,
+          values: left right none
+        ),
+        "overflow": (
+          property: overflow,
+          values: auto hidden,
+        ),
+        "display": (
+          responsive: true,
+          print: true,
+          property: display,
+          class: d,
+          values: none inline inline-block block table table-row table-cell flex inline-flex
+        ),
+        "shadow": (
+          property: box-shadow,
+          class: shadow,
+          values: (
+            null: v.$box-shadow,
+            sm: v.$box-shadow-sm,
+            lg: v.$box-shadow-lg,
+            none: none,
+          )
+        ),
+        "position": (
+          property: position,
+          values: static relative absolute fixed sticky
+        ),
+        "border": (
+          property: border,
+          values: (
+            null: v.$border-width-base v.$border-style-base $border-color-base,
+            0: 0,
+          )
+        ),
+        "border-top": (
+          property: border-top,
+          values: (
+            null: v.$border-width-base v.$border-style-base $border-color-base,
+            0: 0,
+          )
+        ),
+        "border-right": (
+          property: border-right,
+          values: (
+            null: v.$border-width-base v.$border-style-base $border-color-base,
+            0: 0,
+          )
+        ),
+        "border-bottom": (
+          property: border-bottom,
+          values: (
+            null: v.$border-width-base v.$border-style-base $border-color-base,
+            0: 0,
+          )
+        ),
+        "border-left": (
+          property: border-left,
+          values: (
+            null: v.$border-width-base v.$border-style-base $border-color-base,
+            0: 0,
+          )
+        ),
+        "border-color": (
+          property: border-color,
+          class: border,
+          values: map.merge($theme-colors, ("white": $white))
+        ),
+        // Sizing utilities
+        "width": (
+          property: width,
+          class: w,
+          values: (
+            25: 25%,
+            50: 50%,
+            75: 75%,
+            100: 100%,
+            auto: auto
+          )
+        ),
+        "max-width": (
+          property: max-width,
+          class: mw,
+          values: (100: 100%)
+        ),
+        "viewport-width": (
+          property: width,
+          class: vw,
+          values: (100: 100vw)
+        ),
+        "min-viewport-width": (
+          property: min-width,
+          class: min-vw,
+          values: (100: 100vw)
+        ),
+        "height": (
+          property: height,
+          class: h,
+          values: (
+            25: 25%,
+            50: 50%,
+            75: 75%,
+            100: 100%,
+            auto: auto
+          )
+        ),
+        "max-height": (
+          property: max-height,
+          class: mh,
+          values: (100: 100%)
+        ),
+        "viewport-height": (
+          property: height,
+          class: vh,
+          values: (100: 100vh)
+        ),
+        "min-viewport-height": (
+          property: min-height,
+          class: min-vh,
+          values: (100: 100vh)
+        ),
+        // Flex utilities
+        "flex": (
+          responsive: true,
+          property: flex,
+          values: (fill: 1 1 auto)
+        ),
+        "flex-direction": (
+          responsive: true,
+          property: flex-direction,
+          class: flex,
+          values: row column row-reverse column-reverse
+        ),
+        "flex-grow": (
+          responsive: true,
+          property: flex-grow,
+          class: flex,
+          values: (
+            grow-0: 0,
+            grow-1: 1,
+          )
+        ),
+        "flex-shrink": (
+          responsive: true,
+          property: flex-shrink,
+          class: flex,
+          values: (
+            shrink-0: 0,
+            shrink-1: 1,
+          )
+        ),
+        "flex-wrap": (
+          responsive: true,
+          property: flex-wrap,
+          class: flex,
+          values: wrap nowrap wrap-reverse
+        ),
+        "justify-content": (
+          responsive: true,
+          property: justify-content,
+          values: (
+            start: flex-start,
+            end: flex-end,
+            center: center,
+            between: space-between,
+            around: space-around,
+          )
+        ),
+        "align-items": (
+          responsive: true,
+          property: align-items,
+          values: (
+            start: flex-start,
+            end: flex-end,
+            center: center,
+            baseline: baseline,
+            stretch: stretch,
+          )
+        ),
+        "align-content": (
+          responsive: true,
+          property: align-content,
+          values: (
+            start: flex-start,
+            end: flex-end,
+            center: center,
+            between: space-between,
+            around: space-around,
+            stretch: stretch,
+          )
+        ),
+        "align-self": (
+          responsive: true,
+          property: align-self,
+          values: (
+            auto: auto,
+            start: flex-start,
+            end: flex-end,
+            center: center,
+            baseline: baseline,
+            stretch: stretch,
+          )
+        ),
+        "order": (
+          responsive: true,
+          property: order,
+          values: (
+            first: -1,
+            0: 0,
+            1: 1,
+            2: 2,
+            3: 3,
+            4: 4,
+            5: 5,
+            last: 6,
+          ),
+        ),
+        // Margin utilities
+        "margin": (
+          responsive: true,
+          property: margin,
+          class: m,
+          values: map.merge(v.$spacers, (auto: auto))
+        ),
+        "margin-x": (
+          responsive: true,
+          property: margin-right margin-left,
+          class: mx,
+          values: map.merge(v.$spacers, (auto: auto))
+        ),
+        "margin-y": (
+          responsive: true,
+          property: margin-top margin-bottom,
+          class: my,
+          values: map.merge(v.$spacers, (auto: auto))
+        ),
+        "margin-top": (
+          responsive: true,
+          property: margin-top,
+          class: mt,
+          values: map.merge(v.$spacers, (auto: auto))
+        ),
+        "margin-right": (
+          responsive: true,
+          property: margin-right,
+          class: mr,
+          values: map.merge(v.$spacers, (auto: auto))
+        ),
+        "margin-bottom": (
+          responsive: true,
+          property: margin-bottom,
+          class: mb,
+          values: map.merge(v.$spacers, (auto: auto))
+        ),
+        "margin-left": (
+          responsive: true,
+          property: margin-left,
+          class: ml,
+          values: map.merge(v.$spacers, (auto: auto))
+        ),
+        // Negative margin utilities
+        "negative-margin": (
+          responsive: true,
+          property: margin,
+          class: m,
+          values: v.$negative-spacers
+        ),
+        "negative-margin-x": (
+          responsive: true,
+          property: margin-right margin-left,
+          class: mx,
+          values: v.$negative-spacers
+        ),
+        "negative-margin-y": (
+          responsive: true,
+          property: margin-top margin-bottom,
+          class: my,
+          values: v.$negative-spacers
+        ),
+        "negative-margin-top": (
+          responsive: true,
+          property: margin-top,
+          class: mt,
+          values: v.$negative-spacers
+        ),
+        "negative-margin-right": (
+          responsive: true,
+          property: margin-right,
+          class: mr,
+          values: v.$negative-spacers
+        ),
+        "negative-margin-bottom": (
+          responsive: true,
+          property: margin-bottom,
+          class: mb,
+          values: v.$negative-spacers
+        ),
+        "negative-margin-left": (
+          responsive: true,
+          property: margin-left,
+          class: ml,
+          values: v.$negative-spacers
+        ),
+        // Padding utilities
+        "padding": (
+          responsive: true,
+          property: padding,
+          class: p,
+          values: v.$spacers
+        ),
+        "padding-x": (
+          responsive: true,
+          property: padding-right padding-left,
+          class: px,
+          values: v.$spacers
+        ),
+        "padding-y": (
+          responsive: true,
+          property: padding-top padding-bottom,
+          class: py,
+          values: v.$spacers
+        ),
+        "padding-top": (
+          responsive: true,
+          property: padding-top,
+          class: pt,
+          values: v.$spacers
+        ),
+        "padding-right": (
+          responsive: true,
+          property: padding-right,
+          class: pr,
+          values: v.$spacers
+        ),
+        "padding-bottom": (
+          responsive: true,
+          property: padding-bottom,
+          class: pb,
+          values: v.$spacers
+        ),
+        "padding-left": (
+          responsive: true,
+          property: padding-left,
+          class: pl,
+          values: v.$spacers
+        ),
+        // Text
+        "font-weight": (
+          property: font-weight,
+          values: (
+            light: v.$font-weight-light,
+            lighter: v.$font-weight-lighter,
+            normal: v.$font-weight-normal,
+            bold: v.$font-weight-bold,
+            bolder: v.$font-weight-bolder
+          )
+        ),
+        "text-transform": (
+          property: text-transform,
+          class: text,
+          values: lowercase uppercase capitalize
+        ),
+        "text-align": (
+          responsive: true,
+          property: text-align,
+          class: text,
+          values: left right center
+        ),
+        "color": (
+          property: color,
+          class: text,
+          values: map.merge(
+              $theme-colors,
+              (
+                "white": $white,
+                "body": $body-background,
+                "muted": $gray-600,
+                "black-50": rgba($black, .5),
+                "white-50": rgba($white, .5),
+                "reset": inherit,
+              )
+          )
+        ),
+        "line-height": (
+          property: line-height,
+          class: lh,
+          values: (
+            1: 1,
+            sm: v.$line-height-sm,
+            base: v.$line-height-base,
+            lg: v.$line-height-lg,
+          )
+        ),
+        "background-color": (
+          property: background-color,
+          class: bg,
+          values: map.merge(
+              $theme-colors,
+              (
+                "body": $body-background,
+                "white": $white,
+                "transparent": transparent
+              )
+          )
+        ),
+        "white-space": (
+          property: white-space,
+          class: text,
+          values: (
+            wrap: normal,
+            nowrap: nowrap,
+          )
+        ),
+        "text-decoration": (
+          property: text-decoration,
+          values: none underline line-through
+        ),
+        "font-style": (
+          property: font-style,
+          class: font,
+          values: italic normal
+        ),
+        "word-wrap": (
+          property: word-wrap,
+          class: text,
+          values: (break: break-word)
+        ),
+        "font-family": (
+          property: font-family,
+          class: font,
+          values: (monospace: v.$font-family-monospace)
+        ),
+        "user-select": (
+          property: user-select,
+          values: all auto none
+        ),
+        "pointer-events": (
+          property: pointer-events,
+          class: pe,
+          values: none auto,
+        ),
+        "rounded": (
+          property: border-radius,
+          class: rounded,
+          values: (
+            null: v.$border-radius-base,
+            sm: v.$border-radius-sm,
+            lg: v.$border-radius-lg,
+            circle: 50%,
+            pill: 50rem,
+            0: 0,
+          )
+        ),
+        "rounded-top": (
+          property: border-top-left-radius border-top-right-radius,
+          class: rounded-top,
+          values: (null: v.$border-radius-base)
+        ),
+        "rounded-right": (
+          property: border-top-right-radius border-bottom-right-radius,
+          class: rounded-right,
+          values: (null: v.$border-radius-base)
+        ),
+        "rounded-bottom": (
+          property: border-bottom-right-radius border-bottom-left-radius,
+          class: rounded-bottom,
+          values: (null: v.$border-radius-base)
+        ),
+        "rounded-left": (
+          property: border-bottom-left-radius border-top-left-radius,
+          class: rounded-left,
+          values: (null: v.$border-radius-base)
+        ),
+        "visibility": (
+          property: visibility,
+          class: null,
+          values: (
+            visible: visible,
+            invisible: hidden,
+          )
+        )
+      ),
+      $utilities
+  );
+
+  @return $utilities;
+}

@@ -1,0 +1,10 @@
+@use "../variables";
+
+// The width/height of the checkbox element.
+$tri-checkbox-size                : 16px !default;
+
+// The width of the checkbox border shown when the checkbox is unchecked.
+$tri-checkbox-border-width        : 2px;
+
+// The base duration used for the majority of transitions for the checkbox.
+$tri-checkbox-transition-duration : 90ms;

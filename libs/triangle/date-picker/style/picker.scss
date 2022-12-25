@@ -1,0 +1,99 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$calendar-prefix-cls            : "#{$tri-prefix}-calendar";
+$calendar-timepicker-prefix-cls : "#{$tri-prefix}-calendar-time-picker";
+
+
+.#{$calendar-prefix-cls}-picker-container {
+  position : absolute;
+  z-index  : $zindex-picker;
+
+  @at-root &.slide-up-enter.slide-up-enter-active#{&}-placement-topLeft,
+  &.slide-up-enter.slide-up-enter-active#{&}-placement-topRight,
+  &.slide-up-appear.slide-up-appear-active#{&}-placement-topLeft,
+  &.slide-up-appear.slide-up-appear-active#{&}-placement-topRight {
+    animation-name : antSlideDownIn;
+  }
+
+  @at-root &.slide-up-enter.slide-up-enter-active#{&}-placement-bottomLeft,
+  &.slide-up-enter.slide-up-enter-active#{&}-placement-bottomRight,
+  &.slide-up-appear.slide-up-appear-active#{&}-placement-bottomLeft,
+  &.slide-up-appear.slide-up-appear-active#{&}-placement-bottomRight {
+    animation-name : antSlideUpIn;
+  }
+
+  @at-root &.slide-up-leave.slide-up-leave-active#{&}-placement-topLeft,
+  &.slide-up-leave.slide-up-leave-active#{&}-placement-topRight {
+    animation-name : antSlideDownOut;
+  }
+
+  @at-root &.slide-up-leave.slide-up-leave-active#{&}-placement-bottomLeft,
+  &.slide-up-leave.slide-up-leave-active#{&}-placement-bottomRight {
+    animation-name : antSlideUpOut;
+  }
+}
+
+.#{$calendar-prefix-cls}-picker {
+  @include reset-component();
+  position   : relative;
+  display    : inline-block;
+  outline    : none;
+  transition : opacity 0.3s;
+
+  @at-root &-input {
+    outline : none;
+    display : block;
+  }
+
+  @at-root &:hover #{&}-input:not(.#{$tri-prefix}-input-disabled) {
+    //border-color : $primary-color;
+  }
+
+  @at-root &-clear,
+  &-icon {
+    position    : absolute;
+    width       : 14px;
+    height      : 14px;
+    right       : $control-padding-horizontal;
+    top         : 50%;
+    margin-top  : -7px;
+    line-height : 14px;
+    font-size   : $font-size-sm;
+    transition  : all .3s;
+    user-select : none;
+  }
+
+  @at-root &-clear {
+    opacity        : 0;
+    z-index        : 1;
+    //color          : $disabled-color;
+    //background     : $input-bg;
+    pointer-events : none;
+    cursor         : pointer;
+    @at-root &:hover {
+      //color : $text-color-secondary;
+    }
+  }
+
+  @at-root &:hover #{&}-clear {
+    opacity        : 1;
+    pointer-events : auto;
+  }
+
+  @at-root &-icon {
+    //color : $disabled-color;
+    @at-root &:after {
+      content     : "\e6bb";
+      font-family : "anticon";
+      font-size   : $font-size-base;
+      display     : inline-block;
+      line-height : 1;
+    }
+  }
+
+  @at-root &-small #{&}-clear,
+  #{&}-small #{&}-icon {
+    right : $control-padding-horizontal-sm;
+  }
+}

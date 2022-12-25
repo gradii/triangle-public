@@ -1,0 +1,44 @@
+@use "sass:map";
+@use "sass:meta";
+@use "../../style/theming";
+@use "../../style/cdk/a11y";
+
+@mixin tri-ripple() {
+
+  // The host element of an tri-ripple directive should always have a position of "absolute" or
+  // "relative" so that the ripples inside are correctly positioned relatively to the container.
+  .tri-ripple {
+    overflow : hidden;
+
+    // By default, every ripple container should have position: relative in favor of creating an
+    // easy API for developers using the TriRipple directive.
+    position : relative;
+
+    // Promote containers that have ripples to a new layer. We want to target `:not(:empty)`,
+    // because we don't want all ripple containers to have their own layer since they're used in a
+    // lot of places and the layer is only relevant while anitriing. Note that ideally we'd use
+    // the `contain` property here (see #13175), because `:empty` can be broken by having extra
+    // text inside the element, but it isn't very well supported yet.
+    &:not(:empty) {
+      transform : translateZ(0);
+    }
+  }
+
+  .tri-ripple.tri-ripple-unbounded {
+    overflow : visible;
+  }
+
+  .tri-ripple-element {
+    position       : absolute;
+    border-radius  : 50%;
+    pointer-events : none;
+
+    transition     : opacity, transform 0ms cubic-bezier(0, 0, 0.2, 1);
+    transform      : scale(0);
+
+    // In high contrast mode the ripple is opaque, causing it to obstruct the content.
+    @include a11y.cdk-high-contrast(active, off) {
+      display : none;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@use '../../../../../core/style/variables' as v;
+@use '../../../../../core/style/theming';
+@use '../../../../../core/themes/theme';
+
+$primary: theme.$primary;
+
+$primary-color: theming.tri-color($primary);
+
+:host {
+  display    : inline-flex;
+
+  position   : relative;
+
+  background : rgba(255, 255, 255, 0.2);
+
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+
+  &:hover {
+    background : theming.tri-color($primary, 100);
+  }
+}
+
+

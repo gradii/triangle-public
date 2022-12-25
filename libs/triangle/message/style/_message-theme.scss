@@ -1,0 +1,68 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+@use "../../core/style/animations/other";
+
+$message-prefix-cls : "#{ v.$tri-prefix}-message";
+
+$foreground         : theme.$foreground !default;
+$background         : theme.$background !default;
+
+$primary            : theme.$primary !default;
+$success            : theme.$success !default;
+$info               : theme.$info !default;
+$warning            : theme.$warning !default;
+$error              : theme.$error !default;
+
+
+@mixin tri-message-theme() {
+  .#{$message-prefix-cls} {
+
+
+    @at-root &-notice-content {
+      box-shadow : v.$shadow-2;
+      background : theming.tri-color($background, component-background);
+    }
+
+    @at-root &-success {
+      //border           : v.$border-width-base v.$border-style-base theming.tri-color($success, 200);
+      //background-color: theming.tri-color($success, 100);
+      .#{v.$iconfont-css} {
+        color : theming.tri-color($success);
+      }
+    }
+
+    @at-root &-error {
+      //border           : v.$border-width-base v.$border-style-base theming.tri-color($error, 200);
+      //background-color: theming.tri-color($error, 100);
+      .#{v.$iconfont-css} {
+        color : theming.tri-color($error);
+      }
+    }
+
+    @at-root &-warning {
+      //border           : v.$border-width-base v.$border-style-base theming.tri-color($warning, 200);
+      //background-color: theming.tri-color($warning, 100);
+      .#{v.$iconfont-css} {
+        color : theming.tri-color($warning);
+      }
+    }
+
+    // @at-root &-info {
+    //   border           : v.$border-width-base v.$border-style-base theming.tri-color($info, 200);
+    //   background-color: theming.tri-color($info, 100);
+    // }
+
+    @at-root &-info .#{v.$iconfont-css},
+    &-loading .#{v.$iconfont-css} {
+      color : theming.tri-color($info);
+    }
+
+    &-loading .#{v.$iconfont-css} {
+      animation : loadingCircle 1s infinite linear;
+
+      @include other.loading-circle-keyframe()
+    }
+  }
+}

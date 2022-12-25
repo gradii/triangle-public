@@ -1,0 +1,17 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$form-grid-gutter-width : 10px !default;
+
+.#{$tri-prefix}-form-row {
+  display      : flex;
+  flex-wrap    : wrap;
+  margin-right : -$form-grid-gutter-width * 0.5;
+  margin-left  : -$form-grid-gutter-width * 0.5;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right : $form-grid-gutter-width * 0.5;
+    padding-left  : $form-grid-gutter-width * 0.5;
+  }
+}

@@ -1,0 +1,82 @@
+<span #origin="cdkOverlayOrigin" [ngStyle]="style"
+      cdkOverlayOrigin class="{{ prefixCls }}-picker {{ size ? prefixCls + '-picker-' + size : '' }} {{ className }}"
+      tabindex="0">
+  <!-- Content of single picker -->
+  <ng-container *ngIf="!isRange">
+    <input
+      #pickerInput
+      (click)="onClickInputBox()"
+      [class.tri-input-disabled]="disabled"
+      [class.tri-input-lg]="size === 'large'"
+      [class.tri-input-sm]="size === 'small'"
+      [disabled]="disabled"
+
+      class="{{ prefixCls }}-picker-input tri-input"
+      placeholder="{{ getPlaceholder() }}"
+      readonly
+      value="{{ getReadableValue() }}"
+    />
+    <ng-container *ngTemplateOutlet="tplRightRest"></ng-container>
+  </ng-container>
+
+  <!-- Content of range picker -->
+  <ng-container *ngIf="isRange">
+    <span
+      #pickerInput
+      (click)="onClickInputBox()"
+      [class.tri-input-disabled]="disabled"
+      [class.tri-input-lg]="size === 'large'"
+      [class.tri-input-sm]="size === 'small'"
+      class="{{ prefixCls }}-picker-input tri-input"
+    >
+      <ng-container *ngTemplateOutlet="tplRangeInput; context: { partType: 'left' }"></ng-container>
+      <span class="{{ prefixCls }}-range-picker-separator"> ~ </span>
+      <ng-container *ngTemplateOutlet="tplRangeInput; context: { partType: 'right' }"></ng-container>
+      <ng-container *ngTemplateOutlet="tplRightRest"></ng-container>
+    </span>
+  </ng-container>
+</span>
+
+<!-- Input for Range ONLY -->
+<ng-template #tplRangeInput let-partType="partType">
+  <input
+    [disabled]="disabled"
+    class="{{ prefixCls }}-range-picker-input"
+    placeholder="{{ getPlaceholder(partType) }}"
+    readonly
+    value="{{ getReadableValue(partType) }}"
+  />
+</ng-template>
+
+<!-- Right operator icons -->
+<ng-template #tplRightRest>
+  <i
+    (click)="onClickClear($event)"
+    *ngIf="!disabled && !isEmptyValue(value) && allowClear"
+    class="anticon anticon-close-circle {{ prefixCls }}-picker-clear"
+  ></i>
+  <span class="{{ prefixCls }}-picker-icon"></span>
+</ng-template>
+
+<!-- Overlay -->
+<ng-template
+  (backdropClick)="onClickBackdrop()"
+  (detach)="onOverlayDetach()"
+  (positionChange)="onPositionChange($event)"
+  [cdkConnectedOverlayHasBackdrop]="!isOpenHandledByUser()"
+  [cdkConnectedOverlayOpen]="realOpenState"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayPositions]="overlayPositions"
+  cdkConnectedOverlay
+>
+  <div
+    (@dropDownAnimation.done)="animationDone()"
+    (@dropDownAnimation.start)="animationStart()"
+    [@dropDownAnimation]="dropdownAnimation"
+    [style.left]="currentPositionX === 'start' ? '-2px' : '2px'"
+    [style.top]="currentPositionY === 'top' ? '-2px' : '2px'"
+    style="position: relative;"
+  > <!-- Compatible for overlay that not support offset dynamically and immediately -->
+    <ng-content></ng-content>
+  </div>
+</ng-template>

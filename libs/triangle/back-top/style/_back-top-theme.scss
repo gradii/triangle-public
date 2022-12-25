@@ -1,0 +1,23 @@
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$backtop-prefix-cls : "#{ v.$tri-prefix}-back-top" !default;
+// BackTop
+$back-top-color    : #fff !default;
+$back-top-bg       : rgba(64, 64, 64, 0.4) !default;
+$back-top-hover-bg : rgba(64, 64, 64, 0.6) !default;
+
+
+@mixin tri-back-top-theme($theme) {
+
+  .#{$backtop-prefix-cls} {
+    @at-root &-content {
+      background-color : theming.tri-palette($theme, back-top-bg);
+      color            : $back-top-color;
+      @at-root &:hover {
+        background-color : $back-top-hover-bg;
+      }
+    }
+  }
+}

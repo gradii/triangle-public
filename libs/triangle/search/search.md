@@ -1,0 +1,1 @@
+<!-- example(search:search-basic-example) -->

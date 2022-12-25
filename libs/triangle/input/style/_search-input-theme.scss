@@ -1,0 +1,14 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "./input-mixin";
+
+
+@mixin tri-search-input-theme() {
+
+  .#{v.$tri-prefix}-search-input {
+    .#{v.$tri-prefix}-search-btn {
+      @include mixins.btn-default();
+    }
+  }
+
+}

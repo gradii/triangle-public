@@ -1,0 +1,86 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../input/style/input-mixin";
+@use "../../input/style/input-theme";
+@use "../../core/style/mixins/clearfix";
+@use "../../core/style/mixins/compatibility";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$timepicker-prefix-cls : "#{ v.$tri-prefix}-time-picker";
+
+@mixin tri-time-picker-theme($theme) {
+  $foreground              : map.get($theme, foreground);
+  $background              : map.get($theme, background);
+
+  $time-picker-selected-bg : theming.tri-color($background, background-color-base) !default;
+
+  .#{$timepicker-prefix-cls}-panel {
+
+    @at-root &-inner {
+      background-color : theming.tri-color($foreground, component-background);
+      box-shadow       : v.$box-shadow-base;
+    }
+
+    @at-root &-input {
+
+      @include compatibility.placeholder($theme);
+
+      @at-root &-wrap {
+        border-bottom : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-split);
+      }
+
+      @at-root &-invalid {
+        border-color : red;
+      }
+    }
+
+    @at-root &-clear-btn:after {
+      color : theming.tri-color($foreground, disabled-color);
+    }
+
+    @at-root &-clear-btn:hover:after {
+      color : theming.tri-color($foreground, text-color-secondary);
+    }
+
+    @at-root &-select {
+      border-left : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-split);
+
+      li:hover {
+        background : theming.tri-color($foreground, item-hover-bg);
+      }
+
+      @at-root li#{&}-option-selected {
+        background : $time-picker-selected-bg;
+        @at-root &:hover {
+          background : $time-picker-selected-bg;
+        }
+      }
+
+      @at-root li#{&}-option-disabled {
+        color : theming.tri-color($foreground, btn-disable-color);
+        @at-root &:hover {
+          background : transparent;
+        }
+      }
+    }
+
+    @at-root &-combobox {
+      @include clearfix.clearfix;
+    }
+
+  }
+
+  .#{$timepicker-prefix-cls} {
+    @at-root &-icon {
+      color : theming.tri-color($foreground, text-color-secondary);
+    }
+
+    @at-root &-input {
+      @include input-mixin.input;
+      @at-root &[disabled] {
+        @include input-theme.tri-input-disabled-theme($theme);
+      }
+    }
+  }
+}

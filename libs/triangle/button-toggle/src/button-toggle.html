@@ -1,0 +1,20 @@
+<button #button class="tri-button-toggle-button tri-focus-indicator"
+        type="button"
+        [id]="buttonId"
+        [attr.tabindex]="disabled ? -1 : tabIndex"
+        [attr.aria-pressed]="checked"
+        [disabled]="disabled || null"
+        [attr.name]="name || null"
+        [attr.aria-label]="ariaLabel"
+        [attr.aria-labelledby]="ariaLabelledby"
+        (click)="_onButtonClick()">
+  <span class="tri-button-toggle-label-content">
+    <ng-content></ng-content>
+  </span>
+</button>
+
+<span class="tri-button-toggle-focus-overlay"></span>
+<span class="tri-button-toggle-ripple" triRipple
+     [triRippleTrigger]="button"
+     [triRippleDisabled]="this.disableRipple || this.disabled">
+</span>

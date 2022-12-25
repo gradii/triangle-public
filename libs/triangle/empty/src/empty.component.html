@@ -1,0 +1,15 @@
+<div class="tri-empty-image">
+  <ng-container *stringTemplateOutlet="notFoundImage">
+    <img [alt]="isContentString ? notFoundContent : 'empty'" [src]="notFoundImage || defaultSvg">
+  </ng-container>
+</div>
+<p class="tri-empty-description">
+  <ng-container *stringTemplateOutlet="notFoundContent">
+    {{ shouldRenderContent ? notFoundContent : locale['description'] }}
+  </ng-container>
+</p>
+<div *ngIf="notFoundFooter" class="tri-empty-footer">
+  <ng-container *stringTemplateOutlet="notFoundFooter">
+    {{ notFoundFooter }}
+  </ng-container>
+</div>

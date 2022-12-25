@@ -1,0 +1,214 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+
+
+$notification-prefix-cls    : "#{v.$tri-prefix}-notification";
+$notification-width         : 335px;
+$notification-padding       : 16px;
+$notification-margin-bottom : 10px;
+
+@mixin notification-fade-effect() {
+  animation-duration        : 0.24s;
+  animation-fill-mode       : both;
+  animation-timing-function : v.$ease-in-out;
+}
+
+.#{$notification-prefix-cls} {
+  $success     : theme.$success;
+  $info        : theme.$info;
+  $warning     : theme.$warning;
+  $error       : theme.$error;
+
+  $primary     : theme.$primary;
+  $foreground  : theme.$foreground;
+  $background  : theme.$background;
+
+  position     : fixed;
+  z-index      : v.$zindex-notification;
+  width        : $notification-width;
+  margin-right : 24px;
+
+  &:empty {
+    display : none;
+  }
+
+  &-top, &-bottom {
+    left           : 50%;
+    transform      : translateX(-50%);
+    display        : flex;
+    flex-direction : column;
+    align-items    : center;
+  }
+
+
+  @at-root &-topLeft,
+  &-bottomLeft {
+    margin-left  : 24px;
+    margin-right : 0;
+
+    //.#{$notification-prefix-cls}-fade-enter.#{$notification-prefix-cls}-fade-enter-active,
+    //.#{$notification-prefix-cls}-fade-appear.#{$notification-prefix-cls}-fade-appear-active {
+    //  animation-name : NotificationLeftFadeIn;
+    //}
+  }
+
+  @at-root &-notice {
+    padding       : $notification-padding;
+    border-radius : v.$border-radius-base;
+    box-shadow    : v.$shadow-2;
+    background    : theming.tri-color($background, component-background);
+    line-height   : 1.5;
+    position      : relative;
+    margin-bottom : $notification-margin-bottom;
+    overflow      : hidden;
+
+    @at-root &-message {
+      font-size     : v.$font-size-lg;
+      color         : v.$heading-color;
+      margin-bottom : 4px;
+      line-height   : 20px;
+      display       : inline-block;
+
+      @at-root &-single-line-auto-margin {
+        width            : calc(#{$notification-width} - #{$notification-padding} * 2 - 24px - 48px - 100%);
+        background-color : transparent;
+        pointer-events   : none;
+        display          : block;
+        max-width        : 4px;
+        @at-root &:before {
+          content        : "";
+          display        : block;
+          padding-bottom : 100%;
+        }
+      }
+    }
+
+    @at-root &-description {
+      font-size : v.$font-size-base;
+    }
+
+    @at-root &-closable #{&}-message {
+      padding-right : 24px;
+    }
+
+    @at-root &-with-icon #{&}-message {
+      font-size     : v.$font-size-lg;
+      margin-left   : 48px;
+      margin-bottom : 4px;
+    }
+
+    @at-root &-with-icon #{&}-description {
+      margin-left : 48px;
+      font-size   : v.$font-size-base;
+    }
+
+    @at-root &-icon {
+      position    : absolute;
+      font-size   : 32px;
+      line-height : 32px;
+
+      @at-root &-success {
+        color : theming.tri-color($success);
+      }
+      @at-root &-info {
+        color : theming.tri-color($info);
+      }
+      @at-root &-warning {
+        color : theming.tri-color($warning);
+      }
+      @at-root &-error {
+        color : theming.tri-color($error);
+      }
+    }
+
+    @at-root &-close-x:after {
+      cursor      : pointer;
+    }
+
+    @at-root &-close {
+      position        : absolute;
+      right           : 16px;
+      top             : 10px;
+      color           : theming.tri-color($foreground, text-color-secondary);
+      outline         : none;
+      text-decoration : none;
+      @at-root &:hover {
+        color : #404040;
+      }
+    }
+
+    @at-root &-btn {
+      float      : right;
+      margin-top : 16px;
+    }
+  }
+
+  //.notification-fade-effect {
+  //  @include notification-fade-effect()
+  //}
+  //
+  //@at-root &-fade-enter,
+  //&-fade-appear {
+  //  opacity              : 0;
+  //  @include notification-fade-effect();
+  //  animation-play-state : paused;
+  //}
+  //
+  //@at-root &-fade-leave {
+  //  @include notification-fade-effect();
+  //  animation-duration   : 0.2s;
+  //  animation-play-state : paused;
+  //}
+  //
+  //@at-root &-fade-enter#{&}-fade-enter-active,
+  //&-fade-appear#{&}-fade-appear-active {
+  //  animation-name       : NotificationFadeIn;
+  //  animation-play-state : running;
+  //}
+  //
+  //@at-root &-fade-leave#{&}-fade-leave-active {
+  //  animation-name       : NotificationFadeOut;
+  //  animation-play-state : running;
+  //}
+}
+//
+//@keyframes NotificationFadeIn {
+//  0% {
+//    opacity : 0;
+//    left    : $notification-width;
+//  }
+//  100% {
+//    left    : 0;
+//    opacity : 1;
+//  }
+//}
+//
+//@keyframes NotificationLeftFadeIn {
+//  0% {
+//    opacity : 0;
+//    right   : $notification-width;
+//  }
+//  100% {
+//    right   : 0;
+//    opacity : 1;
+//  }
+//}
+//
+//@keyframes NotificationFadeOut {
+//  0% {
+//    opacity        : 1;
+//    margin-bottom  : $notification-margin-bottom;
+//    padding-top    : $notification-padding;
+//    padding-bottom : $notification-padding;
+//    max-height     : 150px;
+//  }
+//  100% {
+//    opacity        : 0;
+//    margin-bottom  : 0;
+//    padding-top    : 0;
+//    padding-bottom : 0;
+//    max-height     : 0;
+//  }
+//}

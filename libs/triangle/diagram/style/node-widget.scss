@@ -1,0 +1,63 @@
+@use "../../core/style/mixins";
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+
+$primary-color        : theming.tri-color(theme.$primary);
+$error-color          : theming.tri-color(theme.$error);
+$menu-item-hover-bg   : theming.tri-color(theme.$background, item-hover-bg) !default;
+$menu-item-bg         : theming.tri-color(theme.$background, background-color-base) !default;
+$menu-item-active-bg  : theming.tri-color(theme.$background, background-color-active) !default;
+$menu-item-disable-bg : theming.tri-color(theme.$background, disabled-bg) !default;
+
+.node-menu {
+  display          : inline-flex;
+  flex-direction   : column;
+  min-width        : 180px;
+  max-width        : 280px;
+  background-color : $menu-item-bg;
+  padding          : 4px 0;
+
+  border-radius    : mixins.$border-radius-base;
+}
+
+.node-menu-item {
+  background-color : transparent;
+  cursor           : pointer;
+  outline          : none;
+  border           : none;
+
+  user-select      : none;
+  min-width        : 64px;
+  font-size        : 14px;
+  line-height      : 24px;
+  padding          : 0 16px;
+
+  display          : flex;
+  align-items      : center;
+  flex-direction   : row;
+  flex             : 1;
+}
+
+.node-menu hr {
+  width            : calc(100% - 20px);
+  margin           : 4px 0;
+  align-self       : center;
+  border           : 0 solid rgba(88, 88, 88, 0.22);
+  border-top-width : 1px;
+}
+
+.node-menu-item:hover {
+  color            : $primary-color;
+  background-color : $menu-item-hover-bg;
+}
+
+.node-menu-item:active {
+  background-color : $menu-item-active-bg;
+}
+
+
+.node-menu-item > .tri-icon {
+  display      : inline-flex;
+  margin-right : 0.5em;
+  color        : $error-color;
+}

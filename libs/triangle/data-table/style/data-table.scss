@@ -1,0 +1,965 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$data-table-line-height : 1.12 !default;
+
+:host {
+  ::ng-deep {
+    .tri-data-table {
+      display        : flex;
+      flex-direction : column;
+      position       : relative;
+
+      &.tri-display-block {
+        display : block;
+      }
+
+      .tri-data-table-container {
+        display  : flex;
+        flex     : 1 1 auto;
+        overflow : hidden;
+      }
+
+      table {
+        margin          : 0;
+        width           : 100%;
+        max-width       : none;
+        border-collapse : separate;
+        border-spacing  : 0;
+        empty-cells     : show;
+        outline         : 0;
+      }
+
+      thead, tbody, tfoot {
+        text-align   : left;
+        border-color : inherit;
+      }
+
+      tr {
+        border-color : inherit;
+      }
+
+      th, td {
+        padding       : 12px 12px;
+        border-style  : solid;
+        outline       : 0;
+        font-weight   : inherit;
+        text-align    : inherit;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+      }
+
+      th:first-child, td:first-child {
+        border-left-width : 0;
+      }
+
+      th:focus, td:focus {
+        outline : none;
+      }
+
+      //th:hover, td:hover {
+      //  word-break      : break-all;
+      //  word-break-wrap : break-word;
+      //  white-space     : normal;
+      //}
+
+      th {
+        border-width : 1px 0 1px 1px;
+        //white-space: nowrap;
+        font-size    : 14px;
+        word-wrap    : break-word;
+
+        a {
+          color : inherit;
+        }
+      }
+
+      td {
+        padding        : 0 8px;
+        line-height    : 28px;
+        white-space    : nowrap;
+        border-width   : 0 0 0 1px;
+        vertical-align : middle;
+      }
+
+      a {
+        //color           : inherit;
+        text-decoration : none;
+
+        &:hover {
+          text-decoration : none;
+        }
+      }
+
+      table, .tri-data-table-header-wrap {
+        box-sizing : content-box;
+      }
+
+      .tri-group-col, .tri-hierarchy-col {
+        padding : 0;
+        width   : 32px;
+      }
+
+      .tri-grouping-row {
+        p {
+          display       : flex;
+          align-items   : center;
+          align-content : center;
+          margin-top    : 0;
+          margin-bottom : 0;
+        }
+
+        td {
+          overflow : visible;
+          border   : 0;
+        }
+
+        + tr td {
+          border-top-width : 1px;
+        }
+
+        .tri-group-cell, ~ tr .tri-group-cell {
+          border        : 0;
+          text-overflow : ellipsis;
+        }
+
+        .tri-icon {
+          margin-left  : -4px;
+          margin-right : 8px;
+        }
+      }
+
+      &-compact {
+        th, td {
+          padding : 2px;
+        }
+      }
+
+      .tri-group-footer {
+        td {
+          border-style : solid;
+          border-width : 1px 0;
+        }
+
+        .tri-group-cell + td {
+          border-left-width : 1px;
+        }
+      }
+
+      .tri-hierarchy-cell {
+        text-align : center;
+        padding    : 0;
+        overflow   : visible;
+
+        > .tri-icon {
+          padding     : 8px 0;
+          width       : 100%;
+          height      : 100%;
+          line-height : $data-table-line-height;
+          display     : inline-block;
+          outline     : 0;
+        }
+
+        + th,
+        + td {
+          border-left-width : 0;
+        }
+      }
+    }
+
+    .tri-data-table {
+      .tri-tooltip.tri-tooltip-validation {
+        display  : flex;
+        position : absolute;
+        width    : auto;
+        padding  : 4px 8px;
+
+        .tri-callout {
+          display : block;
+        }
+      }
+
+      .tri-animation-container-fixed .tri-tooltip.tri-tooltip-validation {
+        position : static;
+      }
+
+      .tri-dirty-cell {
+        position : relative;
+      }
+
+      .tri-dirty {
+        border-width : 5px;
+        left         : 0;
+        right        : auto;
+      }
+    }
+
+    .tri-data-table-toolbar {
+      background          : rgba(0, 0, 0, 0);
+      padding             : 8px 0;
+      border              : 0 solid inherit;
+      border-bottom-width : 1px;
+      text-overflow       : clip;
+      cursor              : default;
+      display             : block;
+
+      > .tri-btn {
+        vertical-align : middle;
+
+        + .tri-btn {
+          margin-left : 4px;
+        }
+      }
+    }
+
+    .tri-grouping-header {
+      display             : block;
+      padding             : 8px;
+      border              : 0 solid inherit;
+      border-bottom-width : 1px;
+      line-height         : calc(10px + 1.42857em);
+    }
+
+    .tri-group-indicator, .tri-drag-clue {
+      border-radius  : 2px;
+      margin         : 0;
+      padding        : 4px 8px;
+      border         : 1px solid;
+      line-height    : $data-table-line-height;
+      display        : inline-flex;
+      flex-direction : row;
+      align-items    : center;
+      align-content  : center;
+      vertical-align : top;
+    }
+
+    .tri-group-indicator {
+      .tri-link, .tri-btn.tri-bare {
+        padding      : 0;
+        border-width : 0;
+        display      : inline-flex;
+        align-items  : center;
+      }
+    }
+
+    .tri-drag-clue {
+      .tri-link, .tri-btn.tri-bare {
+        padding      : 0;
+        border-width : 0;
+        display      : inline-flex;
+        align-items  : center;
+      }
+    }
+
+    .tri-group-indicator .tri-link .tri-icon,
+    .tri-drag-clue .tri-link .tri-icon {
+      margin-left  : -2px;
+      margin-right : 4px;
+    }
+
+    .tri-group-indicator .tri-btn.tri-bare,
+    .tri-drag-clue .tri-btn.tri-bare {
+      margin-left  : 8px;
+      margin-right : -2px;
+      padding      : 0;
+      width        : auto;
+      height       : auto;
+      opacity      : .5;
+    }
+
+    .tri-group-indicator .tri-btn.tri-bare {
+      &::before, &::after {
+        display : none;
+      }
+    }
+
+    .tri-drag-clue .tri-btn.tri-bare {
+      &::before, &::after {
+        display : none;
+      }
+    }
+
+    .tri-group-indicator .tri-btn.tri-bare:hover, .tri-drag-clue .tri-btn.tri-bare:hover {
+      opacity : 1;
+    }
+
+    .tri-group-indicator {
+      margin-right : 4px;
+
+      + .tri-group-indicator {
+        margin-left : 4px;
+      }
+    }
+
+    .tri-grouping-dropclue {
+      width    : 12px;
+      height   : calc(10px + 1.42857em);
+      position : absolute;
+
+      &::before, &::after {
+        display  : inline-block;
+        content  : "";
+        position : absolute;
+      }
+
+      &::before {
+        border              : 6px solid;
+        border-right-color  : transparent;
+        border-bottom-color : transparent;
+        border-left-color   : transparent;
+        top                 : 0;
+      }
+
+      &::after {
+        width  : 2px;
+        height : calc(100% - 6px);
+        top    : 6px;
+        left   : calc(6px - (2px / 2));
+      }
+    }
+
+    .tri-data-table-header-wrap, .tri-data-table-footer-wrap {
+      width              : 100%;
+      border             : 0 solid inherit;
+      border-right-width : 1px;
+      position           : relative;
+      overflow           : hidden;
+    }
+
+    .tri-data-table-header, .tri-data-table-footer {
+      flex          : 0 0 auto;
+      padding-right : 17px;
+      border        : 0 solid inherit;
+    }
+
+    .tri-data-table-header table, .tri-data-table-footer table {
+      table-layout : fixed;
+    }
+
+    div {
+      &.tri-data-table-header, &.tri-data-table-footer {
+        display        : flex;
+        flex-direction : row;
+        align-items    : stretch;
+      }
+    }
+
+    .tri-ie div.tri-data-table-header {
+      display : block;
+    }
+
+    .tri-data-table-header {
+      border-bottom-width : 1px;
+
+      table {
+        margin-bottom : -1px;
+      }
+
+      .tri-header {
+        position       : relative;
+        vertical-align : bottom;
+        overflow       : visible;
+
+        &:first-child {
+          border-left-width : 0;
+        }
+
+        &.tri-first {
+          border-left-width : 1px;
+        }
+
+        > .tri-link {
+          margin        : -8px -12px;
+          padding       : 8px 12px;
+          line-height   : inherit;
+          display       : block;
+          overflow      : hidden;
+          text-overflow : ellipsis;
+        }
+      }
+    }
+
+    .tri-ff .tri-data-table-header .tri-header > .tri-link {
+      margin-inline-start  : 0;
+      padding-inline-start : 0;
+    }
+
+    .tri-data-table-header {
+      .tri-header {
+        &.tri-filterable > .tri-link {
+          margin-right : calc(10px + 1.42857em);
+        }
+
+        > .tri-link {
+          &:focus {
+            text-decoration : none;
+          }
+
+          > .tri-icon {
+            margin         : 0 .4ex;
+            position       : static;
+            vertical-align : middle;
+          }
+        }
+      }
+
+      .tri-data-table-filter, .tri-header-column-menu {
+        padding         : 4px;
+        width           : calc(10px + 1.42857em);
+        height          : calc(10px + 1.42857em);
+        box-sizing      : border-box;
+        outline         : 0;
+        line-height     : $data-table-line-height;
+        display         : inline-flex;
+        align-items     : center;
+        align-content   : center;
+        justify-content : center;
+        position        : absolute;
+        top             : 0;
+        bottom          : 0;
+        right           : 0;
+        z-index         : 1;
+      }
+
+      .tri-data-table-filter, .tri-data-table-sort-order {
+        margin-top    : auto;
+        margin-bottom : auto;
+      }
+
+      .tri-header-column-menu {
+        margin : calc((1.42857em + (-1 * calc(10px + 1.42857em))) / 2) -12px calc((1.42857em + (-1 * calc(10px + 1.42857em))) / 2) 0;
+
+        + .tri-link {
+          margin-right : calc(1.42857em + 8px + 2px - 12px);
+        }
+      }
+
+      //.tri-data-table-sort-order {
+      //  right : 25px;
+      //}
+      .tri-header > .tri-link > .tri-icon {
+        &.tri-i-sort-desc-sm, &.tri-i-sort-asc-sm {
+          vertical-align : text-top;
+          margin-left    : calc(8px - 1px);
+        }
+      }
+
+      .tri-data-table-sort-order {
+        display        : inline-block;
+        font-size      : 12px;
+        height         : 16px;
+        vertical-align : top;
+        margin-top     : 2px;
+      }
+    }
+
+    .tri-data-table-footer {
+      border-width : 1px 0 0;
+
+      td {
+        height : 1.42857em;
+      }
+    }
+
+    .tri-filter-row {
+      line-height : $data-table-line-height;
+
+      th {
+        padding : 8px;
+      }
+
+      .tri-multiselect {
+        height : auto;
+      }
+    }
+
+    .tri-filtercell {
+      width   : auto;
+      display : flex;
+
+      > span {
+        display : flex;
+        flex    : 1;
+      }
+
+      .tri-filtercell-wrapper {
+        display : flex;
+        flex    : 1;
+
+        > {
+          label {
+            vertical-align : middle;
+          }
+
+          .tri-widget, .tri-block {
+            width : 100%;
+          }
+        }
+      }
+
+      > span > label {
+        vertical-align : middle;
+      }
+
+      > span {
+        .tri-btn {
+          visibility     : visible;
+          pointer-events : all;
+          margin-left    : 4px;
+        }
+
+        .tri-dropdown-operator {
+          margin-left : 4px;
+        }
+
+        .tri-numerictextbox {
+          width : auto;
+        }
+      }
+
+      .tri-filtercell-operator {
+        > .tri-btn {
+          &.tri-clear-button-visible {
+            visibility : visible;
+            height     : calc(10px + 1.42857em);
+          }
+
+          &:not(.tri-clear-button-visible) {
+            visibility     : hidden;
+            pointer-events : none;
+          }
+        }
+
+        margin-left : 4px;
+      }
+
+      .tri-widget:not(.tri-dropdown-operator),
+      .tri-block:not(.tri-dropdown-operator) {
+        display : flex;
+        flex    : 1 1 auto;
+      }
+
+      .tri-filtercell-wrapper > .tri-textbox {
+        display   : flex;
+        flex      : 1 1 auto;
+        width     : 100%;
+        min-width : 0;
+      }
+
+      .tri-autocomplete .tri-input,
+      .tri-dropdown-wrap .tri-input,
+      .tri-numeric-wrap .tri-input,
+      .tri-picker-wrap .tri-input,
+      .tri-selectbox .tri-input,
+      .tri-textbox > input {
+        padding-left  : 0;
+        padding-right : 0;
+        text-indent   : 8px;
+      }
+
+      &.tri-filtercell-boolean .tri-filtercell-wrapper {
+        padding-right : calc(1.42857em + 8px + 2px + 4px);
+        overflow      : hidden;
+      }
+    }
+
+    .tri-data-table-content, .tri-data-table-content-locked {
+      border-color : inherit;
+    }
+
+    .tri-data-table-content table, .tri-data-table-content-locked table {
+      table-layout : fixed;
+    }
+
+    .tri-data-table-content tr:last-child td, .tri-data-table-content-locked tr:last-child td {
+      border-bottom-width : 0;
+    }
+
+    .tri-data-table-content {
+      width      : 100%;
+      min-height : 0;
+      overflow   : auto;
+      position   : relative;
+      flex       : 1;
+      //.tri-btn {
+      //  vertical-align: middle;
+      //  margin: .16em;
+      //}
+    }
+
+    .tri-virtual-scrollable-wrap {
+      height     : 100%;
+      overflow-y : hidden;
+      position   : relative;
+    }
+
+    .tri-data-table-edit-row {
+      td {
+        text-overflow : clip;
+      }
+
+      .tri-edit-cell {
+        padding-top    : 0;
+        padding-bottom : 0;
+      }
+
+      .tri-dirty-cell {
+        overflow : visible;
+      }
+    }
+
+    //.tri-data-table-edit-row .tri-widget, .tri-data-table-edit-row .tri-block,
+    //.tri-data-table-edit-row .tri-btn,
+    //.tri-data-table-edit-row .tri-textbox,
+    //.tri-data-table-edit-row .tri-input.tri-textbox {
+    //height: auto;
+    //}
+
+    .tri-edit-cell > {
+      .tri-textbox, .tri-widget, .tri-block, .text-box {
+        margin-left : calc(-8px - 1px);
+      }
+    }
+
+    .tri-data-table-edit-row {
+      > td {
+        padding : 2px;
+      }
+
+      td > {
+        .tri-textbox, .tri-widget, .tri-block {
+          width          : calc(100% + ((8px + 1px) * 2));
+          margin-top     : calc((1.42857em + (-1 * calc(10px + 1.42857em))) / 2);
+          margin-bottom  : calc((1.42857em + (-1 * calc(10px + 1.42857em))) / 2);
+          vertical-align : middle;
+        }
+      }
+    }
+
+    .tri-edit-cell > {
+      .tri-textbox, .tri-widget, .tri-block {
+        width : calc(100% + ((8px + 1px) * 2));
+      }
+    }
+
+    .tri-data-table-command-column {
+      > .tri-btn + .tri-btn {
+        margin-left : 0.25rem;
+      }
+
+      @at-root & > .tri-data-table-remove-command,
+      #{&} > .tri-data-table-edit-command,
+      #{&} > .tri-data-table-save-command,
+      #{&} > .tri-data-table-cancel-command,
+      #{&} > .tri-data-table-command {
+        &:first-child {
+          margin-left : 0;
+        }
+
+        margin-left : 0.5rem;
+      }
+    }
+
+    .tri-data-table-hierarchy-column {
+      padding-left : 0 !important;
+    }
+
+    .tri-command-cell > .tri-btn {
+      margin-top     : calc((1.42857em + (-1 * calc(10px + 1.42857em))) / 2);
+      margin-bottom  : calc((1.42857em + (-1 * calc(10px + 1.42857em))) / 2);
+      vertical-align : middle;
+    }
+
+    .tri-edit-cell > {
+      .tri-textbox, .tri-widget, .tri-block {
+        margin-top     : calc((1.42857em + (-1 * calc(10px + 1.42857em))) / 2);
+        margin-bottom  : calc((1.42857em + (-1 * calc(10px + 1.42857em))) / 2);
+        vertical-align : middle;
+      }
+    }
+
+    .tri-data-table > .tri-resize-handle, .tri-data-table-header .tri-resize-handle {
+      height   : 25px;
+      cursor   : col-resize;
+      position : absolute;
+      z-index  : 2;
+    }
+
+    .tri-data-table-pager {
+      padding      : 8px;
+      border-width : 1px 0 0;
+      border-color : inherit;
+    }
+
+    .tri-data-table-virtual .tri-data-table-content {
+      .tri-data-table-table {
+        position : absolute;
+        z-index  : 1;
+      }
+
+      > {
+        table {
+          position : absolute;
+          z-index  : 1;
+        }
+
+        .tri-height-container {
+          position : relative;
+        }
+      }
+    }
+
+    .tri-data-table-add-row td {
+      border-bottom : 1px solid;
+    }
+
+    .tri-data-table-lockedcolumns {
+      white-space : nowrap;
+    }
+
+    .tri-data-table-content, .tri-data-table-content-locked, .tri-pager-wrap {
+      white-space : normal;
+    }
+
+    .tri-data-table-content-locked, .tri-data-table-footer-locked, .tri-data-table-header-locked {
+      flex           : 1 0 auto;
+      display        : inline-block;
+      vertical-align : top;
+      overflow       : hidden;
+      position       : relative;
+      border-style   : solid;
+      border-width   : 0 1px 0 0;
+    }
+
+    .tri-data-table-content-locked + .tri-data-table-content.tri-auto-scrollable,
+    .tri-data-table-footer-locked + .tri-data-table-content.tri-auto-scrollable,
+    .tri-data-table-header-locked + .tri-data-table-content.tri-auto-scrollable {
+      display : inline-block;
+    }
+
+    .tri-data-table-content, .tri-data-table-footer-wrap, .tri-data-table-header-wrap {
+      flex           : 1 1 auto;
+      display        : inline-block;
+      vertical-align : top;
+    }
+
+    .tri-data-table-content.tri-auto-scrollable,
+    .tri-data-table-footer-wrap.tri-auto-scrollable,
+    .tri-data-table-header-wrap.tri-auto-scrollable {
+      display : block;
+    }
+
+    .tri-data-table-header-locked > table,
+    .tri-data-table-header-wrap > table {
+      margin-bottom : -1px;
+    }
+
+    .tri-header.tri-drag-clue {
+      overflow : hidden;
+    }
+
+    .tri-data-table-no-scrollbar .tri-data-table-header-wrap {
+      border-width : 0;
+    }
+
+    .tri-loading-pdf-mask {
+      position : absolute;
+      width    : 100%;
+      height   : 100%;
+      top      : 0;
+      left     : 0;
+      z-index  : 100;
+
+      > .tri-i-loading {
+        position  : absolute;
+        top       : 50%;
+        left      : 50%;
+        font-size : 64px;
+      }
+
+      .tri-loading-pdf-progress {
+        margin   : auto;
+        position : absolute;
+        top      : 0;
+        bottom   : 0;
+        left     : 0;
+        right    : 0;
+      }
+    }
+
+    .tri-data-table-pdf-export-element {
+      position : absolute;
+      left     : -10000px;
+      top      : -10000px;
+
+      .tri-filter-row {
+        display : none;
+      }
+    }
+
+    .tri-filter-menu {
+      > div:not(.tri-animation-container), .tri-filter-menu-container {
+        padding : 0.5em 1em;
+      }
+
+      > div > div > .tri-btn {
+        margin     : 0.5em 1% 0;
+        width      : 48%;
+        box-sizing : border-box;
+        display    : inline-block;
+      }
+
+      .tri-widget,
+      .tri-block,
+      .tri-radio-list,
+      .tri-textbox {
+        margin  : 0.5em 0;
+        width   : 100%;
+        display : block;
+      }
+
+      .tri-widget.tri-filter-and,
+      .tri-filter-and.tri-block {
+        width  : 6em;
+        margin : 1em 0;
+      }
+
+      .tri-action-buttons {
+        margin : 1em -1em -0.5em;
+
+        .tri-btn {
+          margin : 0;
+        }
+      }
+    }
+
+    .tri-data-table-header, .tri-header, .tri-data-table-header-wrap {
+      border-color : rgba(91, 108, 121, 0.08);
+    }
+
+    .tri-grouping-header {
+      border-color : rgba(91, 108, 121, 0.08);
+
+      .tri-group-indicator {
+        border-color : rgba(91, 108, 121, 0.08);
+      }
+    }
+
+    .tri-data-table td,
+    .tri-data-table-footer,
+    .tri-data-table-footer-wrap,
+    .tri-data-table-content-locked,
+    .tri-data-table-footer-locked,
+    .tri-data-table-header-locked,
+    .tri-filter-row > th {
+      border-width : 0 0 1px 1px;
+      border-style : solid;
+      border-color : rgba(91, 108, 121, 0.08);
+    }
+
+    .tri-data-table-header,
+      //.tri-data-table-toolbar,
+    .tri-grouping-header
+    .tri-drag-clue {
+      color            : #656565;
+      background-color : #fafafa;
+    }
+
+    .tri-group-footer td,
+    .tri-grouping-row td,
+    tbody .tri-group-cell {
+      color            : #656565;
+      background-color : #ededed;
+    }
+
+    .tri-data-table {
+      border : 1px solid #e6ebf5;
+    }
+
+    .tri-data-table {
+      tr {
+        &.tri-alt {
+          //todo remove disable
+          //background-color : rgba(0, 0, 0, 0.04);
+        }
+
+        &.tri-state-selected {
+          color            : inherit;
+          background-color : rgba(89, 186, 255, 0.25);
+        }
+      }
+
+      td {
+        &.tri-state-selected {
+          color            : inherit;
+          background-color : rgba(89, 186, 255, 0.25);
+        }
+
+        &.tri-state-focused {
+          box-shadow : inset 0 0 0 2px rgba(0, 0, 0, 0.13);
+        }
+      }
+
+      th.tri-state-focused {
+        box-shadow : inset 0 0 0 2px rgba(0, 0, 0, 0.13);
+      }
+
+      .tri-data-table-filter, .tri-header-column-menu, .tri-hierarchy-cell .tri-icon {
+        border-width : 0;
+        color        : #656565;
+      }
+
+      .tri-grouping-row {
+        background-color : #ededed;
+
+        .tri-icon {
+          color           : #656565;
+          text-decoration : none;
+        }
+      }
+
+      .tri-grouping-dropclue {
+        &::before {
+          border-color : #656565 transparent transparent;
+        }
+
+        &::after {
+          background-color : #656565;
+        }
+      }
+
+      .tri-dirty {
+        border-color : currentColor transparent transparent currentColor;
+      }
+
+      &[dir="rtl"] .tri-dirty {
+        border-color : currentColor currentColor transparent transparent;
+      }
+    }
+
+    col.tri-sorted, th.tri-sorted {
+      background-color : rgba(0, 0, 0, 0.02);
+    }
+
+    .tri-data-table-header {
+      .tri-i-sort-asc-sm, .tri-i-sort-desc-sm, .tri-sort-order {
+        color : #656565;
+      }
+
+      .tri-data-table-filter {
+        &:hover {
+          color            : #656565;
+          background-color : #ededed;
+        }
+
+        &:focus {
+          box-shadow : inset 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+
+        &.tri-state-active {
+          color : #ffffff;
+        }
+      }
+    }
+  }
+}

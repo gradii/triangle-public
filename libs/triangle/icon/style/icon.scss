@@ -1,0 +1,33 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+// The width/height of the icon element.
+$tri-icon-size : 1em !default;
+
+.tri-icon {
+  background-repeat : no-repeat;
+  display           : inline-block;
+  fill              : currentColor;
+  height            : $tri-icon-size;
+  width             : $tri-icon-size;
+  line-height       : 1;
+  vertical-align    : -.125em;
+}
+
+// Icons that will be mirrored in RTL.
+[dir="rtl"] .tri-icon-rtl-mirror {
+  transform : scale(-1, 1);
+}
+
+.tri-form-field:not(.tri-form-field-appearance-legacy) {
+  .tri-form-field-prefix,
+  .tri-form-field-suffix {
+    .tri-icon {
+      display : block;
+    }
+
+    .tri-icon-button .tri-icon {
+      margin : auto;
+    }
+  }
+}

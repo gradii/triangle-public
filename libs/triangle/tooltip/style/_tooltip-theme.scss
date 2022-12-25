@@ -1,0 +1,62 @@
+@use "../../core/themes/theme";
+@use "../../core/style/variables" as v;
+
+$tooltip-prefix-cls    : #{v.$tri-prefix}-tooltip;
+
+
+//** Tooltip text color
+$tooltip-color         : #fff !default;
+//** Tooltip background color
+$tooltip-bg            : rgba(64, 64, 64, .85) !default;
+
+//** Tooltip arrow color
+$tooltip-arrow-color   : $tooltip-bg !default;
+
+$tooltip-border-radius : v.$border-radius-base !default;
+
+$tooltip-box-shadow    : v.$box-shadow-base !default;
+
+
+
+
+@mixin tri-tooltip-theme() {
+  // Wrapper for the tooltip content
+  .#{$tooltip-prefix-cls}-inner {
+    color            : $tooltip-color;
+    background-color : $tooltip-bg;
+    border-radius    : $tooltip-border-radius;
+    box-shadow       : $tooltip-box-shadow;
+  }
+
+  // Arrows
+  .#{$tooltip-prefix-cls}-arrow {
+    border-color : transparent;
+    border-style : solid;
+  }
+
+  .#{$tooltip-prefix-cls} {
+    @at-root &-placement-top #{&}-arrow,
+    &-placement-topLeft #{&}-arrow,
+    &-placement-topRight #{&}-arrow {
+      border-top-color : $tooltip-arrow-color;
+    }
+
+    @at-root &-placement-right #{&}-arrow,
+    &-placement-rightTop #{&}-arrow,
+    &-placement-rightBottom #{&}-arrow {
+      border-right-color : $tooltip-arrow-color;
+    }
+
+    @at-root &-placement-left #{&}-arrow,
+    &-placement-leftTop #{&}-arrow,
+    &-placement-leftBottom #{&}-arrow {
+      border-left-color : $tooltip-arrow-color;
+    }
+
+    @at-root &-placement-bottom #{&}-arrow,
+    &-placement-bottomLeft #{&}-arrow,
+    &-placement-bottomRight #{&}-arrow {
+      border-bottom-color : $tooltip-arrow-color;
+    }
+  }
+}

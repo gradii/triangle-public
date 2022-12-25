@@ -1,0 +1,47 @@
+<ul #dropdownUl
+    class="tri-select-dropdown-menu tri-select-dropdown-menu-root tri-select-dropdown-menu-vertical"
+    role="menu"
+    tabindex="0">
+  <li *ngIf="selectService.isShowNotFound"
+      class="tri-select-dropdown-menu-item tri-select-dropdown-menu-item-disabled"
+      tri-select-unselectable>
+    <div class="tri-empty-description">
+      {{notFoundContent}}
+    </div>
+  </li>
+  <li *ngIf="selectService.addedTagOption"
+      [menuItemSelectedIcon]="menuItemSelectedIcon"
+      [option]="selectService.addedTagOption"
+      tri-option-li>
+  </li>
+  <li
+    *ngFor="let option of selectService.listOfOptionComponent | triFilterOption : selectService.searchValue : selectService.filterOption : selectService.serverSearch; trackBy: trackValue"
+    [menuItemSelectedIcon]="menuItemSelectedIcon"
+    [option]="option"
+    tri-option-li>
+  </li>
+  <li
+    *ngFor="let group of selectService.listOfOptionGroupComponent | triFilterGroupOption : selectService.searchValue : selectService.filterOption :selectService.serverSearch; trackBy: trackLabel"
+    class="tri-select-dropdown-menu-item-group">
+    <div [attr.title]="group.isLabelString ? group.label : ''"
+         class="tri-select-dropdown-menu-item-group-title">
+      <ng-container *stringTemplateOutlet="group.label">
+        {{group.label}}
+      </ng-container>
+    </div>
+    <ul class="tri-select-dropdown-menu-item-group-list">
+      <li
+        *ngFor="let option of group.listOfOptionComponent | triFilterOption : selectService.searchValue : selectService.filterOption :selectService.serverSearch; trackBy: trackValue"
+        [menuItemSelectedIcon]="menuItemSelectedIcon"
+        [option]="option"
+        tri-option-li>
+      </li>
+    </ul>
+  </li>
+  <li
+    *ngFor="let option of selectService.listOfTagOption | triFilterOption : selectService.searchValue : selectService.filterOption : selectService.serverSearch; trackBy: trackValue "
+    [menuItemSelectedIcon]="menuItemSelectedIcon"
+    [option]="option"
+    tri-option-li>
+  </li>
+</ul>

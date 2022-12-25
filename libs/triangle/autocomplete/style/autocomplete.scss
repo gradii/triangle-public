@@ -1,0 +1,39 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+@import "../../core/style/legend/menu-common";
+
+$input-prefix-cls              : #{$tri-prefix}-input;
+$select-prefix-cls             : #{$tri-prefix}-select;
+$autocomplete-prefix-cls       : #{$tri-prefix}-autocomplete;
+
+$input-padding-horizontal-base : 4px;
+
+$autocomplete-panel-max-height : 256px !default;
+
+.#{$autocomplete-prefix-cls}-panel {
+  @include tri-menu-base();
+  visibility    : hidden;
+  max-width     : none;
+  max-height    : $autocomplete-panel-max-height;
+  position      : relative;
+  width         : 100%;
+  border-radius : $border-radius-base;
+  box-sizing    : border-box;
+  outline       : none;
+
+  //margin
+  margin-top    : 4px;
+  margin-bottom : 4px;
+
+  &.#{$autocomplete-prefix-cls}-visible {
+    visibility : visible;
+  }
+
+  &.#{$autocomplete-prefix-cls}-hidden {
+    visibility : hidden;
+  }
+
+}
+
+
+

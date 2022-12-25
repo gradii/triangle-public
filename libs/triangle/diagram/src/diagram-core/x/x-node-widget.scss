@@ -1,0 +1,67 @@
+@use "../../../../core/style/variables" as v;
+@use "../../../../core/style/theming";
+@use "../../../../core/themes/theme";
+
+$primary       : theme.$primary;
+$foreground    : theme.$foreground;
+$background    : theme.$background;
+
+$primary-color : theming.tri-color($primary);
+$border-color  : theming.tri-color($foreground, "border-color-base");
+$text-color    : theming.tri-color($foreground, "text");
+
+$title-color   : theming.tri-color($primary, 50);
+
+
+:host.tri-diagram-node-selected {
+  border-color : $primary-color;
+}
+
+:host {
+  border-radius : 5px;
+  font-family   : sans-serif;
+  color         : $text-color;
+  border-width  : 2px;
+  border-style  : solid;
+  border-color  : $border-color;
+  background    : theming.tri-color($background, "card");
+  overflow      : hidden;
+  font-size     : 11px;
+  display       : block;
+
+  white-space: nowrap;
+  //word-wrap: break-word;
+
+
+  .title {
+    background    : $title-color;
+    display       : flex;
+    white-space   : nowrap;
+    justify-items : center;
+  }
+
+  .titleName {
+    flex-grow : 1;
+    padding   : 5px 5px;
+  }
+
+  .ports {
+    display    : flex;
+    column-gap : 2rem;
+
+    margin: 0.5rem 0.325rem;
+
+    //background-image : linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+  }
+
+  .portsContainer {
+    flex-grow      : 1;
+    display        : flex;
+    flex-direction : column;
+    row-gap: 2px;
+
+    //min-width      : 3rem;
+    //min-height     : 2rem;
+  }
+
+}

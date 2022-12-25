@@ -1,0 +1,230 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$steps-prefix-cls : "#{ v.$tri-prefix}-steps";
+
+@mixin tri-steps-theme($theme) {
+  $process-icon-color        : theming.tri-color(map.get($theme, primary));
+  $process-title-color       : theming.tri-color(map.get($theme, text-color));
+  $process-description-color : theming.tri-color(map.get($theme, process-title-color));
+  $process-tail-color        : theming.tri-color(map.get($theme, border-color-split));
+  $process-icon-text-color   : #fff;
+  $wait-icon-color           : theming.tri-color(map.get($theme, disabled-color));
+  $wait-title-color          : theming.tri-color(map.get($theme, foreground), text-color-secondary);
+  $wait-description-color    : theming.tri-color(map.get($theme, foreground), wait-title-color);
+  $wait-tail-color           : theming.tri-color(map.get($theme, foreground), process-tail-color);
+  $finish-icon-color         : theming.tri-color(map.get($theme, foreground), process-icon-color);
+  $finish-title-color        : theming.tri-color(map.get($theme, foreground), wait-title-color);
+  $finish-description-color  : theming.tri-color(map.get($theme, foreground), finish-title-color);
+  $finish-tail-color         : theming.tri-color(map.get($theme, foreground), process-icon-color);
+  $error-icon-color          : theming.tri-color(map.get($theme, error));
+  $error-title-color         : theming.tri-color(map.get($theme, error));
+  $error-description-color   : theming.tri-color(map.get($theme, error));
+  $error-tail-color          : theming.tri-color(map.get($theme, error));
+  $steps-background          : theming.tri-color(map.get($theme, background), component-background);
+
+  .#{$steps-prefix-cls} {
+    .#{$steps-prefix-cls}-item {
+
+      @at-root &.#{$steps-prefix-cls}-status-wait {
+        .#{$steps-prefix-cls}-head-inner {
+          border-color     : $wait-icon-color;
+          background-color : $steps-background;
+
+          > .#{$steps-prefix-cls}-icon {
+            color : $wait-icon-color;
+
+            .#{$steps-prefix-cls}-icon-dot {
+              background : $wait-icon-color;
+            }
+          }
+        }
+
+        .#{$steps-prefix-cls}-title {
+          color : $wait-title-color;
+        }
+
+        .#{$steps-prefix-cls}-description {
+          color : $wait-description-color;
+        }
+
+        .#{$steps-prefix-cls}-tail > i {
+          background-color : $wait-tail-color;
+        }
+      }
+      @at-root &.#{$steps-prefix-cls}-status-process {
+        .#{$steps-prefix-cls}-head-inner {
+          border-color     : $process-icon-color;
+          background-color : $process-icon-color;
+
+          > .#{$steps-prefix-cls}-icon {
+            color : $process-icon-text-color;
+
+            .#{$steps-prefix-cls}-icon-dot {
+              background : $process-icon-color;
+            }
+          }
+        }
+
+        .#{$steps-prefix-cls}-title {
+          color : $process-title-color;
+        }
+
+        .#{$steps-prefix-cls}-description {
+          color : $process-description-color;
+        }
+
+        .#{$steps-prefix-cls}-tail > i {
+          background-color : $process-tail-color;
+        }
+      }
+      @at-root &.#{$steps-prefix-cls}-status-finish {
+        .#{$steps-prefix-cls}-head-inner {
+          border-color     : $finish-icon-color;
+          background-color : $steps-background;
+
+          > .#{$steps-prefix-cls}-icon {
+            color : $finish-icon-color;
+
+            .#{$steps-prefix-cls}-icon-dot {
+              background : $finish-icon-color;
+            }
+          }
+        }
+
+        .#{$steps-prefix-cls}-tail > i:after {
+          background : $finish-tail-color;
+          box-shadow : 0 0 0 0 $primary-color;
+        }
+
+        .#{$steps-prefix-cls}-title {
+          color : $finish-title-color;
+        }
+
+        .#{$steps-prefix-cls}-description {
+          color : $finish-description-color;
+        }
+      }
+
+      @at-root &.#{$steps-prefix-cls}-status-error {
+        .#{$steps-prefix-cls}-head-inner {
+          border-color     : $error-icon-color;
+          background-color : $steps-background;
+
+          > .#{$steps-prefix-cls}-icon {
+            color : $error-icon-color;
+
+            .#{$steps-prefix-cls}-icon-dot {
+              background : $error-icon-color;
+            }
+          }
+        }
+
+        .#{$steps-prefix-cls}-title {
+          color : $error-title-color;
+        }
+
+        .#{$steps-prefix-cls}-description {
+          color : $error-description-color;
+        }
+
+        .#{$steps-prefix-cls}-tail > i {
+          background-color : $process-tail-color;
+        }
+      }
+
+      @at-root &.#{$steps-prefix-cls}-next-error {
+        .#{$steps-prefix-cls}-tail > i,
+        .#{$steps-prefix-cls}-tail > i:after {
+          background-color : $error-tail-color;
+        }
+      }
+
+      @at-root &.#{$steps-prefix-cls}-custom {
+        .#{$steps-prefix-cls}-head-inner {
+          background : none;
+        }
+
+        @at-root &.#{$steps-prefix-cls}-status-process {
+          .#{$steps-prefix-cls}-head-inner > .#{$steps-prefix-cls}-icon {
+            color : $process-icon-color;
+          }
+        }
+      }
+    }
+
+    .#{$steps-prefix-cls}-head {
+      background : $steps-background;
+    }
+
+    .#{$steps-prefix-cls}-head-inner {
+      border : v.$border-width-base v.$border-style-base $wait-icon-color;
+      //transition    : background-color 0.3s ease, border-color 0.3s ease;
+
+      > .#{$steps-prefix-cls}-icon {
+        color : $primary-color;
+      }
+    }
+
+    .#{$steps-prefix-cls}-title {
+      color            : v.$text-color;
+      background-color : $steps-background;
+
+      > a:first-child:last-child {
+        color : v.$text-color;
+      }
+    }
+
+    .#{$steps-prefix-cls}-description {
+      color : $text-color-secondary;
+    }
+
+    .#{$steps-prefix-cls}-tail {
+      > i {
+        background : $wait-tail-color;
+        @at-root &:after {
+          background : $border-color-split;
+        }
+      }
+
+      > .#{$steps-prefix-cls}-tail-tip {
+        color : #aaa;
+      }
+    }
+
+    @at-root &.#{$steps-prefix-cls}-small {
+      .#{$steps-prefix-cls}-head-inner {
+        border : v.$border-width-base v.$border-style-base $wait-icon-color;
+      }
+
+      .#{$steps-prefix-cls}-title {
+        color : v.$text-color;
+      }
+
+      .#{$steps-prefix-cls}-description {
+        color : $text-color-secondary;
+      }
+    }
+  }
+
+  .#{$steps-prefix-cls}-dot {
+
+    .#{$steps-prefix-cls}-head {
+      @at-root &-inner {
+        .#{$steps-prefix-cls}-icon-dot {
+          @at-root &:after {
+            background : rgba(255, 255, 255, 0.001);
+          }
+        }
+      }
+    }
+
+    .#{$steps-prefix-cls}-main {
+      .#{$steps-prefix-cls}-title {
+        background-color : transparent;
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@use "sass:map";
+@use "../theming";
+@use "../../themes/theme";
+
+$foreground : theme.$foreground;
+
+// Placeholder text
+@mixin placeholder($color: null) {
+
+  @if ($color == null) {
+    $color : theming.tri-color($foreground, placeholder-color);
+  }
+
+  // Firefox
+  &::-moz-placeholder {
+    color   : $color;
+    opacity : 1;
+  }
+  // Internet Explorer 10+
+  &:-ms-input-placeholder {
+    color : $color;
+  }
+  // Safari and Chrome
+  &::-webkit-input-placeholder {
+    color : $color;
+  }
+}

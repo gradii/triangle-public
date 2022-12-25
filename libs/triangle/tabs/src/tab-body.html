@@ -1,0 +1,9 @@
+<div #content (@translateTab.done)="_translateTabComplete.next($event)"
+     (@translateTab.start)="_onTranslateTabStarted($event)"
+     [@translateTab]="{
+        value: _position,
+        params: {animationDuration: animationDuration}
+     }"
+     class="tri-tab-body-content">
+  <ng-template triTabBodyHost></ng-template>
+</div>

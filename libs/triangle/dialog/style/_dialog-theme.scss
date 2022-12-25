@@ -1,0 +1,58 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/mixins/border-radius";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+@mixin tri-dialog-theme() {
+  $primary           : theme.$primary;
+  $foreground        : theme.$foreground;
+  $background        : theme.$background;
+
+  $dialog-prefix-cls : "#{ v.$tri-prefix}-dialog" !default;
+  $dialog-header-bg  : #f9fafb !default;
+  $dialog-content-bg : theming.tri-color($background, component-background) !default;
+  $dialog-mask-bg    : rgba(55, 55, 55, 0.6) !default;
+
+  .#{$dialog-prefix-cls} {
+    background : $dialog-content-bg;
+    @include border-radius.border-radius(v.$border-radius-base);
+    box-shadow : v.$shadow-2;
+
+    @at-root &-title {
+      color : theming.tri-color($foreground, heading-color);
+    }
+
+    @at-root &-close {
+      border     : 0;
+      background : transparent;
+      color      : theming.tri-color($foreground, text-color-secondary);
+      @at-root &:focus,
+      &:hover {
+        color : #444;
+      }
+    }
+
+    @at-root &-header {
+      @include border-radius.border-radius((v.$border-radius-base v.$border-radius-base 0 0));
+      background    : $dialog-header-bg;
+      color         : v.$text-color;
+      border-bottom : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-split);
+    }
+
+    @at-root &-actions {
+      border-top : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-split);
+      @include border-radius.border-radius((0 0 v.$border-radius-base v.$border-radius-base));
+    }
+
+    @at-root &-mask {
+      background-color : #373737;
+      background-color : $dialog-mask-bg; // lesshint duplicateProperty: false
+      filter           : alpha(opacity=50);
+    }
+
+    @at-root &-open {
+      overflow : hidden;
+    }
+  }
+}

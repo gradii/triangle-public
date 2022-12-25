@@ -1,0 +1,8 @@
+@import "../../style/legend/menu-common";
+@import "../../style/legend/vendor-prefixes";
+
+.tri-optgroup-label {
+  @include tri-menu-item-base();
+  @include user-select(none);
+  cursor : default;
+}

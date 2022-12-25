@@ -1,0 +1,44 @@
+@use '../../../../../core/style/theming';
+@use '../../../../../core/themes/theme';
+
+
+$primary: theme.$primary;
+
+$primary-color: theming.tri-color($primary);
+
+.path {
+  fill           : none;
+  pointer-events : all;
+}
+
+.path-arrow {
+  pointer-events: none;
+}
+
+.path-dashed {
+  pointer-events: none;
+  stroke-dasharray : 10, 2;
+  animation        : animation-selected 3s linear infinite;
+  stroke           : opacify($primary-color, 0.5);
+}
+
+.path-solid {
+  pointer-events: none;
+  stroke : $primary-color
+}
+
+.path-bg {
+  stroke: opacify($primary-color, 0.5);
+}
+.path-bg:hover {
+  stroke-opacity : 0.1;
+}
+
+@keyframes animation-selected {
+  0% {
+    stroke-dashoffset : 24;
+  }
+  100% {
+    stroke-dashoffset : 0;
+  }
+}

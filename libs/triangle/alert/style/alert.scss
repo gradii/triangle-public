@@ -1,0 +1,132 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/themes/theme";
+
+$alert-prefix-cls : #{v.$tri-prefix}-alert;
+
+.#{$alert-prefix-cls} {
+  @include mixins.reset-component();
+  display       : flex;
+  position      : relative;
+  padding       : .5rem 1rem;
+  border-radius : v.$border-radius-base;
+  font-size     : v.$font-size-base;
+  line-height   : v.$line-height-base;
+
+  @at-root &#{&}-no-icon {
+    padding : .5rem 1rem;
+  }
+
+  @at-root &-icon {
+    font-size    : v.$font-size-lg;
+    display      : flex;
+    margin-right : 4px;
+  }
+
+  @at-root &-description {
+    font-size   : v.$font-size-base;
+    line-height : 1.25;
+    display     : none;
+
+    > ul {
+      margin    : 0;
+      padding-left: 1.5rem;
+    }
+  }
+
+  @at-root &-close-icon {
+    font-size   : 12px;
+    position    : absolute;
+    right       : 1rem;
+    top         : .625rem;
+    height      : .75rem;
+    line-height : 1;
+    overflow    : hidden;
+    cursor      : pointer;
+
+    .#{v.$iconfont-css}-cross {
+      transition : color .3s ease;
+    }
+  }
+
+  @at-root &-close-text {
+    position : absolute;
+    right    : 1rem;
+  }
+
+  @at-root &-with-description {
+    padding       : 1rem;
+    position      : relative;
+    border-radius : v.$border-radius-base;
+    line-height   : 1.5;
+  }
+
+  @at-root &-with-description #{&}-icon {
+    font-size : 2rem;
+    margin-right: 0.8rem;
+  }
+
+  @at-root &-with-description #{&}-close-icon {
+    position  : absolute;
+    top       : 16px;
+    right     : 16px;
+    cursor    : pointer;
+    font-size : 12px;
+  }
+
+  @at-root &-with-description #{&}-message {
+    font-size     : v.$font-size-lg;
+    display       : block;
+    margin-bottom : 4px;
+  }
+
+  @at-root &-with-description #{&}-description {
+    display : block;
+  }
+
+  @at-root &#{&}-close {
+    height           : 0 !important;
+    margin           : 0;
+    padding-top      : 0;
+    padding-bottom   : 0;
+    transition       : all .3s v.$ease-in-out-circ;
+    transform-origin : 50% 0;
+  }
+
+  @at-root &-slide-up-leave {
+    animation           : antAlertSlideUpOut .3s v.$ease-in-out-circ;
+    animation-fill-mode : both;
+  }
+
+  @at-root &-banner {
+    border-radius : 0;
+    border        : 0;
+    margin-bottom : 0;
+  }
+}
+
+@keyframes antAlertSlideUpIn {
+  0% {
+    opacity          : 0;
+    transform-origin : 0 0;
+    transform        : scaleY(0);
+  }
+  100% {
+    opacity          : 1;
+    transform-origin : 0 0;
+    transform        : scaleY(1);
+  }
+}
+
+@keyframes antAlertSlideUpOut {
+  0% {
+    opacity          : 1;
+    transform-origin : 0 0;
+    transform        : scaleY(1);
+  }
+  100% {
+    opacity          : 0;
+    transform-origin : 0 0;
+    transform        : scaleY(0);
+  }
+}

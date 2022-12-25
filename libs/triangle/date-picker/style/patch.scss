@@ -1,0 +1,17 @@
+@import "./date-picker";
+
+tri-datepicker {
+  display  : inline-block;
+  position : relative;
+}
+
+.#{$calendar-prefix-cls}-picker-container {
+  position : relative;
+  left     : -2px;
+  @at-root &.top {
+    bottom : -2px;
+  }
+  @at-root &.bottom {
+    top : -2px;
+  }
+}

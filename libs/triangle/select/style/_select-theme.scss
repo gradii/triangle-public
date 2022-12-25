@@ -1,0 +1,83 @@
+@use "sass:map";
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+@use "../../core/style/mixins";
+@use "../../core/style/legend/form-common";
+@use "../../core/style/typography/typography";
+@use "../../core/style/typography/typography-utils";
+
+$foreground : theme.$foreground !default;
+$background : theme.$background !default;
+
+$primary    : theme.$primary !default;
+$secondary  : theme.$secondary !default;
+$success    : theme.$success !default;
+$info       : theme.$info !default;
+$warning    : theme.$warning !default;
+$error      : theme.$error !default;
+
+
+@mixin select-color() {
+  .tri-select-value {
+    color : theming.tri-color($foreground, text);
+  }
+
+  .tri-select-disabled .tri-select-value {
+    color : theming.tri-color($foreground, disabled-text);
+  }
+
+  .tri-select-arrow-icon {
+    color : theming.tri-color($foreground, secondary-text);
+  }
+
+  .tri-select-panel {
+    background : theming.tri-color($background, card);
+
+    .tri-option.tri-selected:not(.tri-option-multiple) {
+      background : theming.tri-color($background, hover, 0.12);
+    }
+  }
+
+  .tri-form-field {
+    &.tri-focused {
+      &.tri-primary .tri-select-arrow {
+        color : theming.tri-color($primary, text);
+      }
+
+      &.tri-accent .tri-select-arrow {
+        color : theming.tri-color($secondary, text);
+      }
+
+      &.tri-warn .tri-select-arrow {
+        color : theming.tri-color($warning, text);
+      }
+    }
+
+    .tri-select.tri-select-invalid .tri-select-arrow {
+      color : theming.tri-color($warning, text);
+    }
+
+    .tri-select.tri-select-disabled .tri-select-arrow {
+      color : theming.tri-color($foreground, disabled-text);
+    }
+  }
+}
+
+@mixin select-typography() {
+
+  .tri-select {
+  }
+
+  .tri-select-trigger {
+  }
+}
+
+@mixin select-density() {}
+
+@mixin tri-select-theme() {
+  @include mixins.import-once("tri-select") {
+    @include select-color();
+    @include select-density();
+    @include select-typography();
+  }
+}

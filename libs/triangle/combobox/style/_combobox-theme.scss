@@ -1,0 +1,227 @@
+@use "sass:color";
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../input/style/input-mixin";
+@use "../../input/style/input-theme";
+@use "../../autocomplete/style/autocomplete-theme";
+@use "../../core/style/mixins/clearfix";
+@use "../../core/style/mixins/import-once";
+@use "../../core/style/mixins/rem";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+@use "../../input/style/input-variables";
+
+$select-prefix-cls : #{v.$tri-prefix}-select;
+
+@mixin selection-clear-theme() {
+  $foreground : theme.$foreground;
+  $background : theme.$background;
+
+  $primary    : theme.$primary;
+
+  color       : theming.tri-color($foreground, disabled-color);
+  background  : theming.tri-color($background, component-background);
+  @at-root &:hover {
+    color : theming.tri-color($foreground, text-color-secondary);
+  }
+}
+
+@mixin tri-combobox-theme() {
+  $foreground : theme.$foreground;
+  $background : theme.$background;
+
+  $primary    : theme.$primary;
+
+  @include import-once.import-once("component:selection") {
+    .#{$select-prefix-cls} {
+      > ul > li > a {
+        background-color : theming.tri-color($background, component-background);
+      }
+
+      // arrow
+      @at-root &-arrow {
+        color : theming.tri-color($foreground, disabled-color);
+      }
+
+      @at-root &-selection {
+        background-color : theming.tri-color($background, component-background);
+        border           : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+        border-radius    : v.$border-radius-base;
+
+        @at-root &:hover {
+          @include input-theme.tri-input-hover-theme();
+        }
+
+        @at-root .#{$select-prefix-cls}-focused #{&},
+        &:focus,
+        &:active {
+          @include input-theme.tri-input-active-theme();
+        }
+
+        @at-root &__clear {
+          @include selection-clear-theme();
+        }
+
+        @at-root &:hover #{&}__clear {
+          opacity : 1;
+        }
+      }
+
+      @at-root &-disabled {
+        color : theming.tri-color($foreground, disabled-color);
+      }
+
+      @at-root &-disabled #{&}-selection {
+        background : theming.tri-color($foreground, input-disabled-bg);
+        @at-root &:hover,
+        &:focus,
+        &:active {
+          border-color : theming.tri-color($foreground, border-color-base);
+          box-shadow   : none;
+        }
+      }
+
+      @at-root &-disabled #{&}-selection--multiple #{&}-selection__choice {
+        color      : color.adjust(theming.tri-color($foreground, disabled), $alpha : 0.33);
+        background : theming.tri-color($background, background-color-active);
+      }
+
+      @at-root &-disabled #{&}-selection__choice__remove {
+        color : theming.tri-color($foreground, disabled-color);
+        @at-root &:hover {
+          color : theming.tri-color($foreground, disabled-color);
+        }
+      }
+
+      @at-root &-selection__placeholder,
+      &-search__field__placeholder {
+        color : input-theme.$input-placeholder-color;
+      }
+
+      @at-root &-search--inline {
+        .#{$select-prefix-cls}-search__field {
+          background    : transparent;
+          border-width  : 0;
+          border-radius : v.$border-radius-base;
+        }
+      }
+
+      @at-root &-selection--multiple {
+        @include clearfix.clearfix;
+        > ul > li,
+        .#{$select-prefix-cls}-selection__rendered > ul > li {
+          // for tree-select
+          height : input-variables.$input-height-base - 0.5rem;
+        }
+
+        .#{$select-prefix-cls}-selection__choice {
+          color            : theming.tri-color($foreground, tag-default-color);
+          background-color : theming.tri-color($foreground, tag-default-bg);
+          border           : 1px solid theming.tri-color($foreground, border-color-split);
+          border-radius    : 4px;
+        }
+
+        .#{$select-prefix-cls}-selection__choice__remove {
+          color : theming.tri-color($foreground, text-color-secondary);
+          @at-root &:hover {
+            color : #404040;
+          }
+        }
+      }
+
+      @at-root &-open {
+        .#{$select-prefix-cls}-selection {
+          @include input-theme.tri-input-active-theme();
+        }
+      }
+
+      @at-root &-combobox {
+        .#{$select-prefix-cls}-search__field {
+          box-shadow : none;
+        }
+      }
+      @at-root &-combobox#{&}-allow-clear #{&}-selection:hover #{&}-selection__rendered,
+      &-combobox#{&}-show-arrow #{&}-selection:hover #{&}-selection__rendered {
+        margin-right : 20px;
+      }
+    }
+  }
+
+  @include import-once.import-once("component:selection-dropdown") {
+    .#{$select-prefix-cls}-dropdown {
+      background-color : theming.tri-color($background, component-background);
+      border-radius    : v.$border-radius-base;
+      box-shadow       : v.$box-shadow-base;
+
+      @at-root &-menu {
+        @at-root &-item-group-title {
+          color : theming.tri-color($foreground, text-color-secondary);
+        }
+
+        @at-root &-item-group-list #{&}-item:first-child:not(:last-child),
+        &-item-group:not(:last-child) #{&}-item-group-list #{&}-item:last-child {
+          border-radius : 0;
+        }
+
+        @at-root &-item {
+          color : theming.tri-color($foreground, text-color);
+          @at-root &:hover {
+            background-color : theming.tri-color($background, item-hover-bg);
+          }
+
+          @at-root &:first-child {
+            border-radius : v.$border-radius-base v.$border-radius-base 0 0;
+          }
+
+          @at-root &:last-child {
+            border-radius : 0 0 v.$border-radius-base v.$border-radius-base;
+          }
+
+          @at-root &-disabled {
+            color : theming.tri-color($foreground, disabled-color);
+
+            @at-root &:hover {
+              color            : theming.tri-color($foreground, disabled-color);
+              background-color : theming.tri-color($background, component-background);
+            }
+          }
+
+          @at-root &-selected {
+            @at-root &,
+            &:hover {
+              background-color : theming.tri-color($background, background-color-base);
+              color            : theming.tri-color($foreground, text-color);
+            }
+          }
+
+          @at-root &-active {
+            background-color : theming.tri-color($foreground, item-active-bg);
+          }
+
+          @at-root &-divider {
+            background-color : #e5e5e5;
+          }
+        }
+      }
+
+      @at-root &#{&}--multiple {
+        .#{$select-prefix-cls}-dropdown-menu-item {
+          padding-right : v.$control-padding-horizontal + 1.25rem;
+
+          & .#{$select-prefix-cls}-selected-icon {
+            color : transparent;
+          }
+
+          &:hover .#{$select-prefix-cls}-selected-icon {
+            color : color.adjust(#000, $alpha : 0.87);
+          }
+
+          &-selected .#{$select-prefix-cls}-selected-icon,
+          &-selected:hover .#{$select-prefix-cls}-selected-icon {
+            color : theming.tri-color($primary);
+          }
+        }
+      }
+    }
+  }
+}

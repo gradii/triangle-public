@@ -1,0 +1,17 @@
+@use "sass:math";
+@use "sass:meta";
+@use "deg-to-rad";
+
+// Convert to unitless rad
+@function unitless-rad ($angle) {
+  @if math.is-unitless($angle) {
+    @return $angle;
+  } @else if math.unit($angle) == rad {
+    @return math.div($angle, 1rad);
+  } @else if math.unit($angle) == deg {
+    @return deg-to-rad.deg-to-rad($angle, false);
+  } @else if meta.type-of($angle) != number or not math.is-unitless($angle) {
+    @warn "#{ $angle } is not a valid number.";
+    @return $angle;
+  }
+}

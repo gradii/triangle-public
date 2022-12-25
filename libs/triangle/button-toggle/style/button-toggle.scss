@@ -1,0 +1,146 @@
+@use '../../core/style/legend/vendor-prefixes';
+@use '../../core/style/legend/layout-common';
+@use '../../core/style/cdk/a11y';
+
+$legacy-padding: 0 16px !default;
+$legacy-height: 2.25rem !default;
+$legacy-border-radius: 4px !default;
+
+.tri-button-toggle-group {
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+  white-space: nowrap;
+  overflow: hidden;
+  border-radius: $legacy-border-radius;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0;
+
+  @include a11y.cdk-high-contrast(active, off) {
+    outline: solid 1px;
+  }
+}
+
+.tri-button-toggle-vertical {
+  flex-direction: column;
+
+  .tri-button-toggle-label-content {
+    // Vertical button toggles shouldn't be an inline-block, because the toggles should
+    // fill the available width in the group.
+    display: block;
+  }
+}
+
+.tri-button-toggle {
+  white-space: nowrap;
+  position: relative;
+  outline: 0;
+
+  // Fixes SVG icons that get thrown off because of the `vertical-align` on the parent.
+  .mat-icon svg {
+    vertical-align: top;
+  }
+
+  &.cdk-keyboard-focused {
+    .tri-button-toggle-focus-overlay {
+      opacity: 1;
+
+      // In high contrast mode `opacity: 1` will show the overlay as solid so we fall back 0.5.
+      @include a11y.cdk-high-contrast(active, off) {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.tri-button-toggle-appearance-standard {
+  &:not(.tri-button-toggle-disabled):hover .tri-button-toggle-focus-overlay {
+    opacity: 0.04;
+  }
+
+  // Similar to components like the checkbox, slide-toggle and radio, we cannot show the focus
+  // overlay for `.cdk-program-focused` because mouse clicks on the <label> element would be always
+  // treated as programmatic focus. Note that it needs the extra `:not` in order to have more
+  // specificity than the `:hover` above.
+  &.cdk-keyboard-focused:not(.tri-button-toggle-disabled) .tri-button-toggle-focus-overlay {
+    opacity: 0.12;
+
+    @include a11y.cdk-high-contrast(active, off) {
+      opacity: 0.5;
+    }
+  }
+
+  // On touch devices the hover state will linger on the element after the user has tapped.
+  // Disable it, because it can be confused with focus. We target the :hover state explicitly,
+  // because we still want to preserve the keyboard focus state for hybrid devices that have
+  // a keyboard and a touchscreen.
+  @media (hover: none) {
+    &:not(.tri-button-toggle-disabled):hover .tri-button-toggle-focus-overlay {
+      display: none;
+    }
+  }
+}
+
+.tri-button-toggle-label-content {
+  @include vendor-prefixes.user-select(none);
+  display: inline-block;
+  line-height: $legacy-height;
+  padding: $legacy-padding;
+
+  // Prevents IE from shifting the content on click.
+  position: relative;
+}
+
+// Overlay to be used as a tint.
+.tri-button-toggle-focus-overlay {
+  border-radius: inherit;
+
+  // Disable pointer events to prevent it from hijacking user events.
+  pointer-events: none;
+  opacity: 0;
+  @include layout-common.tri-fill();
+
+  .tri-button-toggle-checked & {
+    //border-bottom: solid $legacy-height;
+
+    // Changing the background color for the selected item won't be visible in high contrast mode.
+    // We fall back to using the overlay to draw a brighter, semi-transparent tint on top instead.
+    // It uses a border, because the browser will render it using a brighter color.
+    @include a11y.cdk-high-contrast(active, off) {
+      opacity: 0.5;
+      height: 0;
+    }
+  }
+}
+
+// Increase specificity because ripple styles are part of the `mat-core` mixin and can
+// potentially overwrite the absolute position of the container.
+.tri-button-toggle .tri-button-toggle-ripple {
+  @include layout-common.tri-fill();
+
+  // Disable pointer events for the ripple container, because the container will overlay the user
+  // content and we don't want to prevent mouse clicks that should toggle the state.
+  // Pointer events can be safely disabled because the ripple trigger element is the label element.
+  pointer-events: none;
+}
+
+.tri-button-toggle-button {
+  border: 0;
+  background: none;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  outline: none;
+  width: 100%; // Stretch the button in case the consumer set a custom width.
+  cursor: pointer;
+
+  .tri-button-toggle-disabled & {
+    cursor: default;
+  }
+
+  // Remove the extra focus outline that is added by Firefox on native buttons.
+  &::-moz-focus-inner {
+    border: 0;
+  }
+}

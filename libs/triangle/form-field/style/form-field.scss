@@ -1,0 +1,239 @@
+@use "../../core/style/variables";
+@use "../../core/style/cdk/a11y";
+
+
+// Styles that apply to all appearances of the form-field.
+
+// Min amount of space between start and end hint.
+$hint-min-space      : 1em !default;
+// Infix stretches to fit the container, but naturally wants to be this wide. We set this in order
+// to have a a consistent natural size for the various types of controls that can go in a form
+// field.
+$default-infix-width : 180px !default;
+
+
+.tri-form-field {
+  display    : inline-block;
+  position   : relative;
+
+  // To avoid problems with text-align.
+  text-align : left;
+
+  [dir="rtl"] & {
+    text-align : right;
+  }
+}
+
+// Global wrapper. We need to apply margin to the element for spacing, but
+// cannot apply it to the host element directly.
+.tri-form-field-wrapper {
+  position : relative;
+}
+
+.tri-form-field-variant-horizontal {
+  .tri-form-field-wrapper {
+    display        : flex;
+    flex-direction : row;
+    align-items    : center;
+  }
+
+  .tri-form-field-label-outside-wrapper {
+    .tri-form-field-label {
+      padding       : .5rem 0;
+      width         : 120px;
+      font-size     : 14px;
+      height        : 32px;
+      overflow      : hidden;
+      white-space: nowrap;
+      text-overflow : ellipsis;
+    }
+  }
+}
+
+.tri-form-field-variant-vertical {
+  .tri-form-field-wrapper {
+    display        : flex;
+    flex-direction : column;
+  }
+
+  .tri-form-field-label-outside-wrapper {
+    display: inline-flex;
+    .tri-form-field-label {
+      padding : .5rem 0;
+    }
+  }
+}
+
+
+// We use a flex layout to baseline align the prefix and suffix elements.
+// The underline is outside of it so it can cover all of the elements under this flex container.
+.tri-form-field-flex {
+  display     : inline-flex;
+  align-items : center;
+  box-sizing  : border-box;
+  width       : 100%;
+}
+
+.tri-form-field-prefix,
+.tri-form-field-suffix {
+  white-space : nowrap;
+  flex        : none;
+  position    : relative;
+}
+
+.tri-form-field-infix {
+  display   : block;
+  position  : relative;
+  flex      : auto;
+  min-width : 0;
+  width     : $default-infix-width;
+
+  // In high contrast mode IE/Edge will render all of the borders, even if they're transparent.
+  // Since we can't remove the border altogether or replace it with a margin, because it'll throw
+  // off the baseline, and we can't use a base64-encoded 1x1 transparent image because of CSP,
+  // we work around it by setting a linear gradient that goes from `transparent` to `transparent`.
+  @include a11y.cdk-high-contrast(active, off) {
+    border-image : linear-gradient(transparent, transparent);
+  }
+}
+
+// Used to hide the label overflow on IE, since IE doesn't take transform into account when
+// determining overflow.
+.tri-form-field-label-wrapper {
+  position       : absolute;
+  left           : 0;
+  box-sizing     : content-box;
+  width          : 100%;
+  height         : 100%;
+  overflow       : hidden;
+  pointer-events : none; // We shouldn't catch mouse events (let them through).
+
+  [dir="rtl"] & {
+    // Usually this isn't necessary since the element is 100% wide, but
+    // when we've got a `select` node, we need to set a `max-width` on it.
+    left  : auto;
+    right : 0;
+  }
+}
+
+.tri-form-field-label-wrapper {
+  // The label itself. This is invisible unless it is. The logic to show it is
+  // basically `empty || (float && (!empty || focused))`. Float is dependent on the
+  // `floatingPlaceholder` property.
+  .tri-form-field-label {
+    // The label is after the form field control, but needs to be aligned top-left of the infix <div>.
+    position         : absolute;
+    left             : 0;
+
+    font             : inherit;
+    pointer-events   : none; // We shouldn't catch mouse events (let them through).
+
+    // Put ellipsis text overflow.
+    width            : 100%;
+    white-space      : nowrap;
+    text-overflow    : ellipsis;
+    overflow         : hidden;
+
+    transform-origin : 0 0;
+    transition       : transform variables.$swift-ease-out-duration variables.$swift-ease-out-timing-function,
+    color variables.$swift-ease-out-duration variables.$swift-ease-out-timing-function,
+    width variables.$swift-ease-out-duration variables.$swift-ease-out-timing-function,
+    padding variables.$swift-ease-out-duration variables.$swift-ease-out-timing-function;
+
+    // Hide the label initially, and only show it when it's floating or the control is empty.
+    display          : none;
+
+    [dir="rtl"] & {
+      transform-origin : 100% 0;
+      left             : auto;
+      right            : 0;
+    }
+  }
+}
+
+.tri-form-field-empty.tri-form-field-label,
+.tri-form-field-can-float.tri-form-field-should-float .tri-form-field-label {
+  display : block;
+}
+
+// Pseudo-class for Chrome and Safari auto-fill to move the label to the floating position.
+// This is necessary because these browsers do not actually fire any events when a form auto-fill is
+// occurring. Once the autofill is committed, a change event happen and the regular tri-form-field
+// classes take over to fulfill this behaviour.
+// @breaking-change 8.0.0 will rely on AutofillMonitor instead.
+.tri-form-field-autofill-control:-webkit-autofill + .tri-form-field-label-wrapper
+.tri-form-field-label {
+  // The form field will be considered empty if it is autofilled, and therefore the label will
+  // be shown. Therefore we need to override it to hidden...
+  display : none;
+
+  // ...and re-show it only if it's able to float.
+  .tri-form-field-can-float & {
+    display    : block;
+    transition : none;
+  }
+}
+
+// Server-side rendered matInput with focus or a placeholder attribute but placeholder not shown
+// (used as a pure CSS stand-in for tri-form-field-should-float).
+// stylelint-disable material/no-prefixes
+.tri-input-server:focus + .tri-form-field-label-wrapper .tri-form-field-label,
+.tri-input-server[placeholder]:not(:placeholder-shown) + .tri-form-field-label-wrapper
+.tri-form-field-label {
+  display : none;
+
+  .tri-form-field-can-float & {
+    display : block;
+  }
+}
+
+// stylelint-enable material/no-prefixes
+
+// Disable the label animation when the control is not empty (this prevents label
+// animating up when the value is set programmatically).
+.tri-form-field-label:not(.tri-form-field-empty) {
+  transition : none;
+}
+
+// Wrapper for the hints and error messages.
+.tri-form-field-subscript-wrapper {
+  position   : absolute;
+  box-sizing : border-box;
+  width      : 100%;
+  overflow   : hidden; // prevents multi-line errors from overlapping the control
+}
+
+// Scale down icons in the label and hint to be the same size as the text.
+.tri-form-field-subscript-wrapper,
+.tri-form-field-label-wrapper {
+  .tri-icon {
+    width          : 1em;
+    height         : 1em;
+    font-size      : inherit;
+    vertical-align : baseline;
+  }
+}
+
+// Clears the floats on the hints. This is necessary for the hint animation to work.
+.tri-form-field-hint-wrapper {
+  display : flex;
+}
+
+// Spacer used to make sure start and end hints have enough space between them.
+.tri-form-field-hint-spacer {
+  flex : 1 0 $hint-min-space;
+}
+
+// Single error message displayed beneath the form field underline.
+.tri-error {
+  display : block;
+}
+
+// Element that can used to reliably align content in relation to the form field control.
+.tri-form-field-control-wrapper {
+  position : relative;
+}
+
+.tri-form-field-hint-end {
+  order : 1;
+}

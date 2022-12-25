@@ -1,0 +1,87 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+
+$message-prefix-cls : "#{v.$tri-prefix}-message";
+
+.#{$message-prefix-cls} {
+  $success             : theme.$success;
+  $info                : theme.$info;
+  $warning             : theme.$warning;
+  $error               : theme.$error;
+
+  $primary    : theme.$primary;
+  $foreground : theme.$foreground;
+  $background : theme.$background;
+
+  font-size      : v.$font-size-base;
+  position       : fixed;
+  z-index        : v.$zindex-message;
+  width          : 100%;
+  top            : 16px;
+  left           : 0;
+  pointer-events : none;
+
+  @at-root &-notice {
+    padding    : 8px;
+    text-align : center;
+    @at-root &:first-child {
+      margin-top : -8px;
+    }
+  }
+
+  @at-root &-notice-content {
+    padding        : 8px 16px;
+    border-radius  : v.$border-radius-base;
+    display        : inline-block;
+    pointer-events : all;
+  }
+
+  @at-root &-content {
+    display: flex;
+    align-items: center;
+  }
+
+  @at-root &-success .#{v.$iconfont-css} {
+    color : theming.tri-color($success);
+  }
+
+  @at-root &-error .#{v.$iconfont-css} {
+    color : theming.tri-color($error);
+  }
+
+  @at-root &-warning .#{v.$iconfont-css} {
+    color : theming.tri-color($warning);
+  }
+
+  @at-root &-info .#{v.$iconfont-css},
+  &-loading .#{v.$iconfont-css} {
+    color : theming.tri-color($info);
+  }
+
+  .#{v.$iconfont-css} {
+    margin-right : 8px;
+    font-size    : v.$font-size-lg;
+    position     : relative;
+  }
+
+  @at-root &-notice.move-up-leave.move-up-leave-active {
+    animation-name     : MessageMoveOut;
+    overflow           : hidden;
+    animation-duration : .3s;
+  }
+}
+
+@keyframes MessageMoveOut {
+  0% {
+    opacity    : 1;
+    max-height : 150px;
+    padding    : 8px;
+  }
+  100% {
+    opacity    : 0;
+    max-height : 0;
+    padding    : 0;
+  }
+}

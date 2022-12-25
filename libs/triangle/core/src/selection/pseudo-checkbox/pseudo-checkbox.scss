@@ -1,0 +1,67 @@
+@use "../../../style/mixins";
+@use "../../../style/variables" as v;
+
+// Padding inside of a pseudo checkbox.
+$_tri-pseudo-checkbox-padding : mixins.$tri-checkbox-border-width * 2;
+
+// Size of the checkmark in a pseudo checkbox.
+$_tri-pseudo-checkmark-size   : mixins.$tri-checkbox-size - (2 * $_tri-pseudo-checkbox-padding);
+
+
+.tri-pseudo-checkbox {
+  width          : mixins.$tri-checkbox-size;
+  height         : mixins.$tri-checkbox-size;
+  border         : mixins.$tri-checkbox-border-width solid;
+  border-radius  : 2px;
+  cursor         : pointer;
+  display        : inline-block;
+  vertical-align : middle;
+  box-sizing     : border-box;
+  position       : relative;
+  flex-shrink    : 0;
+  transition     : border-color mixins.$tri-checkbox-transition-duration v.$tri-linear-out-slow-in-timing-function,
+  background-color mixins.$tri-checkbox-transition-duration v.$tri-linear-out-slow-in-timing-function;
+
+  // Used to render the checkmark/mixedmark inside of the box.
+  &::after {
+    position      : absolute;
+    opacity       : 0;
+    content       : "";
+    border-bottom : mixins.$tri-checkbox-border-width solid currentColor;
+    transition    : opacity mixins.$tri-checkbox-transition-duration v.$tri-linear-out-slow-in-timing-function;
+  }
+
+  &.tri-pseudo-checkbox-checked, &.tri-pseudo-checkbox-indeterminate {
+    border-color : transparent;
+  }
+
+  @include mixins.noop-animation {
+    &::after {
+      transition : none;
+    }
+  }
+}
+
+.tri-pseudo-checkbox-disabled {
+  cursor : default;
+}
+
+.tri-pseudo-checkbox-indeterminate::after {
+  top           : (mixins.$tri-checkbox-size - mixins.$tri-checkbox-border-width) * 0.5 - mixins.$tri-checkbox-border-width;
+  left          : mixins.$tri-checkbox-border-width * 0.5;
+  width         : mixins.$tri-checkbox-size - 6px;
+  opacity       : 1;
+  border-radius : 2px;
+}
+
+.tri-pseudo-checkbox-checked::after {
+  top         : (mixins.$tri-checkbox-size * 0.5) - ($_tri-pseudo-checkmark-size * 0.25) -
+      (mixins.$tri-checkbox-size * 0.1) - mixins.$tri-checkbox-border-width;
+  left        : $_tri-pseudo-checkbox-padding - mixins.$tri-checkbox-border-width * 1.5;
+  width       : $_tri-pseudo-checkmark-size;
+  height      : ($_tri-pseudo-checkmark-size - mixins.$tri-checkbox-border-width) * 0.5;
+  border-left : mixins.$tri-checkbox-border-width solid currentColor;
+  transform   : rotate(-45deg);
+  opacity     : 1;
+  box-sizing  : content-box;
+}

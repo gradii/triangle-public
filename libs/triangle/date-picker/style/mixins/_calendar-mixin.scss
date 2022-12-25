@@ -1,0 +1,76 @@
+@mixin calendar-panel-header($calendar-prefix-cls) {
+  height      : 40px;
+  line-height : 40px;
+  text-align  : center;
+  user-select : none;
+
+  .#{$calendar-prefix-cls}-century-select,
+  .#{$calendar-prefix-cls}-decade-select,
+  .#{$calendar-prefix-cls}-year-select,
+  .#{$calendar-prefix-cls}-month-select {
+    padding     : 0 2px;
+    font-weight : 500;
+    display     : inline-block;
+    line-height : 40px;
+  }
+
+  .#{$calendar-prefix-cls}-century-select-arrow,
+  .#{$calendar-prefix-cls}-decade-select-arrow,
+  .#{$calendar-prefix-cls}-year-select-arrow,
+  .#{$calendar-prefix-cls}-month-select-arrow {
+    display : none;
+  }
+
+  .#{$calendar-prefix-cls}-prev-century-btn,
+  .#{$calendar-prefix-cls}-next-century-btn,
+  .#{$calendar-prefix-cls}-prev-decade-btn,
+  .#{$calendar-prefix-cls}-next-decade-btn,
+  .#{$calendar-prefix-cls}-prev-month-btn,
+  .#{$calendar-prefix-cls}-next-month-btn,
+  .#{$calendar-prefix-cls}-prev-year-btn,
+  .#{$calendar-prefix-cls}-next-year-btn {
+    position    : absolute;
+    top         : 0;
+    font-family : Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
+    padding     : 0 5px;
+    font-size   : 16px;
+    display     : inline-block;
+    line-height : 40px;
+  }
+
+  .#{$calendar-prefix-cls}-prev-century-btn,
+  .#{$calendar-prefix-cls}-prev-decade-btn,
+  .#{$calendar-prefix-cls}-prev-year-btn {
+    left : 7px;
+
+    &:after {
+      content : "«";
+    }
+  }
+
+  .#{$calendar-prefix-cls}-next-century-btn,
+  .#{$calendar-prefix-cls}-next-decade-btn,
+  .#{$calendar-prefix-cls}-next-year-btn {
+    right : 7px;
+
+    &:after {
+      content : "»";
+    }
+  }
+
+  .#{$calendar-prefix-cls}-prev-month-btn {
+    left : 29px;
+
+    &:after {
+      content : "‹";
+    }
+  }
+
+  .#{$calendar-prefix-cls}-next-month-btn {
+    right : 29px;
+
+    &:after {
+      content : "›";
+    }
+  }
+}

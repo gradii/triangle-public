@@ -1,0 +1,113 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../input/style/input-mixin";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$pagination-prefix-cls : "#{ v.$tri-prefix}-pagination";
+
+@mixin tri-pagination-theme($theme) {
+  $primary    : map.get($theme, primary);
+  $foreground : map.get($theme, foreground);
+  $background : map.get($theme, background);
+
+  .#{$pagination-prefix-cls} {
+    @at-root &-item {
+      border-radius    : v.$border-radius-base;
+      border           : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+      background-color : theming.tri-color($background, component-background);
+
+      a {
+        color : theming.tri-color($foreground, text-color);
+      }
+
+      @at-root &:focus,
+      &:hover {
+        border-color : $primary-color;
+        a {
+          color : $primary-color;
+        }
+      }
+
+      @at-root &-active {
+        background-color : $primary-color;
+        border-color     : $primary-color;
+
+        @at-root &:focus,
+        &:hover {
+          background-color : theming.tri-color($primary, 400);
+          border-color     : theming.tri-color($primary, 400);
+        }
+
+        @at-root & a,
+        &:focus a,
+        &:hover a {
+          color : #fff;
+        }
+      }
+    }
+
+    @at-root &-jump-prev,
+    &-jump-next {
+      @at-root &:after {
+        color : theming.tri-color($foreground, disabled-color);
+      }
+    }
+
+    @at-root &-prev,
+    &-next,
+    &-jump-prev,
+    &-jump-next {
+      color         : theming.tri-color($foreground, text-color);
+      border-radius : v.$border-radius-base;
+    }
+
+    @at-root &-prev,
+    &-next {
+      border           : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+      background-color : theming.tri-color($background, component-background);
+      a {
+        color : theming.tri-color($foreground, text-color);
+      }
+
+      @at-root &:focus,
+      &:hover {
+        border-color : $primary-color;
+        a {
+          color : $primary-color;
+        }
+      }
+    }
+
+    @at-root &-disabled {
+      @at-root &:hover {
+        border-color : theming.tri-color($foreground, border-color-base);
+        a {
+          color  : theming.tri-color($foreground, disabled-color);
+          cursor : not-allowed;
+        }
+      }
+      cursor : not-allowed;
+      a {
+        color : theming.tri-color($foreground, disabled-color);
+      }
+    }
+
+    @at-root &-simple #{&}-simple-pager {
+      input {
+        background-color : theming.tri-color($background, component-background);
+        border-radius    : v.$border-radius-base;
+        border           : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-base);
+        @at-root &:hover {
+          border-color : $primary;
+        }
+      }
+    }
+  }
+
+  .#{$pagination-prefix-cls} {
+    @at-root &.mini #{&}-item {
+      border : 0;
+    }
+  }
+}

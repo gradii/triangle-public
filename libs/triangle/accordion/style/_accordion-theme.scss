@@ -1,0 +1,94 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$accordion-prefix-cls    : "#{ v.$tri-prefix}-accordion";
+
+//$primary             : theme.$primary;
+//$foreground          : theme.$foreground;
+//$background          : theme.$background;
+
+$accordion-disable-color : theming.tri-color(theme.$foreground, disabled-color) !default;
+
+$accordion-header-bg     : theming.tri-color(theme.$background, background-color-base) !default;
+$accordion-active-bg     : theming.tri-color(theme.$background, background-color-active) !default;
+$accordion-disable-bg    : theming.tri-color(theme.$background, disabled-bg) !default;
+
+@mixin _border-bottom-style() {
+  border-bottom : v.$border-width-base v.$border-style-base theming.tri-color(theme.$foreground, border-color-base);
+}
+
+@mixin _border-top-style() {
+  border-top : v.$border-width-base v.$border-style-base theming.tri-color(theme.$foreground, border-color-base);
+}
+
+@mixin tri-accordion-theme() {
+
+  .#{$accordion-prefix-cls} {
+    background-color : $accordion-header-bg;
+    border           : v.$border-width-base v.$border-style-base theming.tri-color(theme.$foreground, border-color-base);
+
+    @at-root & > #{&}-item {
+
+      > .#{$accordion-prefix-cls}-header {
+        @include _border-bottom-style();
+        color : theming.tri-color(theme.$foreground, heading-color);
+
+        .arrow {
+          color : theming.tri-color(theme.$foreground, text-color-secondary);
+        }
+      }
+    }
+
+    @at-root &-content {
+      color            : theming.tri-color(theme.$foreground, text-color);
+      background-color : theming.tri-color(theme.$background, component-background);
+      @include _border-bottom-style();
+    }
+
+    @at-root & > #{&}-item:last-child {
+      > .#{$accordion-prefix-cls}-header {
+        @include _border-bottom-style();
+      }
+
+      > .#{$accordion-prefix-cls}-content {
+        border-radius : 0 0 v.$border-radius-base v.$border-radius-base;
+        border-top    : 0;
+        border-bottom : 0;
+      }
+    }
+
+    @at-root &#{&}-borderless {
+      background-color : theming.tri-color(theme.$background, component-background);
+      border           : 0;
+
+      > .#{$accordion-prefix-cls}-item > .#{$accordion-prefix-cls}-content {
+        background-color : transparent;
+      }
+
+      > .#{$accordion-prefix-cls}-item > .#{$accordion-prefix-cls}-header {
+        @at-root & {
+          background-color : $accordion-header-bg;
+        }
+        @at-root &:hover {
+          background-color : $accordion-active-bg;
+        }
+      }
+    }
+
+    @at-root & > #{&}-item-disabled > #{&}-header {
+      @at-root &, &:hover {
+        color            : $accordion-disable-color !important;
+        background-color : $accordion-disable-bg !important;
+      }
+      & > .arrow {
+        color            : $accordion-disable-color !important;
+      }
+    }
+
+    @at-root & > #{&}-item:not(#{&}-item-disabled) > .#{$accordion-prefix-cls}-header:active {
+      background-color : $accordion-active-bg;
+    }
+  }
+}

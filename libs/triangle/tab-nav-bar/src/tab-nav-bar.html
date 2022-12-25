@@ -1,0 +1,36 @@
+<div class="tri-tab-header-pagination tri-tab-header-pagination-before mat-elevation-z4"
+     #previousPaginator
+     aria-hidden="true"
+     tri-ripple
+     [triRippleDisabled]="_disableScrollBefore || disableRipple"
+     [class.tri-tab-header-pagination-disabled]="_disableScrollBefore"
+     (click)="_handlePaginatorClick('before')"
+     (mousedown)="_handlePaginatorPress('before', $event)"
+     (touchend)="_stopInterval()">
+  <div class="tri-tab-header-pagination-chevron"></div>
+</div>
+
+<div class="tri-tab-link-container" #tabListContainer (keydown)="_handleKeydown($event)">
+  <div
+    class="tri-tab-list"
+    [class._mat-animation-noopable]="_animationMode === 'NoopAnimations'"
+    #tabList
+    (cdkObserveContent)="_onContentChanges()">
+    <div class="tri-tab-links">
+      <ng-content></ng-content>
+    </div>
+    <tri-ink-bar></tri-ink-bar>
+  </div>
+</div>
+
+<div class="tri-tab-header-pagination tri-tab-header-pagination-after mat-elevation-z4"
+     #nextPaginator
+     aria-hidden="true"
+     tri-ripple
+     [triRippleDisabled]="_disableScrollAfter || disableRipple"
+     [class.tri-tab-header-pagination-disabled]="_disableScrollAfter"
+     (mousedown)="_handlePaginatorPress('after', $event)"
+     (click)="_handlePaginatorClick('after')"
+     (touchend)="_stopInterval()">
+  <div class="tri-tab-header-pagination-chevron"></div>
+</div>

@@ -1,0 +1,62 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/themes/theme";
+
+$rate-prefix-cls : "#{v.$tri-prefix}-rate";
+
+.#{$rate-prefix-cls} {
+  margin         : 0;
+  padding        : 0;
+  list-style     : none;
+  font-size      : 20px;
+  display        : inline-block;
+  vertical-align : middle;
+
+  @at-root &-disabled #{&}-star {
+    cursor : not-allowed;
+    @at-root &:hover {
+      transform : scale(1);
+    }
+  }
+
+  @at-root &-star {
+    margin     : 0 8px 0 0;
+    padding    : 0;
+    display    : inline-block;
+    position   : relative;
+    transition : all .3s;
+    cursor     : pointer;
+
+    @at-root &-first,
+    &-second {
+      user-select : none;
+      transition  : all .3s;
+    }
+
+    @at-root &:hover {
+      transform : scale(1.1);
+    }
+
+    @at-root &-first {
+      position : absolute;
+      left     : 0;
+      top      : 0;
+      width    : 50%;
+      height   : 100%;
+      overflow : hidden;
+      opacity  : 0;
+    }
+
+    @at-root &-half #{&}-first,
+    &-half #{&}-second {
+      opacity : 1;
+    }
+  }
+
+  @at-root &-text {
+    margin-left    : 8px;
+    vertical-align : middle;
+    display        : inline-block;
+    font-size      : v.$font-size-base;
+  }
+}

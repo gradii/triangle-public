@@ -1,0 +1,60 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$badge-prefix-cls  : "#{ v.$tri-prefix}-badge";
+$number-prefix-cls : "#{ v.$tri-prefix}-scroll-number";
+
+@mixin tri-badge-theme() {
+  $primary : theme.$primary;
+  $highlight : theme.$highlight;
+  $success : theme.$success;
+  $error : theme.$error;
+  $warning : theme.$warning;
+  $foreground : theme.$foreground;
+  $normal-color :  map-get($foreground, 'normal-color');
+  $text-color : map-get($foreground, 'text-color');
+
+  .#{$badge-prefix-cls} {
+
+    @at-root &-count {
+      background : theming.tri-color($highlight);
+      color      : #fff;
+      a,
+      a:hover {
+        color : #fff;
+      }
+    }
+
+    @at-root &-dot {
+      background : theming.tri-color($highlight);
+      box-shadow : 0 0 0 1px #fff;
+    }
+
+    @at-root &-status {
+      @at-root &-success {
+        background-color : theming.tri-color($success);
+      }
+      @at-root &-processing {
+        background-color : theming.tri-color($primary);
+        @at-root &:after {
+          border : 1px solid theming.tri-color($primary);
+        }
+      }
+      @at-root &-default {
+        background-color : $normal-color;
+      }
+      @at-root &-error {
+        background-color : theming.tri-color($error);
+      }
+      @at-root &-warning {
+        background-color : theming.tri-color($warning);
+      }
+      @at-root &-text {
+        color : $text-color;
+      }
+    }
+  }
+
+}

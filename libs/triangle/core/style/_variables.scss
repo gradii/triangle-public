@@ -1,0 +1,123 @@
+// formatter:off
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+//@import "color/colors";
+@use "functions";
+
+@forward "variables-palette";
+@forward "variables-animation";
+@forward "variables-background";
+@forward "variables-density";
+@forward "variables-foreground";
+@forward "variables-layout";
+@forward "variables-other";
+@forward "variables-typography";
+
+
+// Options
+$enable-caret               : true !default;
+$enable-rounded             : true !default;
+$enable-shadows             : false !default;
+$enable-gradients           : false !default;
+
+$enable-hover-media-query   : false !default; // Deprecated, no longer affects any compiled CSS
+$enable-grid-classes        : true !default;
+$enable-print-styles        : true !default;
+//$enable-rfs                             : true !default;
+$enable-important-utilities : false !default;
+
+
+// LINK
+$link-decoration            : none !default;
+$link-hover-decoration      : none !default;
+
+
+// Checkbox
+$checkbox-size              : 1rem !default;
+
+// Radio
+//$radio-size             : 1rem !default;
+
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints           : (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+@include functions.assert-ascending($grid-breakpoints, "$grid-breakpoints");
+@include functions.assert-starts-at-zero($grid-breakpoints, "$grid-breakpoints");
+
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths       : (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px
+) !default;
+
+@include functions.assert-ascending($container-max-widths, "$container-max-widths");
+
+
+// Grid system
+$grid-columns               : 12 !default;
+$grid-gutter-width          : 0 !default;
+
+
+// Modal
+// --
+$modal-mask-bg              : rgba(55, 55, 55, 0.6) !default;
+
+
+// Table
+// --
+//$table-header-bg                : $background-color-base !default;
+//$table-header-sort-bg           : $background-color-active !default;
+//$table-row-hover-bg             : $primary-1 !default;
+//$table-selected-row-bg          : #fafafa !default;
+//$table-padding-vertical         : 1rem !default;
+//$table-padding-horizontal       : .5rem !default;
+
+
+// Carousel
+// ---
+$carousel-dot-width         : 1rem !default;
+$carousel-dot-height        : 0.1875rem !default;
+$carousel-dot-active-width  : 1.5rem !default;
+
+
+$tri-xsmall                 : "max-width: 599px";
+$tri-small                  : "max-width: 959px";
+
+// z-index master list
+
+$z-index-fab                : 20 !default;
+$z-index-drawer             : 100 !default;
+
+// Padding between input toggles and their labels
+$tri-toggle-padding         : 8px !default;
+// Width and height of input toggles
+$tri-toggle-size            : 20px !default;
+
+
+// Color
+$color-contrast-dark        : #212529 !default;
+$color-contrast-light       : #fff !default;
+
+// The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
+// See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
+$min-contrast-ratio         : 3 !default;
+
+
+//Form
+$form-item-trailing-colon   : true !default;

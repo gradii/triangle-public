@@ -1,0 +1,5 @@
+@include import-once("component:layout-patch") {
+  tri-layout, tri-footer, tri-header, tri-content {
+    display : block;
+  }
+}

@@ -1,0 +1,10 @@
+<tri-pseudo-checkbox *ngIf="multiple" [disabled]="disabled"
+                     [state]="selected ? 'checked' : 'unchecked'"
+                     class="tri-option-pseudo-checkbox"></tri-pseudo-checkbox>
+
+<span class="tri-option-text"><ng-content></ng-content></span>
+
+<div [triRippleDisabled]="disabled || disableRipple" [triRippleTrigger]="_getHostElement()"
+     class="tri-option-ripple"
+     tri-ripple>
+</div>

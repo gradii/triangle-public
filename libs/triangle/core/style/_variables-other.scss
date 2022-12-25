@@ -1,0 +1,46 @@
+$tri-prefix    : tri !default;
+
+
+// Media queries breakpoints
+// Extra small screen / phone
+$screen-xs     : 480px !default;
+$screen-xs-min : $screen-xs !default;
+
+// Small screen / tablet
+$screen-sm     : 768px !default;
+$screen-sm-min : $screen-sm !default;
+
+// Medium screen / desktop
+$screen-md     : 992px !default;
+$screen-md-min : $screen-md !default;
+
+// Large screen / wide desktop
+$screen-lg     : 1200px !default;
+$screen-lg-min : $screen-lg !default;
+
+// Extra Large screen / full hd
+$screen-xl     : 1600px !default;
+$screen-xl-min : $screen-xl !default;
+
+// provide a maximum
+$screen-xs-max : ($screen-sm-min - 1px) !default;
+$screen-sm-max : ($screen-md-min - 1px) !default;
+$screen-md-max : ($screen-lg-min - 1px) !default;
+$screen-lg-max : ($screen-xl-min - 1px) !default;
+
+
+// z-index list
+$zindex-table-fixed                     : auto !default;
+$zindex-affix                           : 10 !default;
+$zindex-back-top                        : 10 !default;
+$zindex-badge                           : 10 !default;
+$zindex-picker-panel                    : 10 !default;
+$zindex-popup-close                     : 10 !default;
+$zindex-modal-mask                      : 100 !default;
+$zindex-modal                           : 1000 !default;
+$zindex-notification                    : 1100 !default;
+$zindex-message                         : 1100 !default;
+$zindex-popover                         : 1300 !default;
+$zindex-picker                          : 1500 !default;
+$zindex-dropdown                        : 1500 !default;
+$zindex-tooltip                         : 1600 !default;

@@ -1,0 +1,64 @@
+@use "sass:math";
+@use "sass:map";
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+
+
+$switch-prefix-cls             : "#{v.$tri-prefix}-switch";
+$switch-duration               : .36s;
+
+$foreground : theme.$foreground;
+$background : theme.$background;
+$primary    : theme.$primary;
+
+@mixin tri-switch-theme() {
+
+  .#{$switch-prefix-cls} {
+    background-color : theming.tri-color($foreground, disabled);
+
+    @at-root &-inner {
+      color : #fff;
+    }
+
+    @at-root &:after {
+      background-color : theming.tri-color($background, component-background);
+    }
+
+    @at-root &:focus {
+      box-shadow : 0 0 0 2px rgba(theming.tri-color($primary), 0.2);
+      outline    : 0;
+    }
+
+    @at-root &:focus:active {
+      box-shadow : none;
+    }
+
+    @at-root &-checked {
+      background-color : theming.tri-color($primary);
+    }
+
+    @at-root &-disabled {
+      cursor     : not-allowed;
+      background : #f4f4f4;
+
+
+      @at-root &:after {
+        background : #ccc;
+        cursor     : not-allowed;
+      }
+
+      @at-root &.#{$switch-prefix-cls}-checked {
+        background : theming.tri-color($primary, 300);
+        @at-root &:after {
+          background : #f4f4f4;
+        }
+      }
+
+      .#{$switch-prefix-cls}-inner {
+        color : theming.tri-color($foreground, disabled);
+      }
+    }
+  }
+}

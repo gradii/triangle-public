@@ -1,0 +1,74 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/mixins/reset";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$alert-prefix-cls : #{ v.$tri-prefix}-alert;
+
+@mixin tri-alert-theme() {
+  $success             : theme.$success;
+  $info                : theme.$info;
+  $warning             : theme.$warning;
+  $error               : theme.$error;
+
+  $foreground          : theme.$foreground;
+  $background          : theme.$background;
+
+  $alert-message-color : theming.tri-color($foreground, heading-color);
+  $alert-text-color    : theming.tri-color($foreground, text-color);
+
+  .#{$alert-prefix-cls} {
+    @include reset.reset-component;
+    color : $alert-text-color;
+
+    @at-root &-success {
+      border           : v.$border-width-base v.$border-style-base theming.tri-color($success, 200);
+      background-color : theming.tri-color($success, 100);
+      .#{$alert-prefix-cls}-icon {
+        color : theming.tri-color($success, 500);
+      }
+    }
+
+    @at-root &-info {
+      border           : v.$border-width-base v.$border-style-base theming.tri-color($success, 200);
+      background-color : theming.tri-color($success, 100);
+      .#{$alert-prefix-cls}-icon {
+        color : theming.tri-color($info, 500);
+      }
+    }
+
+    @at-root &-warning {
+      border           : v.$border-width-base v.$border-style-base theming.tri-color($warning, 200);
+      background-color : theming.tri-color($warning, 100);
+      .#{$alert-prefix-cls}-icon {
+        color : theming.tri-color($warning, 500);
+      }
+    }
+
+    @at-root &-error {
+      border           : v.$border-width-base v.$border-style-base theming.tri-color($error, 200);
+      background-color : theming.tri-color($error, 100);
+      .#{$alert-prefix-cls}-icon {
+        color : theming.tri-color($error);
+      }
+    }
+
+    @at-root &-close-icon {
+      .#{v.$iconfont-css}-cross {
+        color : theming.tri-color($foreground, text-color-secondary);
+        @at-root &:hover {
+          color : #404040;
+        }
+      }
+    }
+
+    @at-root &-with-description {
+      color : theming.tri-color($foreground, text-color);
+    }
+
+    @at-root &-with-description #{&}-message {
+      color : $alert-message-color;
+    }
+  }
+}

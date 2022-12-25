@@ -1,0 +1,232 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables";
+
+@use "./input-mixin";
+@use "input-variables";
+
+.#{mixins.$tri-prefix}-input-group {
+  position        : relative;
+  display         : flex;
+  flex-wrap       : wrap;
+  align-items     : stretch;
+  border-collapse : separate;
+  border-spacing  : 0;
+  width           : 100%;
+
+  @at-root &-addon,
+  &-wrap,
+  & > .#{mixins.$tri-prefix}-input {
+    @at-root &:not(:first-child):not(:last-child) {
+      border-radius : 0;
+    }
+  }
+
+  @at-root &-addon,
+  &-wrap {
+    white-space    : nowrap;
+    vertical-align : middle;
+  }
+
+  @at-root &-wrap > * {
+    display : block !important;
+  }
+
+  @at-root
+  & > .#{mixins.$tri-prefix}-input,
+  & > .#{mixins.$tri-prefix}-input-wrapper {
+    position      : relative;
+    flex          : 1 1 auto;
+    width         : 1%;
+    margin-bottom : 0;
+    @at-root &:focus {
+      z-index : 4;
+    }
+    @at-root &:hover {
+      z-index : 3;
+    }
+  }
+
+  @at-root
+  & > .#{mixins.$tri-prefix}-btn {
+    @at-root &:active {
+      z-index : 4;
+    }
+
+    @at-root &:focus {
+      z-index : 4;
+    }
+
+    @at-root &:hover {
+      z-index : 3;
+    }
+  }
+
+  @at-root
+  & > * {
+    &:not(:first-child) {
+      margin-left : -(input-variables.$input-border-width);
+    }
+
+    > .#{mixins.$tri-prefix}-select-selection {
+      @at-root &:focus {
+        z-index : 4;
+      }
+
+      @at-root &:hover {
+        z-index : 3;
+      }
+    }
+  }
+
+  @at-root &-addon {
+    display       : flex;
+    align-items   : center;
+    padding       : input-mixin.$input-padding-vertical-base input-mixin.$input-padding-horizontal;
+    margin-bottom : 0;
+    font-size     : mixins.$font-size-base;
+    font-weight   : normal;
+    line-height   : mixins.$line-height-base;
+    text-align    : center;
+    white-space   : nowrap;
+    @include mixins.border-radius(mixins.$border-radius-base);
+    position      : relative;
+    transition    : all .3s;
+
+    // Reset Select's style in addon
+    .#{mixins.$tri-prefix}-select {
+      margin : -(input-mixin.$input-padding-vertical-base + 0.0625rem) (-(input-mixin.$input-padding-horizontal));
+
+      > .#{mixins.$tri-prefix}-select-selection {
+        background-color : inherit;
+        margin           : -1px;
+        border           : input-variables.$input-border-width mixins.$border-style-base transparent;
+        box-shadow       : none;
+      }
+
+      @at-root &-open,
+      &-focused {
+        .#{mixins.$tri-prefix}-select-selection {
+        }
+      }
+    }
+
+  }
+
+  // Reset rounded corners
+  @at-root
+  & > .#{mixins.$tri-prefix}-input:first-child,
+  &-addon:first-child {
+    border-bottom-right-radius : 0;
+    border-top-right-radius    : 0;
+
+    // Reset Select's style in addon
+    .#{mixins.$tri-prefix}-select .#{mixins.$tri-prefix}-select-selection {
+      border-bottom-right-radius : 0;
+      border-top-right-radius    : 0;
+    }
+  }
+
+  @at-root & > .#{mixins.$tri-prefix}-input-affix-wrapper {
+    @at-root &:not(:first-child) .#{mixins.$tri-prefix}-input {
+      border-bottom-left-radius : 0;
+      border-top-left-radius    : 0;
+    }
+
+    @at-root &:not(:last-child) .#{mixins.$tri-prefix}-input {
+      border-bottom-right-radius : 0;
+      border-top-right-radius    : 0;
+    }
+  }
+
+  @at-root &-addon:first-child {
+    border-right : 0;
+  }
+  @at-root &-addon:last-child {
+    border-left : 0;
+  }
+
+  @at-root & > .#{mixins.$tri-prefix}-input:last-child,
+  &-addon:last-child {
+    border-bottom-left-radius : 0;
+    border-top-left-radius    : 0;
+
+    // Reset Select's style in addon
+    .#{mixins.$tri-prefix}-select .#{mixins.$tri-prefix}-select-selection {
+      border-bottom-left-radius : 0;
+      border-top-left-radius    : 0;
+    }
+  }
+
+  // Sizing options
+  @at-root &-lg .#{mixins.$tri-prefix}-input,
+  &-lg > #{&}-addon {
+    @include input-mixin.input-lg();
+  }
+
+  @at-root &-sm .#{mixins.$tri-prefix}-input,
+  &-sm > #{&}-addon {
+    @include input-mixin.input-sm();
+  }
+
+  @at-root &-lg .#{mixins.$tri-prefix}-select-selection--single {
+    height : input-variables.$input-height-lg;
+  }
+
+  @at-root &-sm .#{mixins.$tri-prefix}-select-selection--single {
+    height : input-variables.$input-height-sm;
+  }
+
+  .#{mixins.$tri-prefix}-input-affix-wrapper {
+    width : 100%;
+  }
+
+  @at-root & {
+    @at-root & > * {
+      border-radius : 0 !important;
+    }
+
+    // reset border for Select, DatePicker, AutoComplete, Cascader, Mention, TimePicker
+    @at-root
+    & > .#{mixins.$tri-prefix}-input-number,
+    & > .#{mixins.$tri-prefix}-select > .#{mixins.$tri-prefix}-select-selection,
+    & > .#{mixins.$tri-prefix}-input-wrapper > .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-calendar-picker .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-select-auto-complete .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-cascader-picker .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-mention-wrapper .#{mixins.$tri-prefix}-mention-editor,
+    & > .#{mixins.$tri-prefix}-time-picker .#{mixins.$tri-prefix}-time-picker-input {
+      border-radius : 0 !important;
+    }
+
+    @at-root
+    & > *:first-child,
+    & > .#{mixins.$tri-prefix}-select:first-child > .#{mixins.$tri-prefix}-select-selection,
+    & > .#{mixins.$tri-prefix}-input-wrapper:first-child > .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-calendar-picker:first-child .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-select-auto-complete:first-child .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-cascader-picker:first-child .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-mention-wrapper:first-child .#{mixins.$tri-prefix}-mention-editor,
+    & > .#{mixins.$tri-prefix}-time-picker:first-child .#{mixins.$tri-prefix}-time-picker-input {
+      border-top-left-radius    : mixins.$border-radius-base !important;
+      border-bottom-left-radius : mixins.$border-radius-base !important;
+    }
+
+    @at-root
+    & > *:last-child,
+    & > .#{mixins.$tri-prefix}-select:last-child > .#{mixins.$tri-prefix}-select-selection,
+    & > .#{mixins.$tri-prefix}-input-wrapper:last-child > .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-calendar-picker:last-child .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-select-auto-complete:last-child .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-cascader-picker:last-child .#{mixins.$tri-prefix}-input,
+    & > .#{mixins.$tri-prefix}-mention-wrapper:last-child .#{mixins.$tri-prefix}-mention-editor,
+    & > .#{mixins.$tri-prefix}-time-picker:last-child .#{mixins.$tri-prefix}-time-picker-input {
+      border-top-right-radius    : mixins.$border-radius-base !important;
+      border-bottom-right-radius : mixins.$border-radius-base !important;
+    }
+  }
+
+  @at-root &-wrapper {
+    display        : inline-block;
+    vertical-align : top;
+  }
+}

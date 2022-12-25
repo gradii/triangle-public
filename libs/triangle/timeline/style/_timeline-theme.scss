@@ -1,0 +1,53 @@
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$timeline-prefix-cls : "#{ v.$tri-prefix}-timeline";
+
+@mixin tri-timeline-theme($theme) {
+  $foreground     : map.get($theme, foreground);
+  $background     : map.get($theme, background);
+
+  $primary        : map.get($theme, primary);
+  $error          : map.get($theme, error);
+  $success        : map.get($theme, success);
+
+  $timeline-color : theming.tri-color($foreground, border-color-split);
+
+  .#{$timeline-prefix-cls} {
+    @at-root &-item {
+      @at-root &-tail {
+        border-left : 2px solid $timeline-color;
+      }
+
+      @at-root &-head {
+        background-color : theming.tri-color($background, component-background);
+        border-radius    : 100px;
+        border           : 2px solid transparent;
+        @at-root &-blue {
+          border-color : theming.tri-color($primary);
+          color        : theming.tri-color($primary);
+        }
+        @at-root &-red {
+          border-color : theming.tri-color($error);
+          color        : theming.tri-color($error);
+        }
+        @at-root &-green {
+          border-color : theming.tri-color($success);
+          color        : theming.tri-color($success);
+        }
+      }
+    }
+
+    @at-root &#{&}-pending #{&}-item-last #{&}-item-tail {
+      border-left : 2px dotted $timeline-color;
+    }
+
+    @at-root &#{&}-reverse #{&}-item-pending {
+      .#{$timeline-prefix-cls}-item-tail {
+        border-left : 2px dotted $timeline-color;
+      }
+    }
+  }
+}

@@ -1,0 +1,95 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$layout-prefix-cls          : "#{$tri-prefix}-layout";
+
+// Layout
+$layout-header-height       : 64px !default;
+$layout-header-padding      : 0 !default;
+$layout-footer-padding      : 24px 50px !default;
+$layout-trigger-height      : 48px !default;
+$layout-zero-trigger-width  : 36px !default;
+$layout-zero-trigger-height : 42px !default;
+
+@include import-once("component:layout") {
+  .#{$layout-prefix-cls} {
+    display        : flex;
+    flex-direction : column;
+    flex           : auto;
+
+    @at-root &#{&}-has-sider {
+      flex-direction : row;
+      > .#{$layout-prefix-cls},
+      > .#{$layout-prefix-cls}-content {
+        overflow-x : hidden;
+      }
+    }
+
+    @at-root &-header,
+    &-footer {
+      flex : 0 0 auto;
+    }
+
+    @at-root &-header {
+      padding     : $layout-header-padding;
+      height      : $layout-header-height;
+      line-height : $layout-header-height;
+    }
+
+    @at-root &-footer {
+      padding   : $layout-footer-padding;
+      font-size : $font-size-base;
+    }
+
+    @at-root &-content {
+      flex : auto;
+      min-height: 0;
+    }
+
+    @at-root &-sider {
+      transition : all .15s $ease-in-out;
+      position   : relative;
+
+      /* fix firefox can't set width smaller than content on flex item */
+      min-width  : 0;
+
+      @at-root &-has-trigger {
+        padding-bottom : $layout-trigger-height;
+      }
+
+      @at-root &-right {
+        order : 1;
+      }
+
+      @at-root &-trigger {
+        position    : absolute;
+        text-align  : center;
+        width       : 100%;
+        bottom      : 0;
+        cursor      : pointer;
+        height      : $layout-trigger-height;
+        line-height : $layout-trigger-height;
+      }
+
+      @at-root &-zero-width {
+        @at-root & > * {
+          overflow : hidden;
+        }
+
+        @at-root &-trigger {
+          position      : absolute;
+          top           : $layout-header-height;
+          right         : -$layout-zero-trigger-width;
+          text-align    : center;
+          width         : $layout-zero-trigger-width;
+          height        : $layout-zero-trigger-height;
+          line-height   : $layout-zero-trigger-height;
+          font-size     : $layout-zero-trigger-width * 0.5;
+          border-radius : 0 $border-radius-base $border-radius-base 0;
+          cursor        : pointer;
+          transition    : background .3s ease;
+        }
+      }
+    }
+  }
+}

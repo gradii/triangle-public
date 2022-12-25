@@ -1,0 +1,30 @@
+@import "../../../core/themes/theme";
+
+$calendar-prefix-cls            : "#{$tri-prefix}-calendar";
+$calendar-timepicker-prefix-cls : "#{$tri-prefix}-calendar-time-picker";
+
+
+@mixin tri-picker-theme($theme) {
+  $foreground : map-get($theme, foreground);
+  $background : map-get($theme, background);
+
+  .#{$calendar-prefix-cls}-picker {
+    @include reset-component();
+
+    @at-root &:hover #{&}-input:not(.#{$tri-prefix}-input-disabled) {
+      border-color : tri-color($foreground, primary-color);
+    }
+
+    @at-root &-clear {
+      color      : tri-color($foreground, disabled-color);
+      background : tri-color($foreground, input-bg);
+      @at-root &:hover {
+        color : tri-color($foreground, text-color-secondary);
+      }
+    }
+
+    @at-root &-icon {
+      color : tri-color($foreground, disabled-color);
+    }
+  }
+}

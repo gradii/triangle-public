@@ -1,0 +1,43 @@
+@use "sass:map";
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/style/theming";
+@use "../../core/themes/theme";
+@use "input-variables" as input-v;
+
+$inputClass : #{v.$tri-prefix}-input-group;
+
+@mixin tri-input-group-theme() {
+  .#{$inputClass} {
+    $foreground : theme.$foreground;
+    $background : theme.$background;
+
+    $primary    : theme.$primary;
+
+    .#{$inputClass}-prefix,
+    .#{$inputClass}-suffix {
+      color : theming.tri-color($foreground, input-color);
+    }
+
+    @at-root &-addon {
+      color            : theming.tri-color($foreground, input-addon-color);
+      background-color : input-v.$input-addon-bg;
+      border           : input-v.$input-border-width mixins.$border-style-base input-v.$input-border-color;
+
+      .#{mixins.$tri-prefix}-select {
+
+        > .#{mixins.$tri-prefix}-select-selection {
+          background-color : inherit;
+          border           : input-v.$input-border-width mixins.$border-style-base transparent;
+        }
+
+        @at-root &-open,
+        &-focused {
+          .#{mixins.$tri-prefix}-select-selection {
+            color : theming.tri-color($primary);
+          }
+        }
+      }
+    }
+  }
+}

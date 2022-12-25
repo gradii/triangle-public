@@ -1,0 +1,31 @@
+@import "../../core/style/mixins";
+@import "../../core/style/variables";
+
+$backtop-prefix-cls : "#{$tri-prefix}-back-top";
+
+.#{$backtop-prefix-cls} {
+  z-index  : $zindex-back-top;
+  position : fixed;
+  right    : 100px;
+  bottom   : 50px;
+  height   : 40px;
+  width    : 40px;
+  cursor   : pointer;
+
+  @at-root &-content {
+    height        : 40px;
+    width         : 40px;
+    border-radius : 20px;
+    text-align    : center;
+    transition    : all .3s $ease-in-out;
+
+    @at-root &:hover {
+      transition : all .3s $ease-in-out;
+    }
+  }
+
+  @at-root &-icon {
+    font-size  : 20px;
+    margin-top : 10px;
+  }
+}

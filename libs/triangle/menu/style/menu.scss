@@ -1,0 +1,411 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$menu-prefix-cls      : "#{v.$tri-prefix}-menu" !default;
+$menu-collapsed-width : 64px !default;
+$menu-font-size       : v.$font-size-base !default;
+
+// default theme
+.#{$menu-prefix-cls} {
+  outline       : none;
+  margin-bottom : 0;
+  padding-left  : 0; // Override default ul/ol
+  list-style    : none;
+  z-index       : v.$zindex-dropdown;
+  line-height   : 46px;
+  transition    : background .3s v.$ease-in-out, width .15s v.$ease-in-out;
+
+  ul, li {
+    list-style     : none;
+    padding-block  : 0;
+    padding-inline : 0;
+  }
+
+  @at-root &-hidden {
+    display : none;
+  }
+
+  @at-root &-item-group-list {
+    margin  : 0;
+    padding : 0;
+  }
+
+  @at-root &-item-group-title {
+    font-size   : $menu-font-size;
+    line-height : 1.5;
+    padding     : 8px 16px;
+  }
+
+  @at-root &-item,
+  &-submenu,
+  &-submenu-title {
+    outline : 0;
+    cursor  : pointer;
+  }
+  @at-root &-submenu, #{&}-submenu-inline {
+    transition : border-color .3s v.$ease-in-out, background .3s v.$ease-in-out, padding .15s v.$ease-in-out;
+  }
+  @at-root &-item, #{&}-submenu-title {
+    transition : color .3s v.$ease-in-out, border-color .3s v.$ease-in-out, background .3s v.$ease-in-out, padding .15s v.$ease-in-out;
+  }
+
+  @at-root &-item:active,
+  &-submenu-title:active {
+  }
+
+  @at-root &-submenu #{&}-sub {
+    cursor     : initial;
+    transition : background .3s v.$ease-in-out, padding .3s v.$ease-in-out;
+  }
+
+  @at-root &-item > a {
+    display : block;
+    @at-root &:hover {
+    }
+    @at-root &:focus {
+      text-decoration : none;
+    }
+    @at-root &:before {
+      position : absolute;
+      width    : 100%;
+      height   : 100%;
+      top      : 0;
+      left     : 0;
+      bottom   : 0;
+      right    : 0;
+      content  : "";
+    }
+  }
+
+  @at-root &-item-divider {
+    height      : 1px;
+    overflow    : hidden;
+    line-height : 0;
+    margin      : 0.5em 0;
+  }
+
+  @at-root &-item:hover,
+  &-item-active,
+  &:not(#{&}-inline) #{&}-submenu-open,
+  &-submenu-active,
+  &-submenu-title:hover {
+  }
+
+  @at-root &:not(#{&}-inline) #{&}-submenu-open {
+    z-index : v.$zindex-dropdown;
+  }
+
+  @at-root &-horizontal #{&}-item,
+  &-horizontal #{&}-submenu {
+    margin-top : -1px;
+  }
+
+  @at-root &-horizontal,
+  &-inline,
+  &-vertical {
+    z-index : auto;
+  }
+
+  @at-root &-inline,
+  &-vertical {
+    .#{$menu-prefix-cls}-item {
+      margin-left : -1px;
+      left        : 1px;
+      position    : relative;
+      z-index     : 1;
+      @at-root &:after {
+        content    : "";
+        position   : absolute;
+        right      : 0;
+        top        : 0;
+        bottom     : 0;
+        transform  : scaleY(.0001);
+        opacity    : 0;
+        transition : transform .15s v.$ease-out, opacity .15s v.$ease-out;
+      }
+    }
+  }
+
+  @at-root &-vertical#{&}-sub {
+    border-right : 0;
+    .#{$menu-prefix-cls}-item {
+      border-right : 0;
+      margin-left  : 0;
+      left         : 0;
+      @at-root &:after {
+        border-right : 0;
+      }
+    }
+
+    > .#{$menu-prefix-cls}-item:first-child {
+      border-radius : v.$border-radius-base v.$border-radius-base 0 0;
+    }
+
+    > .#{$menu-prefix-cls}-item:last-child,
+    > .#{$menu-prefix-cls}-item-group:last-child > .#{$menu-prefix-cls}-item-group-list:last-child > .#{$menu-prefix-cls}-item:last-child {
+      border-radius : 0 0 v.$border-radius-base v.$border-radius-base;
+    }
+
+    > .#{$menu-prefix-cls}-item:only-child {
+      border-radius : v.$border-radius-base;
+    }
+  }
+
+  @at-root &-inline {
+    width : 100%;
+    .#{$menu-prefix-cls}-selected,
+    .#{$menu-prefix-cls}-item-selected {
+      @at-root &:after {
+        transition : transform .15s v.$ease-in-out, opacity .15s v.$ease-in-out;
+        opacity    : 1;
+        transform  : scaleY(1);
+      }
+    }
+  }
+
+  @at-root &-vertical#{&}-inline-collapsed,
+  &-inline-collapsed {
+    width : $menu-collapsed-width;
+    > .#{$menu-prefix-cls}-item,
+    > .#{$menu-prefix-cls}-submenu > .#{$menu-prefix-cls}-submenu-title {
+      left          : 0;
+      text-overflow : clip;
+      padding       : 0 ($menu-collapsed-width - 16px) * 0.5;
+      @at-root &:after {
+        display : none;
+      }
+      .#{v.$iconfont-css} {
+        font-size   : 16px;
+        line-height : 42px;
+        margin      : 0;
+
+        + span {
+          max-width : 0;
+          display   : inline-block;
+          opacity   : 0;
+        }
+      }
+    }
+
+    @at-root &-tooltip {
+      pointer-events : none;
+      .#{v.$iconfont-css} {
+        display : none;
+      }
+    }
+  }
+
+  @at-root &-submenu-horizontal > #{&} {
+    top        : 100%;
+    left       : 0;
+    position   : absolute;
+    min-width  : 100%;
+    margin-top : 7px;
+    z-index    : v.$zindex-dropdown;
+  }
+
+  @at-root &-submenu-vertical {
+    z-index : 1;
+  }
+
+  @at-root &-submenu-vertical > #{&} {
+    top         : 0;
+    left        : 100%;
+    position    : absolute;
+    min-width   : 160px;
+    margin-left : 4px;
+    z-index     : v.$zindex-dropdown;
+  }
+
+  @at-root &-item,
+  &-submenu-title {
+    margin      : 0;
+    padding     : 0 20px;
+    position    : relative;
+    display     : block;
+    white-space : nowrap;
+    .#{v.$iconfont-css} {
+      min-width    : 14px;
+      margin-right : 8px;
+      transition   : font-size .15s v.$ease-out, margin .3s v.$ease-in-out;
+
+      + span {
+        transition : opacity .3s v.$ease-in-out, width .3s v.$ease-in-out;
+        opacity    : 1;
+      }
+    }
+  }
+
+  @at-root & > #{&}-item-divider {
+    height      : 1px;
+    margin      : 1px 0;
+    overflow    : hidden;
+    padding     : 0;
+    line-height : 0;
+  }
+
+  @at-root &-submenu {
+    position : relative;
+
+    > .#{$menu-prefix-cls} {
+      border-radius : v.$border-radius-base;
+      @at-root &-submenu-title:after {
+        transition : transform .3s v.$ease-in-out;
+      }
+    }
+
+    @at-root &-vertical > .#{$menu-prefix-cls}-submenu-title:after {
+      font-family    : "anticon" !important;
+      font-style     : normal;
+      vertical-align : baseline;
+      text-align     : center;
+      text-transform : none;
+      text-rendering : auto;
+      position       : absolute;
+      content        : "\e61d";
+      right          : 16px;
+      transform      : rotate(270deg) scale(0.75);
+    }
+
+    @at-root &-inline > .#{$menu-prefix-cls}-submenu-title:after {
+      font-family    : "anticon" !important;
+      font-style     : normal;
+      vertical-align : baseline;
+      text-align     : center;
+      text-transform : none;
+      text-rendering : auto;
+      position       : absolute;
+      content        : "\e61d";
+      right          : 16px;
+      top            : 0;
+      @include mixins.iconfont-size-under-12px(8px);
+    }
+
+    @at-root &-open {
+      @at-root &.#{$menu-prefix-cls}-submenu-inline > .#{$menu-prefix-cls}-submenu-title:after {
+        transform : rotate(180deg) scale(0.75);
+      }
+    }
+  }
+
+  @at-root &-horizontal {
+    border     : 0;
+    box-shadow : none;
+    z-index    : 0;
+
+    > .#{$menu-prefix-cls}-item,
+    > .#{$menu-prefix-cls}-submenu {
+      position      : relative;
+      top           : 1px;
+      float         : left;
+      border-bottom : 2px solid transparent;
+
+      &:hover,
+      &-active,
+      &-open,
+      &-selected {
+      }
+
+      > a {
+        display : block;
+      }
+    }
+  }
+
+  @at-root &-vertical,
+  &-inline {
+    .#{$menu-prefix-cls}-item,
+    .#{$menu-prefix-cls}-submenu-title {
+      padding       : 0 16px;
+      font-size     : $menu-font-size;
+      line-height   : 42px;
+      height        : 42px;
+      overflow      : hidden;
+      text-overflow : ellipsis;
+    }
+  }
+
+  @at-root &-item-group-list {
+    .#{$menu-prefix-cls}-item,
+    .#{$menu-prefix-cls}-submenu-title {
+      padding : 0 16px 0 28px;
+    }
+  }
+
+  @at-root &-vertical#{&}-sub {
+    padding          : 0;
+    transform-origin : 0 0;
+    @at-root & > .#{$menu-prefix-cls}-item,
+    & > .#{$menu-prefix-cls}-submenu {
+      transform-origin : 0 0;
+    }
+  }
+
+  @at-root &-root#{&}-vertical,
+  &-root#{&}-inline {
+    box-shadow : none;
+  }
+
+  @at-root &-sub#{&}-inline {
+    padding       : 0;
+    border        : 0;
+    box-shadow    : none;
+    border-radius : 0;
+    @at-root & > .#{$menu-prefix-cls}-item,
+    & > .#{$menu-prefix-cls}-submenu > .#{$menu-prefix-cls}-submenu-title {
+      line-height         : 42px;
+      height              : 42px;
+      list-style-type     : disc;
+      list-style-position : inside;
+    }
+
+    @at-root &.#{$menu-prefix-cls}-item-group-title {
+      padding-left : 32px;
+    }
+  }
+
+  // Disabled state sets text to gray and nukes hover/tab effects
+  @at-root &-item-disabled,
+  &-submenu-disabled {
+    cursor : not-allowed;
+    > a {
+      pointer-events : none;
+    }
+
+    > .#{$menu-prefix-cls}-submenu-title {
+      cursor : not-allowed;
+    }
+  }
+}
+
+//// dark theme
+//.#{$menu-prefix-cls} {
+//
+//  @at-root &-dark#{&}-inline #{&}-item,
+//  &-dark#{&}-vertical #{&}-item {
+//    border-right : 0;
+//    margin-left  : 0;
+//    left         : 0;
+//    @at-root &:after {
+//      border-right : 0;
+//    }
+//  }
+//
+//  @at-root &-dark #{&}-item-selected {
+//    border-right : 0;
+//    @at-root &:after {
+//      border-right : 0;
+//    }
+//  }
+//
+//  // Disabled state sets text to dark gray and nukes hover/tab effects
+//  @at-root &-dark #{&}-item-disabled,
+//  &-dark #{&}-submenu-disabled {
+//    @at-root &,
+//    & > a {
+//      opacity : 0.8;
+//    }
+//    > .#{$menu-prefix-cls}-submenu-title {
+//    }
+//  }
+//}

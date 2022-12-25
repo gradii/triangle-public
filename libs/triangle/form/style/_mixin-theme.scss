@@ -1,0 +1,67 @@
+@use "sass:map";
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../input/style/input-theme";
+
+$foreground       : theme.$foreground !default;
+$background       : theme.$background !default;
+
+$text-color       : theming.tri-color($foreground, input-color) !default;
+$border-color     : theming.tri-color($foreground, input-border-color) !default;
+$background-color : theming.tri-color($foreground, input-bg) !default;
+
+@mixin form-control-validation(
+  $text-color: $text-color, $border-color: $border-color, $background-color: $background-color
+) {
+
+
+  .#{v.$tri-prefix}-form-explain,
+  .#{v.$tri-prefix}-form-split {
+    color : $text-color;
+  }
+  // 输入框的不同校验状态
+  .#{v.$tri-prefix}-input {
+    //@at-root &,
+    &:hover {
+      border-color : $border-color;
+    }
+
+    @at-root &:focus {
+      @include input-theme.tri-input-active-theme($border-color);
+    }
+
+    @at-root &:not([disabled]):hover {
+      border-color : $border-color,
+    }
+  }
+
+  .#{v.$tri-prefix}-calendar-picker-open .#{v.$tri-prefix}-calendar-picker-input {
+    @include input-theme.tri-input-active-theme($border-color);
+  }
+
+  .#{v.$tri-prefix}-input-prefix {
+    color : $text-color,
+  }
+
+  .#{v.$tri-prefix}-input-group-addon {
+    //color            : $text-color;
+    border-color     : $border-color;
+    background-color : $background-color;
+
+    + .#{v.$tri-prefix}-input {
+      border-top    : 1px solid $border-color;
+      border-bottom : 1px solid $border-color;
+    }
+  }
+
+  .has-feedback {
+    color : $text-color;
+
+    // 表格中的复选框文字不变成红色
+    .tri-data-table {
+      color : #444 !important;
+    }
+  }
+}

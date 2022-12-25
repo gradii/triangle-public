@@ -1,0 +1,84 @@
+@use "sass:list";
+@use "sass:map";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+
+$tag-prefix-cls : "#{ v.$tri-prefix}-tag";
+
+
+@mixin make-color-classes($colors, $names) {
+  @for $i from 1 through list.length($colors) {
+    $color      : theming.tri-palette(list.nth($colors, $i));
+    $name       : list.nth($names, $i);
+    $lightColor : map.get($color, lighter);
+    $darkColor  : map.get($color, darker);
+    @at-root &-#{"" + $name} {
+      color        : $darkColor;
+      background   : $lightColor;
+      border-color : $lightColor;
+    }
+    @at-root &-#{"" + $name}-inverse {
+      background   : $darkColor;
+      border-color : $darkColor;
+      color        : #fff;
+    }
+  }
+}
+
+
+@mixin tri-tag-theme() {
+  $foreground        : theme.$foreground;
+  $primary           : theme.$primary;
+
+  $tag-default-bg    : #f3f3f3 !default;
+  $tag-default-color : theming.tri-color($foreground, text-color);
+
+  .#{$tag-prefix-cls},
+  .tri-tag-ghost {
+    border-radius : 3px;
+    border        : v.$border-width-base v.$border-style-base theming.tri-color($foreground, border-color-split);
+    background    : $tag-default-bg;
+
+    @at-root &,
+    & a,
+    & a:hover {
+      color : $tag-default-color;
+    }
+
+    @at-root &-has-color {
+      border-color : transparent;
+      @at-root &,
+      & a,
+      & a:hover,
+      & .#{v.$iconfont-css}-cross,
+      & .#{v.$iconfont-css}-cross:hover {
+        color : #fff;
+      }
+    }
+
+    @at-root &-checkable {
+      background-color : transparent;
+      border-color     : transparent;
+      @at-root &:not(#{&}-checked):hover {
+        color : theming.tri-color($primary);
+      }
+      @at-root &:active,
+      &-checked {
+        color : #fff;
+      }
+      @at-root &-checked {
+        background-color : theming.tri-color($primary, 500);
+      }
+      @at-root &:active {
+        background-color : theming.tri-color($primary, 600);
+      }
+    }
+
+    $colors       : v.$tri-pink, v.$tri-red, v.$tri-orange, v.$tri-yellow, v.$tri-cyan, v.$tri-green, v.$tri-blue, v.$tri-purple;
+    $color-names  : pink, red, orange, yellow, cyan, green, blue, purple;
+    // mixin to iterate over colors and create CSS class for each one
+
+    @include make-color-classes($colors, $color-names);
+  }
+}

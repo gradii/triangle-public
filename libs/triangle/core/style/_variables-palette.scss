@@ -1,0 +1,419 @@
+@use "sass:map";
+// Color palettes from the Material Design spec.
+// See https://material.io/design/color/
+//
+// Contrast colors are hard-coded because it is too difficult (probably impossible) to
+// calculate them. These contrast colors are pulled from the public Material Design spec swatches.
+// While the contrast colors in the spec are not prescriptive, we use them for convenience.
+
+
+$dark-primary-text          : rgba(black, 0.87);
+$dark-secondary-text        : rgba(black, 0.54);
+$dark-disabled-text         : rgba(black, 0.38);
+$dark-dividers              : rgba(black, 0.12);
+$dark-focused               : rgba(black, 0.12);
+$light-primary-text         : white;
+$light-secondary-text       : rgba(white, 0.7);
+$light-disabled-text        : rgba(white, 0.5);
+$light-dividers             : rgba(white, 0.12);
+$light-focused              : rgba(white, 0.12);
+
+$tri-gray                   : (
+  50: #fafafa,
+  100: #f5f5f5,
+  200: #eeeeee,
+  300: #e0e0e0,
+  400: #bdbdbd,
+  500: #9e9e9e,
+  600: #757575,
+  700: #616161,
+  800: #424242,
+  900: #212121,
+  A100: #ffffff,
+  A200: #eeeeee,
+  A400: #bdbdbd,
+  A700: #616161,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$tri-blue-gray              : (
+  50: #eceff1,
+  100: #cfd8dc,
+  200: #b0bec5,
+  300: #90a4ae,
+  400: #78909c,
+  500: #607d8b,
+  600: #546e7a,
+  700: #455a64,
+  800: #37474f,
+  900: #263238,
+  A100: #cfd8dc,
+  A200: #b0bec5,
+  A400: #78909c,
+  A700: #455a64,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+// http://mcg.mbitson.com/
+$tri-blue                   : (
+  50: #ecf6fd,
+  100: #d2eafb,
+  200: #add8f7,
+  300: #7ec2f3,
+  400: #49a9ee,
+  500: #108ee9,
+  600: #0e77ca,
+  700: #0c60aa,
+  800: #09488a,
+  900: #073069,
+  A100: #82c9ff,
+  A200: #54b5ff,
+  A400: #1a9cff,
+  A700: #0078d4,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$tri-indigo                 : (
+  50: #e8eaf6,
+  100: #c5cae9,
+  200: #9fa8da,
+  300: #7986cb,
+  400: #5c6bc0,
+  500: #3f51b5,
+  600: #3949ab,
+  700: #303f9f,
+  800: #283593,
+  900: #1a237e,
+  A100: #8c9eff,
+  A200: #536dfe,
+  A400: #3d5afe,
+  A700: #304ffe,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$tri-purple                 : (
+  50: #f3e5f5,
+  100: #e1bee7,
+  200: #ce93d8,
+  300: #ba68c8,
+  400: #ab47bc,
+  500: #9c27b0,
+  600: #8e24aa,
+  700: #7b1fa2,
+  800: #6a1b9a,
+  900: #4a148c,
+  A100: #ea80fc,
+  A200: #e040fb,
+  A400: #d500f9,
+  A700: #aa00ff,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+
+$tri-steal                  : (
+  50: #edfbf7,
+  100: #d5f5eb,
+  200: #b2ecdb,
+  300: #87e2c7,
+  400: #55d6b0,
+  500: #20c997,
+  600: #1cae86,
+  700: #179275,
+  800: #137663,
+  900: #0e5a51,
+  A100: #7ffad5,
+  A200: #41fac2,
+  A400: #00f7ad,
+  A700: #00ffb2,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$tri-cyan                   : (
+  50: #ebf8f9,
+  100: #cfedf0,
+  200: #a7dfe3,
+  300: #76cdd3,
+  400: #3db8c1,
+  500: #00a2ae,
+  600: #008997,
+  700: #00707f,
+  800: #005667,
+  900: #003c4e,
+  A100: #7fdffa,
+  A200: #41d2fa,
+  A400: #00c0f5,
+  A700: #00c8ff,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$tri-green                  : (
+  50: #edfff6,
+  100: #bef7db,
+  200: #8febbd,
+  300: #64dea1,
+  400: #3dd187,
+  500: #1ac46f,
+  600: #0d9e55,
+  700: #04783e,
+  800: #005229,
+  900: #002b16,
+  A100: #6edba4,
+  A200: #34c27b,
+  A400: #00ba5d,
+  A700: #00a352,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$tri-pink                   : (
+  50: #feeff5,
+  100: #fdd8e7,
+  200: #fcb8d3,
+  300: #fa90ba,
+  400: #f7629e,
+  500: #f5317f,
+  600: #dc277d,
+  700: #c11c7b,
+  800: #a71278,
+  900: #8c0776,
+  A100: #fa7fe8,
+  A200: #fa41de,
+  A400: #f500d0,
+  A700: #ff00d9,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+
+$tri-red                    : (
+  50: #fceff1,
+  100: #f8d9dd,
+  200: #f2bac0,
+  300: #eb939d,
+  400: #e26675,
+  500: #d93649,
+  600: #c02e49,
+  700: #a62649,
+  800: #8c1e48,
+  900: #721648,
+  A100: #fa7fc3,
+  A200: #fa41a7,
+  A400: #f50087,
+  A700: #ff008c,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$tri-orange                 : (
+  50: #fef3eb,
+  100: #fde3cf,
+  200: #fccca7,
+  300: #faaf76,
+  400: #f78e3d,
+  500: #f56a00,
+  600: #d75000,
+  700: #b93600,
+  800: #9a1b00,
+  900: #7b0000,
+  A100: #fab27f,
+  A200: #fa8e41,
+  A400: #f56600,
+  A700: #ff6a00,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+
+$tri-yellow                 : (
+  50: #fffaeb,
+  100: #fff3cf,
+  200: #ffe9a7,
+  300: #ffdd76,
+  400: #ffce3d,
+  500: #ffbf00,
+  600: #e09a00,
+  700: #c17500,
+  800: #a04f00,
+  900: #802800,
+  A100: #fad97f,
+  A200: #fac941,
+  A400: #f5b400,
+  A700: #ffbb00,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);

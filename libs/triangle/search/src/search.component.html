@@ -1,0 +1,52 @@
+<div class="tri-search">
+  <input
+    triInput
+    [size]="size"
+    #filterInput
+    [autofocus]="autoFocus"
+    [placeholder]="placeholder || i18nCommonText?.searchPlaceholder"
+    (change)="inputChange(filterInput.value, $event)"
+    (keyup)="inputChange(filterInput.value, $event)"
+    [attr.maxlength]="maxLength"
+    [disabled]="disabled"
+    (blur)="inputBlur()"
+    type="text"
+    class="tri-input {{ cssClass }}"
+    [ngClass]="{
+      'tri-clear-exit': clearIconExit,
+      'tri-icon-left': iconPosition === 'left',
+      'tri-search-no-border': borderless === true
+    }"
+  />
+  <span
+    class="tri-search-icon"
+    [ngClass]="{
+     'tri-search-icon-sm': size === 'sm',
+     'tri-search-icon-lg': size === 'lg',
+     'tri-icon-left': iconPosition === 'left'
+    }"
+    (click)="clickSearch(filterInput.value)"
+  >
+    <tri-icon svgIcon="outline:search"></tri-icon>
+  </span>
+  <span
+    #line
+    *ngIf="iconPosition === 'right'"
+    class="tri-search-line"
+    [ngClass]="{ 'tri-search-line-sm': size === 'sm', 'tri-search-line-lg': size === 'lg', 'tri-clear-exit': clearIconExit }"
+  >
+  </span>
+  <span
+    #clearIcon
+    (click)="clearText()"
+    class="tri-search-clear"
+    [ngClass]="{
+      'tri-search-clear-sm': size === 'sm',
+      'tri-search-clear-lg': size === 'lg',
+      'tri-clear-exit': clearIconExit,
+      'tri-icon-left': iconPosition === 'left'
+    }"
+  >
+    <tri-icon svgIcon="outline:close-circle"></tri-icon>
+  </span>
+</div>

@@ -1,0 +1,23 @@
+@use "sass:map";
+@use "../../style/variables" as v;
+@use "../../style/theming";
+@use "../../style/typography/typography-utils";
+@use "../../themes/theme";
+
+@mixin tri-optgroup-theme() {
+  $foreground : theme.$foreground;
+
+  .tri-optgroup-label {
+    color : theming.tri-color($foreground, secondary-text);
+  }
+
+  .tri-optgroup-disabled .tri-optgroup-label {
+    color : theming.tri-color($foreground, hint-text);
+  }
+}
+
+@mixin tri-optgroup-typography($config) {
+  .tri-optgroup-label {
+    @include typography-utils.tri-typography-level-to-styles($config, body-2);
+  }
+}

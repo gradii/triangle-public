@@ -1,0 +1,112 @@
+@import "./calendar-mixin";
+@import "../../../core/themes/theme";
+
+$calendar-prefix-cls            : "#{$tri-prefix}-calendar";
+$calendar-timepicker-prefix-cls : "#{$tri-prefix}-calendar-time-picker";
+
+@mixin tri-calendar-theme($theme) {
+  $foreground : map-get($theme, foreground);
+  $background : map-get($theme, background);
+
+  .#{$calendar-prefix-cls} {
+    background-color : tri-color($background, component-background);
+
+    @at-root &-input {
+      color      : tri-color($foreground, input-color);
+      background : tri-color($foreground, input-bg);
+      @include placeholder($theme);
+    }
+
+    @at-root &-header {
+      @include _calendar-panel-header-theme($calendar-prefix-cls);
+    }
+
+    @at-root &-date {
+      color : tri-color($theme, text-color);
+
+      @at-root &:hover {
+        background : tri-color($theme, item-hover-bg);
+        cursor     : pointer;
+      }
+
+      @at-root &:active {
+        color      : #fff;
+        background : $primary-5;
+      }
+    }
+
+    @at-root &-today &-date {
+      border-color : $primary-color;
+      font-weight  : bold;
+      color        : $primary-color;
+    }
+
+    @at-root &-last-month-cell #{&}-date,
+    &-next-month-btn-day #{&}-date {
+      color : $disabled-color;
+    }
+
+    @at-root &-selected-day #{&}-date {
+      background : $primary-color;
+      color      : #fff;
+      border     : $border-width-base $border-style-base transparent;
+
+      @at-root &:hover {
+        background : $primary-color;
+      }
+    }
+
+    @at-root &-disabled-cell #{&}-date {
+      cursor     : not-allowed;
+      color      : #bcbcbc;
+      background : $disabled-bg;
+      border     : $border-width-base $border-style-base transparent;
+
+      @at-root &:hover {
+        background : $disabled-bg;
+      }
+    }
+
+    @at-root &-footer {
+      border-top : $border-width-base $border-style-base $border-color-split;
+      @at-root &-extra + #{&}-btn {
+        border-top : $border-width-base $border-style-base $border-color-split;
+      }
+    }
+
+    .#{$calendar-prefix-cls}-today-btn,
+    .#{$calendar-prefix-cls}-clear-btn {
+      @at-root &-disabled {
+        color  : $disabled-color;
+        cursor : not-allowed;
+      }
+      @at-root &:only-child {
+        margin : 0;
+      }
+    }
+
+    .#{$calendar-prefix-cls}-clear-btn:after {
+      color : $disabled-color;
+    }
+
+    .#{$calendar-prefix-cls}-clear-btn:hover:after {
+      color : $text-color-secondary;
+    }
+
+    .#{$calendar-prefix-cls}-ok-btn {
+      @include btn();
+      @include button-variant-basic($btn-primary-color, $btn-primary-bg);
+      @include button-size($btn-height-sm,
+        $btn-padding-y-sm, $btn-padding-x-sm, $font-size-base, $btn-line-height-sm, $border-radius-base);
+      line-height : $line-height-base;
+
+      @at-root &-disabled {
+        @include button-color($btn-disable-color, $btn-disable-bg, $btn-disable-border);
+        cursor : not-allowed;
+        @at-root &:hover {
+          @include button-color($btn-disable-color, $btn-disable-bg, $btn-disable-border);
+        }
+      }
+    }
+  }
+}

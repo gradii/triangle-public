@@ -1,0 +1,22 @@
+
+@mixin _prepend-with-selector($selector, $prop: null, $value: null) {
+  #{$selector} & {
+    @if $prop != null {
+      #{$prop}: $value;
+    }
+
+    @content;
+  }
+}
+
+@mixin tri-ltr($prop: null, $value: null) {
+  @include _prepend-with-selector('[dir=ltr]', $prop, $value) {
+    @content;
+  }
+}
+
+@mixin tri-rtl($prop: null, $value: null) {
+  @include _prepend-with-selector('[dir=rtl]', $prop, $value) {
+    @content;
+  };
+}

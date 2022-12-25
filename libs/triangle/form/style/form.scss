@@ -1,0 +1,141 @@
+@use "./mixin";
+@use "./mixin-theme";
+@use "../../core/themes/theme";
+@use "../../core/style/theming";
+@use "../../core/style/variables" as v;
+@use "../../input/style/input-variables";
+@use "../../input/style/input-mixin";
+@use "../../input/style/input-theme";
+
+$form-prefix-cls         : "#{v.$tri-prefix}-form" !default;
+$form-component-height   : input-variables.$input-height-base !default;
+$form-feedback-font-size : v.$font-size-base !default;
+
+$foreground              : theme.$foreground !default;
+$background              : theme.$background !default;
+$success                 : theme.$success !default;
+$primary                 : theme.$primary !default;
+$error                   : theme.$error !default;
+$warning                 : theme.$warning !default;
+$label-required-color    : theming.tri-color(theme.$highlight) !default;
+
+$form-item-margin-bottom : 1.5rem !default;
+
+$label-color             : theming.tri-color($foreground, heading-color) !default;
+$text-color-secondary    : theming.tri-color($foreground, text-color-secondary);
+$border-color-base       : theming.tri-color($foreground, border-color-base);
+
+:host {
+  ::ng-deep {
+    @include mixin.reset-form();
+  }
+}
+
+label {
+  position : relative;
+}
+
+.#{$form-prefix-cls}-item-required:before {
+  display      : inline-block;
+  margin-right : 4px;
+  content      : "*";
+  font-family  : SimSun;
+  line-height  : 1;
+  font-size    : v.$font-size-base;
+  color        : $label-required-color;
+  @at-root .#{$form-prefix-cls}-hide-required-mark #{&} {
+    display : none;
+  }
+}
+
+// Radio
+input[type="radio"],
+input[type="checkbox"] {
+  @at-root &[disabled],
+  &.disabled {
+    cursor : not-allowed;
+  }
+}
+
+// These classes are used directly on <label>s
+.#{v.$tri-prefix}-radio-inline,
+.#{v.$tri-prefix}-radio-vertical,
+.#{v.$tri-prefix}-checkbox-inline,
+.#{v.$tri-prefix}-checkbox-vertical {
+  @at-root &.disabled {
+    cursor : not-allowed;
+  }
+}
+
+// These classes are used on elements with <label> descendants
+.#{v.$tri-prefix}-radio,
+.#{v.$tri-prefix}-checkbox {
+  @at-root &.disabled {
+    label {
+      cursor : not-allowed;
+    }
+  }
+}
+
+.#{$form-prefix-cls}-vertical {
+  .#{$form-prefix-cls}-item {
+    display : flex;
+    flex-direction: column;
+  }
+}
+
+.#{$form-prefix-cls}-horizontal {
+  .#{$form-prefix-cls}-item {
+    gap: .5rem
+  }
+}
+
+//== Inline Form
+.#{$form-prefix-cls}-inline {
+  .#{$form-prefix-cls}-item {
+    display       : inline-flex;
+    margin-right  : 1rem;
+    margin-bottom : 0;
+
+    @at-root &-with-help {
+      margin-bottom : 24px;
+    }
+
+    > div {
+      display        : inline-block;
+      vertical-align : middle;
+    }
+  }
+
+  .#{$form-prefix-cls}-text {
+    display : inline-block;
+  }
+
+  .has-feedback {
+    display : inline-block;
+  }
+
+  .#{$form-prefix-cls}-explain {
+    position : absolute;
+  }
+}
+
+.#{$form-prefix-cls}-item {
+  > label {
+    color          : $label-color;
+    text-align     : right;
+    vertical-align : middle;
+    padding        : 7px 0;
+    display        : inline-block;
+    overflow       : hidden;
+    text-overflow  : ellipsis;
+    white-space    : nowrap;
+    @at-root &:after {
+      content  : ":";
+      margin   : 0 8px 0 2px;
+      position : relative;
+      top      : -0.5px;
+    }
+  }
+}
+

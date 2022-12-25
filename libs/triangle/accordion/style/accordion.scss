@@ -1,0 +1,110 @@
+@use "../../core/style/mixins";
+@use "../../core/style/variables" as v;
+
+$accordion-prefix-cls : "#{v.$tri-prefix}-accordion";
+
+@mixin accordion-close() {
+  @include mixins.iconfont-size-under-12px(6px, 0);
+}
+
+@mixin accordion-open() {
+  @include mixins.iconfont-size-under-12px(6px, 90deg);
+}
+
+.#{$accordion-prefix-cls} {
+  display       : block;
+  border-radius : v.$border-radius-base;
+
+  @at-root & > #{&}-item {
+    display : block;
+
+    @at-root &:last-child {
+      @at-root & > .#{$accordion-prefix-cls}-header {
+        &:not(.expanded) {
+          border-radius : 0 0 v.$border-radius-base v.$border-radius-base;
+          margin-bottom : -1px
+        }
+      }
+    }
+
+    > .#{$accordion-prefix-cls}-header {
+      line-height : 22px;
+      padding     : 8px 0 8px 8px;
+      cursor      : pointer;
+      position    : relative;
+
+      display     : flex;
+      align-items : center;
+
+      .arrow {
+        @include accordion-close();
+        display        : inline-block;
+        font-weight    : bold;
+        vertical-align : middle;
+        transition     : transform 0.24s;
+        height         : 1.5rem;
+        width          : 1.5rem;
+      }
+    }
+  }
+
+  @at-root &-sm > #{&}-item > #{&}-header {
+    line-height : 1rem;
+    padding     : 0.25rem 0 0.25rem 0.25rem;
+  }
+
+  @at-root &-lg > #{&}-item > #{&}-header {
+    line-height : 2rem;
+    padding     : .75rem 0 .75rem 2rem;
+  }
+
+  @at-root &-content {
+    overflow : hidden;
+    padding  : 0 16px;
+
+    @at-root & > #{&}-box {
+      padding-top    : 1rem;
+      padding-bottom : 1rem;
+    }
+
+    @at-root &-inactive {
+      display : none;
+    }
+  }
+
+  @at-root &#{&}-borderless {
+    > .#{$accordion-prefix-cls}-item:last-child {
+      > .#{$accordion-prefix-cls}-header {
+        border-radius : 0;
+      }
+    }
+  }
+
+  @at-root &-item:last-child {
+    > .#{$accordion-prefix-cls}-content {
+      border-radius : 0 0 v.$border-radius-base v.$border-radius-base;
+    }
+  }
+
+  @at-root & > #{&}-item > #{&}-header[aria-expanded="true"] {
+    .arrow {
+      @include accordion-open();
+    }
+  }
+
+  @at-root &-borderless {
+    border : 0;
+  }
+
+  @at-root &-borderless > #{&}-item-active {
+    border : 0;
+  }
+
+  @at-root &-borderless > #{&}-item > #{&}-content {
+    background-color : transparent;
+  }
+
+  @at-root &-borderless > #{&}-item > #{&}-header {
+    transition : all .3s;
+  }
+}
